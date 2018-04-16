@@ -22,6 +22,8 @@ import menus from "../config/menus";
 // 导入系统组件
 import { components } from "flagwind-web";
 
+import AMap from "src/index";
+
 // 导入应用组件
 import Code from "examples/components/code";
 import Example from "examples/components/example";
@@ -103,6 +105,9 @@ export default class Workbench extends WorkbenchBase
     {
         // 注册系统组件
         Vue.use(components);
+        
+        // 注册地图组件
+        Vue.use(AMap);
 
         // 注册应用组件
         Vue.component("u-code", Code);

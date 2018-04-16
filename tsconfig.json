@@ -34,9 +34,13 @@
             "es5",
             "es2015.promise"
         ],
-        "baseUrl": "./",
+        "baseUrl": ".",
         "paths": {
-            "src": ["src"]
+            "src": ["./src"],
+            "config/*": ["./src/config/*"],
+            "models/*": ["./src/models/*"],
+            "common/*": ["./src/common/*"],
+            "components": ["./src/components/"]
         }
     }
 }
