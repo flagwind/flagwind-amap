@@ -18,7 +18,7 @@ const MAP_CONFIG: IMapConfig =
     version: "1.4.5",
     protocol: "https",
     host: "webapi.amap.com/maps",
-    // lazyload: true,
+    lazyload: true,
     plugins: [],
     callback: "onAMapLoaded"
 };

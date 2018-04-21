@@ -7,6 +7,7 @@
  */
 
 import { Component as ComponentBase } from "flagwind-web";
+import events from "config/events";
 
 /**
  * 地图组件基类。
@@ -33,11 +34,36 @@ export default abstract class Component extends ComponentBase
         this._amap = value;
     }
 
+    /**
+     * 当创建组件时调用的钩子方法。
+     * @protected
+     * @override
+     * @returns void
+     */
     protected mounted(): void
     {
-        console.log("base mounted...");
+        const parentComponent = this.$parent as any;
+
+        this.amap = this.amap || parentComponent.amap;
+        
+        if(this.amap)
+        {
+            this.register();
+        }
+        else
+        {
+            this.$on(events.amapReady, () =>
+            {
+                this.register();
+            });
+        }
     }
     
+    /**
+     * 解析地图配置选项。
+     * @protected
+     * @returns object
+     */
     protected resolveOptions(): object
     {
         const options: any = {};
@@ -57,5 +83,10 @@ export default abstract class Component extends ComponentBase
         });
 
         return options;
+    }
+
+    protected register(): void
+    {
+        console.log("register...");
     }
 }

@@ -69,14 +69,7 @@ export default class Intro extends View
     protected plugins: Array<any> =
     [
         {
-            name: "ToolBar",
-            events:
-            {
-                init: () =>
-                {
-                    console.log("Toolbar...");
-                }
-            }
+            name: "ToolBar"
         }
     ];
 }

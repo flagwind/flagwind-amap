@@ -11,6 +11,7 @@ import Type = flagwind.Type;
 import Map = flagwind.Map;
 import { component, config } from "flagwind-web";
 import Component from "../component";
+import events from "config/events";
 import MapLoader from "common/map-loader";
 import MapConvert from "common/map-convert";
 import IMapPlugin from "models/map-plugin";
@@ -527,6 +528,15 @@ export default class AMapComponent extends Component
 
         // 初始化地图实例
         this.amap = new window.AMap.Map(this.$amap, options);
+
+        // 通知外部组件高德地图已准备就绪
+        this.$emit(events.amapReady, this.amap);
+
+        // 通知所有子组件高德地图已准备就绪
+        this.$children.forEach(child =>
+        {
+            child.$emit(events.amapReady, this.amap);
+        });
 
         // 初始化地图插件
         this.initializePlugins();
