@@ -18,6 +18,7 @@ module.exports =
             "config": resolve("src/config"),
             "models": resolve("src/models"),
             "common": resolve("src/common"),
+            "mixins": resolve("src/mixins"),
             "components": resolve("src/components")
         }
     },

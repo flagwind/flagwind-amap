@@ -40,7 +40,8 @@
             "config/*": ["./src/config/*"],
             "models/*": ["./src/models/*"],
             "common/*": ["./src/common/*"],
-            "components": ["./src/components/"]
+            "mixins/*": ["./src/mixins/*"],
+            "components/*": ["./src/components/*"]
         }
     }
 }

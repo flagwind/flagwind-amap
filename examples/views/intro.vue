@@ -1,7 +1,7 @@
 <template>
     <l-generic>
         <div class="v-intro">
-            <amap></amap>
+            <fw-amap :plugins="plugins"></fw-amap>
         </div>
     </l-generic>
 </template>
@@ -11,6 +11,13 @@
 {
     padding: 20px 25px;
 }
+
+.fw-amap
+{
+    width:100%;
+    height:600px;
+    margin:0 auto;
+}
 </style>
 
 <script lang="ts">
@@ -19,7 +26,8 @@ import amap from "src/index";
 
 amap.init
 ({
-    key: "fef37c12ffcfec32fe33d06081430de8"
+    key: "fef37c12ffcfec32fe33d06081430de8",
+    plugins: ["ToolBar"]
 });
 
 // import AMap from "src/components/amap";
@@ -51,5 +59,25 @@ export default class Intro extends View
      * @returns any
      */
     // protected options: any = options;
+
+    /**
+     * 地图插件列表。
+     * @protected
+     * @member
+     * @returns Array<any>
+     */
+    protected plugins: Array<any> =
+    [
+        {
+            name: "ToolBar",
+            events:
+            {
+                init: () =>
+                {
+                    console.log("Toolbar...");
+                }
+            }
+        }
+    ];
 }
 </script>

@@ -47,6 +47,13 @@ export default interface IMapConfig
      * @returns string
      */
     protocol?: string;
+    
+    /**
+     * 获取或设置一个布尔值，表示是否延迟加载地图库。
+     * @member
+     * @returns boolean
+     */
+    lazyload?: boolean;
 
     /**
      * 获取或设置高德插件列表。

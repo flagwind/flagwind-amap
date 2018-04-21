@@ -6,6 +6,8 @@
  * Copyright (C) 2010-present Flagwind Inc. All rights reserved. 
  */
 
+import flagwind from "flagwind-core";
+import Type = flagwind.Type;
 import IMapConfig from "models/map-config";
 import DEFAULT_MAP_CONFIG from "config/index";
 
@@ -40,12 +42,12 @@ export default class MapLoader
      */
     private constructor(config: IMapConfig)
     {
-        // 初始化配置项
-        this._config =
+        if(Type.isEmptyString(config.key))
         {
-            ...DEFAULT_MAP_CONFIG,
-            ...config
-        };
+            throw new Error("AMap key is required.");
+        }
+
+        this._config = config;
     }
     
     /**
@@ -226,8 +228,21 @@ export default class MapLoader
             return Promise.resolve();
         }
 
+        // 合并默认配置项
+        config =
+        {
+            ...DEFAULT_MAP_CONFIG,
+            ...config
+        };
+
         // 初始化地图加载器
         MapLoader._instance = new MapLoader(config);
+
+        // 延迟加载处理
+        if(config.lazyload !== true)
+        {
+            return Promise.resolve();
+        }
         
         return MapLoader._instance.load();
     }

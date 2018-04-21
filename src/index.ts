@@ -14,7 +14,7 @@ import AMap from "./components/amap";
 
 const components =
 {
-    "amap": AMap
+    "fw-amap": AMap
 };
 
 const amap =
@@ -30,12 +30,9 @@ const amap =
         {
             return;
         }
-
+        
         Object.keys(components).forEach(key =>
         {
-            console.log(key);
-
-            // flagwind 组件统一加小写 "fw" 标识
             Vue.component(key, components[key]);
         });
 
