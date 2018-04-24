@@ -443,6 +443,11 @@ export default class AMapComponent extends Component
      */
     @config({type: Boolean, default: true})
     public preloadMode: boolean;
+
+    public constructor()
+    {
+        super(EVENTS);
+    }
     
     /**
      * 设置地图的显示状态，包括是否可鼠标拖拽移动地图、地图是否可缩放、地图是否可旋转（rotateEnable）、是否可双击放大地图、是否可以通过键盘控制地图旋转（keyboardEnable）等。  
@@ -527,8 +532,8 @@ export default class AMapComponent extends Component
         const options = this.resolveOptions();
 
         // 初始化地图实例
-        this.amap = new window.AMap.Map(this.$amap, options);
-
+        this.amap = this.amapComponent = new window.AMap.Map(this.$amap, options);
+        
         // 通知外部组件高德地图已准备就绪
         this.$emit(events.amapReady, this.amap);
 

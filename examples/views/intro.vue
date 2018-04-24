@@ -1,7 +1,7 @@
 <template>
     <l-generic>
         <div class="v-intro">
-            <fw-amap :plugins="plugins"></fw-amap>
+            <fw-amap :plugins="plugins" @click="onMapClick"></fw-amap>
         </div>
     </l-generic>
 </template>
@@ -72,5 +72,10 @@ export default class Intro extends View
             name: "ToolBar"
         }
     ];
+
+    protected onMapClick(e: any)
+    {
+        console.log(e);
+    }
 }
 </script>
