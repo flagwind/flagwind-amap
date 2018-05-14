@@ -1,7 +1,10 @@
 <template>
     <l-generic>
         <div class="v-intro">
-            <fw-amap :plugins="plugins" @click="onMapClick"></fw-amap>
+            <fw-amap ref="fwAmap" :plugins="plugins" @click="onMapClick">
+                <fw-amap-marker v-for="(marker, index) in markers" :key="index" vid="vid" :position="marker"></fw-amap-marker>
+            </fw-amap>
+            <i-button @click="onHiddenMarker2">移除marker2</i-button>
         </div>
     </l-generic>
 </template>
@@ -23,6 +26,8 @@
 <script lang="ts">
 import { component, View } from "flagwind-web";
 import amap from "src/index";
+
+// import { IMapLngLat } from "models";
 
 amap.init
 ({
@@ -53,12 +58,15 @@ export default class Intro extends View
     // protected codes: any = codes;
 
     /**
-     * 演示需要的数据选项。
+     * 标记点
      * @protected
      * @member
      * @returns any
      */
-    // protected options: any = options;
+    protected markers: any = [
+        [114.04962, 22.56671],
+        [114.0062427521, 22.548470663]
+    ];
 
     /**
      * 地图插件列表。
@@ -76,6 +84,16 @@ export default class Intro extends View
     protected onMapClick(e: any)
     {
         console.log(e);
+    }
+
+    /**
+     * 移除点位2
+     * @protected
+     * @returns void
+     */
+    protected onHiddenMarker2(): void
+    {
+        this.markers.splice(1, 1);
     }
 }
 </script>

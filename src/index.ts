@@ -11,10 +11,12 @@ import MapLoader from "common/map-loader";
 
 // 组件
 import AMap from "./components/amap";
+import AMapMarker from "./components/marker";
 
 const components =
 {
-    "fw-amap": AMap
+    "fw-amap": AMap,
+    "fw-amap-marker": AMapMarker
 };
 
 const amap =
