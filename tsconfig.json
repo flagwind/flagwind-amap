@@ -38,6 +38,7 @@
         "paths": {
             "src": ["./src"],
             "config/*": ["./src/config/*"],
+            "models": ["./src/models"],
             "models/*": ["./src/models/*"],
             "common/*": ["./src/common/*"],
             "mixins/*": ["./src/mixins/*"],

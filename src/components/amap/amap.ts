@@ -65,7 +65,7 @@ export default class AMapComponent extends Component
     private _loadPromise: Promise<void>;                              // 地图库加载Promise
     private _resolvedPlugins: Array<any>;                             // 解析后的插件
     private _amapPlugins: Map<string, any>;                           // 高德地图真实的插件
-    
+
     /**
      * 获取解析后的插件列表。
      * @protected
@@ -512,7 +512,7 @@ export default class AMapComponent extends Component
             this.amap.destroy();
         }
     }
-    
+
     /**
      * 初始化高德地图。
      * @private
