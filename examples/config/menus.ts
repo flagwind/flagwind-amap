@@ -12,6 +12,25 @@ const menus =
         title: "概览",
         path: "/intro",
         icon: "pie-graph"
+    },
+    {
+        title: "组件",
+        path: "/components",
+        icon: "ios-keypad",
+        children:
+        [
+            {
+                title: "基本",
+                children:
+                [
+                    {
+                        title: "地图",
+                        path: "/components/amap",
+                        icon: "map"
+                    }
+                ]
+            }
+        ]
     }
 ];
 

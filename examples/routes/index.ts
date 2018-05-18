@@ -15,6 +15,14 @@ const routes =
     {
         path: "/intro",
         component: (resolve: any) => (<any>require)(["views/intro.vue"], resolve)
+    },
+    {
+        path: "/components",
+        redirect: "/components/amap"
+    },
+    {
+        path: "/components/amap",
+        component: (resolve: any) => (<any>require)(["views/components/amap.vue"], resolve)
     }
 ];
 

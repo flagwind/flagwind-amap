@@ -31,6 +31,7 @@
         "url": "https://github.com/flagwind/flagwind-amap/issues"
     },
     "dependencies": {
+        "uppercamelcase": "^3.0.0"
     },
     "peerDependencies": {
         "flagwind-core": "^1.1.0",
@@ -45,6 +46,7 @@
         "@types/lodash.debounce": "^4.0.3",
         "@types/mocha": "^2.2.44",
         "@types/node": "^8.0.47",
+        "@types/uppercamelcase": "^3.0.0",
         "autoprefixer": "^7.1.2",
         "babel-core": "^6.26.0",
         "babel-loader": "^7.1.2",

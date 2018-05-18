@@ -2,20 +2,15 @@
  * Authors:
  *      Evan <skcy@vip.qq.com>
  * 
- * Copyright (C) 2018-present O&M Cloud Inc. All rights reserved. 
+ * Copyright (C) 2010-present Flagwind Inc. All rights reserved. 
  */
 
-// import flagwind from "flagwind-core";
-// import Type = flagwind.Type;
-// import Map = flagwind.Map;
 import { component, config } from "flagwind-web";
 import Component from "../component";
 import events from "config/events";
-// import MapLoader from "common/map-loader";
 import MapConvert from "common/map-convert";
 import { IMapLngLat, IMapPixel } from "models";
-import "./marker.less";
-import { RenderContext } from "vue";
+// import "./marker.less";
 
 const window: any = global;
 
@@ -336,10 +331,14 @@ export default class AMapMarker extends Component
     protected render(h: any): void
     {
         const slots = this.$slots.default || [];
+
         this.withSlots = !!slots.length;
-        if (this.withSlots) {
+
+        if (this.withSlots)
+        {
             return h("div", slots);
         }
+
         return null;
     }
 

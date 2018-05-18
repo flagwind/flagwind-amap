@@ -17,6 +17,7 @@ import Router from "vue-router";
 import Vuex from "vuex";
 import routes from "../routes";
 import modules from "../store";
+import config from "../config/index";
 import menus from "../config/menus";
 
 // 导入系统组件
@@ -28,6 +29,7 @@ import AMap from "src/index";
 import Code from "examples/components/code";
 import Example from "examples/components/example";
 import Generic from "examples/layouts/generic.vue";
+import Article from "examples/layouts/article.vue";
 
 // 倒入全局样式
 import "flagwind-web/dist/styles/flagwind.css";
@@ -81,7 +83,10 @@ export default class Workbench extends WorkbenchBase
         
         // 初始化状态管理程序
         this.initializeStore(context);
-        
+
+        // 初始化地图库
+        this.initializeMap(context);
+
         // 初始化工作空间
         this._workspace = this.createWorkspace();
     }
@@ -112,9 +117,10 @@ export default class Workbench extends WorkbenchBase
         // 注册应用组件
         Vue.component("u-code", Code);
         Vue.component("u-example", Example);
-
+        
         // 注册布局母版
         Vue.component("l-generic", Generic);
+        Vue.component("l-article", Article);
     }
     
     /**
@@ -155,5 +161,19 @@ export default class Workbench extends WorkbenchBase
         
         // 添加公共菜单
         context.store.dispatch("menu/add", { path: "/", items: menus });
+    }
+
+    /**
+     * 初始化地图库。
+     * @param  {ApplicationContext} context 应用程序上下文实例。
+     * @returns void
+     */
+    private initializeMap(context: ApplicationContext): void
+    {
+        AMap.init
+        ({
+            key: config.mapKey,
+            plugins: config.mapPlugins
+        });
     }
 }

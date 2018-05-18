@@ -7,6 +7,7 @@
  */
 
 import { Component as ComponentBase } from "flagwind-web";
+import upperCamelCase from "uppercamelcase";
 import events from "config/events";
 const window: any = global;
 
@@ -19,7 +20,6 @@ export default abstract class Component extends ComponentBase
 {
     private _amap: any;                                 // 高德地图实例
     private _amapComponent: any;                        // 高德组件实例
-    // private $listeners: any;                            // Vue 事件监听器列表
 
     /**
      * 获取或设置组件支持的高德事件。
@@ -29,6 +29,14 @@ export default abstract class Component extends ComponentBase
      */
     protected amapEvents: Array<string>;
 
+    /**
+     * 获取或设置组件属性侦听处理程序。
+     * @protected
+     * @member
+     * @returns object
+     */
+    protected watchHandlers: object;
+    
     /**
      * 获取或设置高德地图实例。
      * @public
@@ -163,8 +171,11 @@ export default abstract class Component extends ComponentBase
             this.amapComponent = component;
         }
         
-        // 注册高德事件
+        // 注册事件
         this.registerEvents();
+
+        // 注册属性监听器
+        this.registerWatchers();
     }
 
     /**
@@ -200,7 +211,7 @@ export default abstract class Component extends ComponentBase
     private unregisterEvents(): void
     {
         const eventNames = Object.keys(this.$listeners).filter((e: string) => ~this.amapEvents.indexOf(e));
-        
+
         for(const eventName of eventNames)
         {
             window.AMap.event.removeListener(this.amapComponent, eventName);
@@ -221,5 +232,48 @@ export default abstract class Component extends ComponentBase
             // 通过 Vue 的事件模型转发高德原生事件
             this.$emit(args.type, args);
         }
+    }
+
+    private registerWatchers(): void
+    {
+        const { $options: { propsData: props = {} } } = this;
+        
+        Object.keys(props).forEach((prop: string) =>
+        {
+            const handler = this.resolveWatchHandler(prop);
+
+            if(handler)
+            {
+                this.$watch(prop, (value: any) =>
+                {
+                    if(handler === this.amapComponent.setOptions)
+                    {
+                        handler.call(this.amapComponent, { [prop]: value });
+                    }
+                    else
+                    {
+                        handler.call(this.amapComponent, value);
+                    }
+                });
+            }
+        });
+    }
+    
+    /**
+     * 解析指定属性的侦听处理程序。
+     * @param  {string} prop 属性名。
+     * @returns Function
+     */
+    private resolveWatchHandler(prop: string): Function
+    {
+        const amapComponent = this.amapComponent;
+        const handlers = this.watchHandlers;
+        
+        if(handlers && handlers[prop])
+        {
+            return handlers[prop];
+        }
+
+        return amapComponent[`set${upperCamelCase(prop)}`] || amapComponent.setOptions;
     }
 }

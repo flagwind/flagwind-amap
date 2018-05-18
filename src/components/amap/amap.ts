@@ -144,9 +144,9 @@ export default class AMapComponent extends Component
      */
     @config({type: Array})
     public zooms: [number, number];
-
+    
     /**
-     * 获取或设置地图中心点坐标值。
+     * 获取或设置地图中心点坐标值[经度，纬度]。
      * @description 动态属性，支持响应式。
      * @public
      * @config
@@ -443,7 +443,12 @@ export default class AMapComponent extends Component
      */
     @config({type: Boolean, default: true})
     public preloadMode: boolean;
-
+    
+    /**
+     * 初始化地图组件的新实例。
+     * @public
+     * @constructor
+     */
     public constructor()
     {
         super(EVENTS);

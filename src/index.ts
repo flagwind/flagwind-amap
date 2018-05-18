@@ -7,7 +7,7 @@
  */
 
 // 地图加载器
-import MapLoader from "common/map-loader";
+import MapLoader from "./common/map-loader";
 
 // 组件
 import AMap from "./components/amap";

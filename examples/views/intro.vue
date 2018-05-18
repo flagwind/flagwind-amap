@@ -1,9 +1,10 @@
 <template>
     <l-generic>
         <div class="v-intro">
-            <fw-amap ref="fwAmap" :plugins="plugins" @click="onMapClick">
+            <!--<fw-amap ref="fwAmap" :plugins="plugins" @click="onMapClick">
                 <fw-amap-marker v-for="(marker, index) in markers" :key="index" vid="vid" :position="marker"></fw-amap-marker>
             </fw-amap>
+            -->
             <i-button @click="onHiddenMarker2">移除marker2</i-button>
         </div>
     </l-generic>
@@ -25,15 +26,7 @@
 
 <script lang="ts">
 import { component, View } from "flagwind-web";
-import amap from "src/index";
-
 // import { IMapLngLat } from "models";
-
-amap.init
-({
-    key: "fef37c12ffcfec32fe33d06081430de8",
-    plugins: ["ToolBar"]
-});
 
 // import AMap from "src/components/amap";
 // import * as codes from "examples/codes";
