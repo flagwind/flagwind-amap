@@ -13,7 +13,35 @@ declare namespace AMap
      * @interface
      * @see http://lbs.amap.com/api/javascript-api/reference/event
      */
-    interface EventProvider
+    interface IEventProvider
+    {
+        /**
+         * 注册指定事件。
+         * @param  {string} eventName 事件名称。
+         * @param  {Function} handler 事件回调函数。
+         * @param  {object} context? 事件回调中的上下文（可选，缺省时，handler 中 this 为调用 on 方法的对象本身，否则 this 指向 context 引用的对象）。
+         * @description 多次绑定时，当 eventName、handler 函数对象、context 对象有任意一个不一样就会再次绑定。
+         * @returns void
+         */
+        on(eventName: string, handler: Function, context?: object): void;
+        
+        /**
+         * 移除指定事件。
+         * @param  {string} eventName 事件名称。
+         * @param  {Function} handler 事件回调函数。
+         * @param  {object} context? 事件回调中的上下文（可选，缺省时为调用 off 方法的对象本身，否则为 context 引用的对象）
+         * @description 只有当 off 与 on 的 eventName、handler 函数对象、context 对象完全一致时才能有效移除监听。
+         * @returns void
+         */
+        off(eventName: string, handler: Function, context?: object): void;
+    }
+    
+    /**
+     * 实现该抽象类能提供事件注册、移除、触发功能。
+     * @interface
+     * @see http://lbs.amap.com/api/javascript-api/reference/event
+     */
+    abstract class EventProvider implements IEventProvider
     {
         /**
          * 注册指定事件。
@@ -43,7 +71,7 @@ declare namespace AMap
      * @description v1.2 新增
      * @see http://lbs.amap.com/api/javascript-api/reference/event
      */
-    interface EventListener
+    abstract class EventListener
     {
     }
 
@@ -53,7 +81,7 @@ declare namespace AMap
      * @description v1.2 新增
      * @see http://lbs.amap.com/api/javascript-api/reference/event
      */
-    interface MapsEvent
+    abstract class MapsEvent
     {
         /**
          * 事件类型。
@@ -72,16 +100,16 @@ declare namespace AMap
         /**
          * 发生事件时光标所在处的经纬度坐标。
          * @member
-         * @returns AMap.LngLat
+         * @returns LngLat
          */
-        lnglat?: AMap.LngLat;
+        lnglat?: LngLat;
 
         /**
          * 发生事件时光标所在处的像素坐标。
          * @member
-         * @returns AMap.Pixel
+         * @returns Pixel
          */
-        pixel?: AMap.Pixel;
+        pixel?: Pixel;
     }
 }
 
@@ -89,7 +117,7 @@ declare namespace AMap.event
 {
     /**
      * 注册 DOM 对象事件：给 DOM 对象注册事件，并返回 EventListener。
-     * 运行 AMap.event.removeListener(eventListener) 可以删除该事件的监听器。
+     * 运行 event.removeListener(eventListener) 可以删除该事件的监听器。
      * @param  {object} instance 需注册事件的 DOM 对象。
      * @param  {string} eventName 事件名称。
      * @param  {Function} handler 事件处理函数。
@@ -101,7 +129,7 @@ declare namespace AMap.event
     
     /**
      * 注册对象事件：给对象注册事件，并返回 EventListener。
-     * 运行 AMap.event.removeListener(eventListener) 可以删除该事件的监听器。
+     * 运行 event.removeListener(eventListener) 可以删除该事件的监听器。
      * @param  {object} instance 需注册事件的对象。
      * @param  {string} eventName 事件名称。
      * @param  {Function} handler 事件处理函数。

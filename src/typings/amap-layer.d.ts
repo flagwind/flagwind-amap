@@ -6,54 +6,107 @@
  * Copyright (C) 2010-present Flagwind Inc. All rights reserved. 
  */
 
- /**
- * 公用图层配置项。
- * @interface
- */
-interface LayerOptions
-{
-    /**
-     * 要显示该图层的地图对象。
-     * @member
-     * @returns AMap.Map
-     */
-    map?: AMap.Map;
-
-    /**
-     * 图层叠加的顺序值，0表示最底层。默认zIndex：1。
-     * @member
-     * @default 1
-     * @returns number
-     */
-    zIndex?: number;
-
-    /**
-     * 图层的透明度，取值范围[0,1]，1代表完全不透明，0代表完全透明。
-     * @member
-     * @returns number
-     */
-    opacity?: number;
-
-    /**
-     * 支持的缩放级别范围，默认范围[3-18]，在PC上，取值范围为[3-18]；在移动设备上，取值范围为[3-19]。
-     * @member
-     * @default PC: [3, 18] APP: [3, 19]
-     * @returns [number, number]
-     */
-    zooms?: [number, number];
-
-    /**
-     * 是否在高清屏下进行清晰度适配，默认为true。
-     * 将根据移动设备屏幕设备像素比，采用相应的技术手段，保证图层在不同设备像素比下的清晰度。
-     * @member
-     * @default true
-     * @returns boolean
-     */
-    detectRetina?: boolean;
-}
-
 declare namespace AMap
 {
+    /**
+     * 图层基础配置项。
+     */
+    interface LayerOptions
+    {
+        /**
+         * 要显示该图层的地图对象。
+         * @member
+         * @returns Map
+         */
+        map?: Map;
+
+        /**
+         * 图层叠加的顺序值，0表示最底层。
+         * @member
+         * @default 1
+         * @returns number
+         */
+        zIndex?: number;
+
+        /**
+         * 图层的透明度，取值范围[0,1]，1代表完全不透明，0代表完全透明。
+         * @member
+         * @returns number | [number, number]
+         */
+        opacity?: number | [number, number];
+
+        /**
+         * 支持的缩放级别范围，默认范围[3-18]，在PC上，取值范围为[3-18]；在移动设备上，取值范围为[3-19]。
+         * @member
+         * @default PC: [3, 18] APP: [3, 19]
+         * @returns [number, number]
+         */
+        zooms?: [number, number];
+    }
+    
+    /**
+     * 表示一个图层基础类。
+     */
+    class Layer extends EventProvider
+    {
+        /**
+         * 设置图层的所在地图对象。
+         * @param  {Map} map
+         * @returns void
+         */
+        setMap(map: Map): void;
+        
+        /**
+         * 获取图层所在的地图对象。
+         * @returns Map
+         */
+        getMap(): Map;
+
+        /**
+         * 显示图层。
+         * @returns void
+         */
+        show(): void;
+        
+        /**
+         * 隐藏图层。
+         * @returns void
+         */
+        hide(): void;
+
+        /**
+         * 设置图层透明度。
+         * @param  {number | [number, number]} alpha
+         * @returns void
+         */
+        setOpacity(alpha: number | [number, number]): void;
+        
+        /**
+         * 获取图层透明度。
+         * @returns number | [number, number]
+         */
+        getOpacity(): number | [number, number];
+
+        /**
+         * 设置图层叠加的顺序值。
+         * @param  {number} index
+         * @returns void
+         */
+        setzIndex(index: number): void;
+        
+        /**
+         * 获取图层叠加的顺序值。
+         * @returns number
+         */
+        getzIndex(): number;
+
+        /**
+         * 获取该图层可显示的级别范围；在PC上，取值范围为[3-18]；在移动设备上，取值范围为[3-19]。
+         * @returns [number, number]
+         */
+        getZooms(): [number, number];
+    }
+
     /**
      * TileLayer 类配置选项。
      * @interface
@@ -96,13 +149,23 @@ declare namespace AMap
          * @returns string | ((x: number, y: number, z: number) => string)
          */
         getTileUrl?: string | ((x: number, y: number, z: number) => string);
+
+        /**
+         * 是否在高清屏下进行清晰度适配，默认为true。
+         * 将根据移动设备屏幕设备像素比，采用相应的技术手段，保证图层在不同设备像素比下的清晰度。
+         * @member
+         * @default true
+         * @returns boolean
+         */
+        detectRetina?: boolean;
     }
 
     /**
      * 切片图层类，该类为基础类，不指定getTileUrl时为高德默认底图。
      * @class
+     * @see http://lbs.amap.com/api/javascript-api/reference/layer#TileLayer
      */
-    class TileLayer
+    class TileLayer extends Layer
     {
         /**
          * 构造一个切片图层对象，通过TileLayerOptions设置图层属性。
@@ -110,25 +173,6 @@ declare namespace AMap
          * @param  {TileLayerOptions} tileOpt
          */
         constructor(opts: TileLayerOptions);
-        
-        /**
-         * 设置图层透明度。
-         * @param  {number} alpha
-         * @returns void
-         */
-        setOpacity(alpha: number): void;
-        
-        /**
-         * 在地图上显示该图层。
-         * @returns void
-         */
-        show(): void;
-        
-        /**
-         * 隐藏图层。
-         * @returns void
-         */
-        hide(): void;
 
         /**
          * 获取当前图层所有切片号。
@@ -148,38 +192,6 @@ declare namespace AMap
          * @returns void
          */
         setTileUrl(url: string): void;
-        
-        /**
-         * 获取该图层可显示的级别范围；在PC上，取值范围为[3-18]；在移动设备上，取值范围为[3-19]。
-         * @returns [number, number]
-         */
-        getZooms(): [number, number];
-        
-        /**
-         * 设置图层叠加的顺序值，默认zIndex：1。
-         * @param  {number} index
-         * @returns void
-         */
-        setzIndex(index: number): void;
-        
-        /**
-         * 获取图层叠加的顺序值。
-         * @returns number
-         */
-        getzIndex(): number;
-        
-        /**
-         * 设置要显示图层的地图对象。
-         * @param  {Map} map
-         * @returns void
-         */
-        setMap(map: Map): void;
-        
-        /**
-         * 获取图层所在的地图对象。
-         * @returns Map
-         */
-        getMap(): Map;
     }
 
     /**
@@ -202,32 +214,14 @@ declare namespace AMap
          */
         visible?: boolean;
     }
-
+    
     /**
      * 楼块图层，单独展示矢量化的楼块图层，兼容IE9以上(不含)的浏览器。
      * @class
+     * @see http://lbs.amap.com/api/javascript-api/reference/layer#buildings
      */
-    class Buildings
+    class Buildings extends Layer
     {
-        /**
-         * 在地图上显示该图层。
-         * @returns void
-         */
-        show(): void;
-        
-        /**
-         * 隐藏图层。
-         * @returns void
-         */
-        hide(): void;
-
-        /**
-         * 设置要显示图层的地图对象。
-         * @param  {Map} map
-         * @returns void
-         */
-        setMap(map: Map): void;
-
         /**
          * 按区域设置楼块的颜色。
          * @description 示例地址：http://lbs.amap.com/api/javascript-api/example/personalized-map/building-style
@@ -245,9 +239,9 @@ declare namespace AMap
     {
         /**
          * 必填参数，图标显示位置偏移量，以图标的左上角为基准点（0,0）点。
-         * 例如：anchor: new AMap.Pixel(5, 5)
+         * 例如：anchor: new Pixel(5, 5)
          * @member
-         * @returns AMap.Pixel
+         * @returns Pixel
          */
         anchor: Pixel;
 
@@ -257,12 +251,12 @@ declare namespace AMap
          * @returns string
          */
         url: string;
-
+        
         /**
          * 必填参数，图标的尺寸。
-         * 例如：size:new AMap.Size(11,11)
+         * 例如：size:new Size(11,11)
          * @member
-         * @returns AMap.Size
+         * @returns Size
          */
         size: Size;
 
@@ -306,8 +300,9 @@ declare namespace AMap
     /**
      * 量点类，利用该类可同时在地图上展示万级别的点，目前仅适用于html5浏览器。
      * @class
+     * @see http://lbs.amap.com/api/javascript-api/reference/layer#MassMarks
      */
-    class MassMarks
+    class MassMarks extends Layer
     {
         /**
          * 创建海量点类。data为点对象的数组，点对象为包含经纬度lnglat属性的Object，opts为点与点集合的绘制样式。
@@ -317,19 +312,6 @@ declare namespace AMap
          * @param  {MassMarksOptions} opts
          */
         constructor(data: Array<object>, opts: MassMarksOptions);
-
-        /**
-         * 设置要显示图层的地图对象。
-         * @param  {Map} map
-         * @returns void
-         */
-        setMap(map: Map): void;
-        
-        /**
-         * 获取图层所在的地图对象。
-         * @returns Map
-         */
-        getMap(): Map;
         
         /**
          * 设置MassMark的显示样式。
@@ -361,18 +343,6 @@ declare namespace AMap
         getData(): Array<object>;
         
         /**
-         * 显示海量点图层。
-         * @returns void
-         */
-        show(): void;
-        
-        /**
-         * 隐藏海量点图层。
-         * @returns void
-         */
-        hide(): void;
-        
-        /**
          * 清除海量点。
          * @returns void
          */
@@ -383,7 +353,7 @@ declare namespace AMap
      * Heatmap 类配置项。
      * @interface
      */
-    interface HeatmapOptions
+    interface HeatmapOptions extends LayerOptions
     {
         /**
          * 热力图中单个点的半径，默认：30，单位：pixel。
@@ -405,20 +375,6 @@ declare namespace AMap
          * @returns object
          */
         gradient?: object;
-
-        /**
-         * 热力图透明度数组，取值范围[0,1]，0表示完全透明，1表示不透明，默认：[0,1]
-         * @member
-         * @returns Array<number>
-         */
-        opacity?: [number, number];
-        
-        /**
-         * 支持的缩放级别范围，默认范围[3-18]。
-         * @member
-         * @returns [number, number]
-         */
-        zooms?: [number, number];
     }
 
     /**
@@ -427,8 +383,9 @@ declare namespace AMap
      * API引用了heatmap.js最新版本v2.0，v2.0基于新的渲染模型，具有更高的渲染效率和更强的性能。
      * 支持chrome、firefox、safari、ie9及以上浏览器。
      * @class
+     * @see http://lbs.amap.com/api/javascript-api/reference/layer#m_Heatmap
      */
-    class Heatmap
+    class Heatmap extends Layer
     {
         /**
          * 构造一个热力图插件对象，map为要叠加热力图的地图对象，opts属性参考HeatmapOptions列表中的说明。
@@ -437,19 +394,6 @@ declare namespace AMap
          */
         constructor(map: Map, opts: HeatmapOptions);
 
-        /**
-         * 设置热力图要叠加的地图对象，也可以在Map中的layers属性中设置为默认显示的图层。
-         * @param  {Map} map
-         * @returns void
-         */
-        setMap(map: Map): void;
-        
-        /**
-         * 获取热力图叠加地图对象。
-         * @returns Map
-         */
-        getMap(): Map;
-        
         /**
          * 设置热力图属性，参考HeatmapOptions列表中的说明。
          * @param  {HeatmapOptions} opts
@@ -509,73 +453,63 @@ declare namespace AMap
          * @returns object
          */
         getDataSet(): object;
-        
-        /**
-         * 显示热力图。
-         * @returns void
-         */
-        show(): void;
-        
-        /**
-         * 隐藏热力图。
-         * @returns void
-         */
-        hide(): void;
     }
 
     /**
      * LayerGroup类用来包装其它图层类的实例，对实例集合做批量操作，避免开发者对多个需要设置同样属性的图层实例做循环处理。
      * 同时只要对LayerGroup执行过setMap方法后，新添加到该LayerGroup中的图层会自动将其map属性修改到该group对应的map，此外从group中移除该图层时，也会将该图层从group对应的map中移除。
      * @class
+     * @description v1.4.2 新增
+     * @see http://lbs.amap.com/api/javascript-api/reference/layer#LayerGroup
      */
-    class LayerGroup
+    class LayerGroup extends EventProvider
     {
         /**
          * 构造图层集合，传入的参数是一个图层实例的数组。
-         * @param  {Array<object>} layers
+         * @param  {Array<Layer>} layers
          */
-        constructor(layers: Array<object>);
+        constructor(layers: Array<Layer>);
         
         /**
          * 添加单个图层到集合中，不支持添加重复的图层。
-         * @param  {object} layer
+         * @param  {Layer} layer
          * @returns void
          */
-        addLayer(layer: object): void;
+        addLayer(layer: Layer): void;
         
         /**
          * 添加图层数组到集合中，不支持添加重复的图层。
-         * @param  {Array<object>} layers
+         * @param  {Array<Layer>} layers
          * @returns void
          */
-        addLayers(layers: Array<object>): void;
+        addLayers(layers: Array<Layer>): void;
         
         /**
          * 返回当前集合中所有的图层。
          * @returns void
          */
-        getLayers(): Array<object>;
+        getLayers(): Array<Layer>;
         
         /**
          * 判断传入的图层实例是否在集合中。
-         * @param  {object} layer
+         * @param  {Layer} layer
          * @returns boolean
          */
-        hasLayer(layer: object): boolean;
+        hasLayer(layer: Layer): boolean;
         
         /**
          * 从集合中删除传入的图层实例。
-         * @param  {object} layer
+         * @param  {Layer} layer
          * @returns void
          */
-        removeLayer(layer: object): void;
+        removeLayer(layer: Layer): void;
         
         /**
          * 从集合中删除传入的图层实例数组。
-         * @param  {Array<object>} layers
+         * @param  {Array<Layer>} layers
          * @returns void
          */
-        removeLayers(layers: Array<object>): void;
+        removeLayers(layers: Array<Layer>): void;
         
         /**
          * 	清空集合。
@@ -592,7 +526,7 @@ declare namespace AMap
          * @param  {Function} iterator
          * @returns void
          */
-        eachLayer(iterator: ((layer: object, index: number, layers: Array<object>) => void)): void;
+        eachLayer(iterator: ((layer: Layer, index: number, layers: Array<Layer>) => void)): void;
         
         /**
          * 指定集合中里图层的显示地图。
@@ -600,6 +534,12 @@ declare namespace AMap
          * @returns void
          */
         setMap(map: Map): void;
+
+        /**
+         * 获取图层所在的地图对象。
+         * @returns Map
+         */
+        getMap(): Map;
         
         /**
          * 修改图层属性(包括线样式、样色等等)。
@@ -607,6 +547,12 @@ declare namespace AMap
          * @returns void
          */
         setOptions(opts: object): void;
+
+        /**
+         * 获取图层属性。
+         * @returns HeatmapOptions
+         */
+        getOptions(): object;
         
         /**
          * 在地图上显示集合中图层。
@@ -621,7 +567,7 @@ declare namespace AMap
         hide(): void;
     }
 
-        /**
+    /**
      * ImageLayer 类配置项。
      * @interface
      */
@@ -630,9 +576,9 @@ declare namespace AMap
         /**
          * ImageLayer 显示的范围。
          * @member
-         * @returns AMap.Bounds
+         * @returns Bounds
          */
-        bounds?: AMap.Bounds;
+        bounds?: Bounds;
 
         /**
          * 需要显示的 Image 的 Url。
@@ -652,8 +598,9 @@ declare namespace AMap
     /**
      * 图片图层类，用户可以将一张静态图片作为图层添加在地图上，图片图层会随缩放级别而自适应缩放。
      * @class
+     * @see http://lbs.amap.com/api/javascript-api/reference/self-own-layers#imagelayer
      */
-    class ImageLayer
+    class ImageLayer extends Layer
     {
         /**
          * 构造一个ImageLayer图层对象，需要提供一个Image的url，以及它覆盖的Bounds。
@@ -662,19 +609,6 @@ declare namespace AMap
          * @param  {ImageLayerOptions} opts
          */
         constructor(opts: ImageLayerOptions);
-
-        /**
-         * 设置要显示图层的地图对象。
-         * @param  {Map} map
-         * @returns void
-         */
-        setMap(map: Map): void;
-        
-        /**
-         * 获取图层所在的地图对象。
-         * @returns Map
-         */
-        getMap(): Map;
         
         /**
          * 设置 ImageLayer 显示的范围。
@@ -688,31 +622,6 @@ declare namespace AMap
          * @returns Bounds
          */
         getBounds(): Bounds;
-
-        /**
-         * 在地图上显示该图层。
-         * @returns void
-         */
-        show(): void;
-        
-        /**
-         * 隐藏图层。
-         * @returns void
-         */
-        hide(): void;
-
-        /**
-         * 设置图层叠加的顺序值，默认zIndex：1。
-         * @param  {number} index
-         * @returns void
-         */
-        setzIndex(index: number): void;
-        
-        /**
-         * 获取图层叠加的顺序值。
-         * @returns number
-         */
-        getzIndex(): number;
         
         /**
          * 返回 Image 对象。
@@ -734,14 +643,18 @@ declare namespace AMap
         getImageUrl(): string;
     }
 
+    /**
+     * CanvasLayer 类配置项。
+     * @interface
+     */
     interface CanvasLayerOptions extends LayerOptions
     {
         /**
          * CanvasLayer 覆盖的范围。
          * @member
-         * @returns AMap.Bounds
+         * @returns Bounds
          */
-        bounds?: AMap.Bounds;
+        bounds?: Bounds;
 
         /**
          * 需要显示的Canvas对象。
@@ -760,10 +673,11 @@ declare namespace AMap
     
     /**
      * Canvas 图层类，用户可以将一个 Canvas 作为图层添加在地图上，Canvas 图层会随缩放级别而自适应缩放。
-     * @description v1.4.2 新增
      * @class
+     * @description v1.4.2 新增
+     * @see http://lbs.amap.com/api/javascript-api/reference/self-own-layers#canvaslayer
      */
-    class CanvasLayer
+    class CanvasLayer extends Layer
     {
         /**
          * 构造一个CanvasLayer图层对象，需要提供一个Canvas，以及它覆盖的Bounds。
@@ -778,44 +692,6 @@ declare namespace AMap
          * @returns void
          */
         reFresh(): void;
-
-        /**
-         * 在地图上显示该图层。
-         * @returns void
-         */
-        show(): void;
-        
-        /**
-         * 隐藏图层。
-         * @returns void
-         */
-        hide(): void;
-
-        /**
-         * 设置要显示图层的地图对象。
-         * @param  {Map} map
-         * @returns void
-         */
-        setMap(map: Map): void;
-        
-        /**
-         * 获取图层所在的地图对象。
-         * @returns Map
-         */
-        getMap(): Map;
-
-        /**
-         * 设置图层叠加的顺序值，默认zIndex：1。
-         * @param  {number} index
-         * @returns void
-         */
-        setzIndex(index: number): void;
-        
-        /**
-         * 获取图层叠加的顺序值。
-         * @returns number
-         */
-        getzIndex(): number;
         
         /**
          * 返回 Canvas 对象。
@@ -854,9 +730,9 @@ declare namespace AMap
         /**
          * VideoLayer覆盖的范围。
          * @member
-         * @returns AMap.Bounds
+         * @returns Bounds
          */
-        bounds?: AMap.Bounds;
+        bounds?: Bounds;
 
         /**
          * 需要显示的Video的Url，可使用同一视频的不同视频格式的url的数组来实现视频的浏览器兼容。
@@ -875,10 +751,11 @@ declare namespace AMap
 
     /**
      * 视频图层类，用户可以将一个视频作为图层添加在地图上，视频图层会随缩放级别而自适应缩放。
-     * @description v1.4.2 新增
      * @class
+     * @description v1.4.2 新增
+     * @see http://lbs.amap.com/api/javascript-api/reference/self-own-layers#video
      */
-    class VideoLayer
+    class VideoLayer extends Layer
     {
         /**
          * 构造一个VideoLayer图层对象，需要提供一个Video的url，以及它覆盖的Bounds。
@@ -888,44 +765,6 @@ declare namespace AMap
          */
         constructor(opts: VideoLayerOptions);
 
-        /**
-         * 在地图上显示该图层。
-         * @returns void
-         */
-        show(): void;
-        
-        /**
-         * 隐藏图层。
-         * @returns void
-         */
-        hide(): void;
-
-        /**
-         * 设置要显示图层的地图对象。
-         * @param  {Map} map
-         * @returns void
-         */
-        setMap(map: Map): void;
-        
-        /**
-         * 获取图层所在的地图对象。
-         * @returns Map
-         */
-        getMap(): Map;
-
-        /**
-         * 设置图层叠加的顺序值，默认zIndex：1。
-         * @param  {number} index
-         * @returns void
-         */
-        setzIndex(index: number): void;
-        
-        /**
-         * 获取图层叠加的顺序值。
-         * @returns number
-         */
-        getzIndex(): number;
-        
         /**
          * 返回 Video 对象。
          * @returns HTMLVideoElement
@@ -957,8 +796,9 @@ declare namespace AMap
     /**
      * 自定义图层是一种完全由开发者来指定绘制方法的图层。
      * @class
+     * @see http://lbs.amap.com/api/javascript-api/reference/self-own-layers#customlayer
      */
-    class CustomLayer
+    class CustomLayer extends Layer
     {
         /**
          * 初始化完成时候，开发者需要给该图层设定render方法，该方法需要实现图层的绘制，API会在合适的时机自动调用该方法。
@@ -972,61 +812,16 @@ declare namespace AMap
          * @param  {CustomLayerOptions} opts
          */
         constructor(opts: CustomLayerOptions);
-
-         /**
-         * 在地图上显示该图层。
-         * @returns void
-         */
-        show(): void;
-        
-        /**
-         * 隐藏图层。
-         * @returns void
-         */
-        hide(): void;
-
-        /**
-         * 设置要显示图层的地图对象。
-         * @param  {Map} map
-         * @returns void
-         */
-        setMap(map: Map): void;
-        
-        /**
-         * 获取图层所在的地图对象。
-         * @returns Map
-         */
-        getMap(): Map;
-
-        /**
-         * 设置图层叠加的顺序值，默认zIndex：1。
-         * @param  {number} index
-         * @returns void
-         */
-        setzIndex(index: number): void;
-        
-        /**
-         * 获取图层叠加的顺序值。
-         * @returns number
-         */
-        getzIndex(): number;
-        
-        /**
-         * 设置透明度。
-         * @param  {number} opacity
-         * @returns void
-         */
-        setOpacity(opacity: number): void;
     }
 }
 
-declare namespace AMap.TileLayer
+declare namespace TileLayer
 {
     /**
      * Satellite 类配置项。
      * @interface
      */
-    interface SatelliteOptions extends LayerOptions
+    interface SatelliteOptions extends AMap.LayerOptions
     {
         
     }
@@ -1034,6 +829,7 @@ declare namespace AMap.TileLayer
     /**
      * 卫星图层类，继承自TileLayer。
      * @class
+     * @see http://lbs.amap.com/api/javascript-api/reference/layer#TileLayer.Satellite
      */
     class Satellite extends AMap.TileLayer
     {
@@ -1049,7 +845,7 @@ declare namespace AMap.TileLayer
      * RoadNet 类配置项。
      * @interface
      */
-    interface RoadNetOptions extends LayerOptions
+    interface RoadNetOptions extends AMap.LayerOptions
     {
         
     }
@@ -1057,6 +853,7 @@ declare namespace AMap.TileLayer
     /**
      * 路网图层类，继承自TileLayer。
      * @class
+     * @see http://lbs.amap.com/api/javascript-api/reference/layer#TileLayer.RoadNet
      */
     class RoadNet extends AMap.TileLayer
     {
@@ -1072,7 +869,7 @@ declare namespace AMap.TileLayer
      * Traffic 类配置项。
      * @interface
      */
-    interface TrafficOptions extends LayerOptions
+    interface TrafficOptions extends AMap.LayerOptions
     {
         /**
          * 是否设置可以自动刷新实时路况信息，默认为false。
@@ -1094,6 +891,7 @@ declare namespace AMap.TileLayer
     /**
      * 实时交通图层类，继承自TileLayer。
      * @class
+     * @see http://lbs.amap.com/api/javascript-api/reference/layer#TileLayer.Traffic
      */
     class Traffic extends AMap.TileLayer
     {
@@ -1108,7 +906,7 @@ declare namespace AMap.TileLayer
     /**
      * Flexible 类配置项。
      */
-    interface FlexibleOptions extends LayerOptions
+    interface FlexibleOptions extends AMap.LayerOptions
     {
         /**
          * 由开发者实现，由API自动调用，xyz分别为切片横向纵向编号和层级，切片大小256。
@@ -1134,8 +932,10 @@ declare namespace AMap.TileLayer
     }
 
     /**
-     * 灵活切片图层，继承自AMap.TileLayer，开发者可通过构造时传入给其传入createTile字段来指定每一个切片的内容(v1.4.2新增)。
+     * 灵活切片图层，继承自TileLayer，开发者可通过构造时传入给其传入createTile字段来指定每一个切片的内容。
      * @class
+     * @description v1.4.2 新增
+     * @see http://lbs.amap.com/api/javascript-api/reference/self-own-layers#flex
      */
     class Flexible extends AMap.TileLayer
     {
@@ -1145,5 +945,182 @@ declare namespace AMap.TileLayer
          * @param  {FlexibleOptions} opts
          */
         constructor(opts: FlexibleOptions)
+    }
+
+    /**
+     * WMS 类配置项。
+     */
+    interface WMSOptions extends AMap.LayerOptions
+    {
+        /**
+         * wms服务的url地址，如："https://ahocevar.com/geoserver/wms"
+         * @member
+         * @returns string
+         */
+        url?: string;
+
+        /**
+         * 地图级别切换时，不同级别的图片是否进行混合，如图层的图像内容为部分透明请设置为false。
+         * @member
+         * @returns boolean
+         */
+        blend?: boolean;
+
+        /**
+         * 加载WMS图层服务时，图片的分片大小，可自由设定，不易过大，建议[256,512]。
+         * @member
+         * @returns number
+         */
+        tileSize?: number;
+
+        /**
+         * 初始时时候是否显示。
+         * @member
+         * @returns boolean
+         */
+        visible?: boolean;
+
+        /**
+         * OGC标准的WMS地图服务的GetMap接口的参数，包括VERSION、LAYERS、STYLES、FORMAT、TRANSPARENT等，
+         * CRS、BBOX、REQUEST、WIDTH、HEIGHT等参数请勿添加，例如：
+         * {
+         *     LAYERS: "topp:states",
+         *     VERSION: "1.3.0",
+         *     FORMAT: "image/png"
+         * } 
+         * @member
+         * @returns object
+         */
+        params?: object;
+    }
+
+    /**
+     * 用于加载OGC标准的WMS地图服务的一种图层类，自v1.4.3新增，仅支持EPSG3857坐标系统的WMS图层。
+     * @class
+     * @description v1.4.3 新增
+     * @see http://lbs.amap.com/api/javascript-api/reference/wms#wms
+     */
+    class WMS extends AMap.Layer
+    {
+        /**
+         * 创建WMS图层，WMSOptions为创建图层所需要的属性组对象。
+         * @constructor
+         * @param  {WMSOptions} opts
+         */
+        constructor(opts: WMSOptions);
+
+        /**
+         * 设置wms服务地址。
+         * @param  {string} url
+         * @returns void
+         */
+        setUrl(url: string): void;
+        
+        /**
+         * 返回wms服务地址。
+         * @returns string
+         */
+        getUrl(): string;
+        
+        /**
+         * 设置OGC标准的WMS getMap接口的参数，包括VERSION、LAYERS、STYLES、FORMAT、TRANSPARENT等。
+         * @param  {object} params
+         * @returns void
+         */
+        setParams(params: object): void;
+        
+        /**
+         * 返回OGC标准的WMS getMap接口的参数。
+         * @returns object
+         */
+        getParams(): object;
+    }
+
+    /**
+     * WMTS 类配置项。
+     * @interface
+     */
+    interface WMTSOptions extends AMap.LayerOptions
+    {
+        /**
+         * wmts服务的url地址，如："https://services.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/WMTS/"
+         * @member
+         * @returns string
+         */
+        url?: string;
+
+        /**
+         * 地图级别切换时，不同级别的图片是否进行混合，如图层的图像内容为部分透明请设置为false。
+         * @member
+         * @returns boolean
+         */
+        blend?: boolean;
+
+        /**
+         * WMTS图层的分片大小，需要和WMTS服务支持的大小一致。
+         * @member
+         * @returns number
+         */
+        tileSize?: number;
+
+        /**
+         * 初始时时候是否显示。
+         * @member
+         * @returns boolean
+         */
+        visible?: boolean;
+
+        /**
+         * OGC标准的WMTS地图服务的GetTile接口的参数，包括Version、Layer、Style、Format、Service等，TileMatrixSet、TileRow、TileCol、Request 等参数请勿添加，例如：
+         * {
+         *     Layer: "0",
+         *     Version: "1.0.0",
+         *     Format: "image/png"
+         * }
+         * @member
+         * @returns object
+         */
+        params?: object;
+    }
+
+    /**
+     * 用于加载OGC标准的WMTS地图服务的一种图层类，自v1.4.3新增，仅支持EPSG3857坐标系统的WMTS图层。
+     * @class
+     * @description v1.4.3 新增
+     * @see http://lbs.amap.com/api/javascript-api/reference/wms#wmts
+     */
+    class WMTS extends AMap.Layer
+    {
+        /**
+         * 创建WMTS图层，WMTSOptions为创建图层所需要的属性组对象。
+         * @param  {WMTSOptions} opts
+         */
+        constructor(opts: WMTSOptions);
+
+        /**
+         * 设置wmts服务地址。
+         * @param  {string} url
+         * @returns void
+         */
+        setUrl(url: string): void;
+        
+        /**
+         * 返回wmts服务地址。
+         * @returns string
+         */
+        getUrl(): string;
+        
+        /**
+         * 设置OGC标准的WMTS getTile接口的参数，包括Version、Layer、Style、Format、Service等。
+         * @param  {object} params
+         * @returns void
+         */
+        setParams(params: object): void;
+        
+        /**
+         * 设置OGC标准的WMTS getTile接口的参数。
+         * @returns object
+         */
+        getParams(): object;
     }
 }

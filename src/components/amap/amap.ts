@@ -609,12 +609,8 @@ export default class AMapComponent extends Component
         // 初始化地图插件
         this.initializePlugins();
 
-        // AMap.event.addDomListener()
-
-        // console.log(AMap);
-
-        // const layers = this.amap.getLayers();
-        // console.log(layers);
+        const layers = this.amap.getLayers();
+        console.log(layers);
     }
     
     /**
