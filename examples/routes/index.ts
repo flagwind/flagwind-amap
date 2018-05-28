@@ -23,6 +23,10 @@ const routes =
     {
         path: "/components/amap",
         component: (resolve: any) => (<any>require)(["views/components/amap.vue"], resolve)
+    },
+    {
+        path: "/components/marker",
+        component: (resolve: any) => (<any>require)(["views/components/marker.vue"], resolve)
     }
 ];
 

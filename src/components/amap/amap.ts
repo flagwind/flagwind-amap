@@ -67,6 +67,50 @@ export default class AMapComponent extends Component
     private _amapPlugins: Map<string, any>;                           // 高德地图真实的插件
 
     /**
+     * 获取或设置组件属性侦听处理程序。
+     * @protected
+     * @member
+     * @returns object
+     */
+    protected watchHandlers: object =
+    {
+        city: function(value: string)
+        {
+            (<any>this).amap.setCity(value);
+        },
+
+        zoomEnable: function(value: boolean)
+        {
+            (<any>this).amap.setStatus({ zoomEnable: value });
+        },
+
+        dragEnable: function(value: boolean)
+        {
+            (<any>this).amap.setStatus({ dragEnable: value });
+        },
+
+        doubleClickZoom: function(value: boolean)
+        {
+            (<any>this).amap.setStatus({ doubleClickZoom: value });
+        },
+
+        keyboardEnable: function(value: boolean)
+        {
+            (<any>this).amap.setStatus({ keyboardEnable: value });
+        },
+
+        jogEnable: function(value: boolean)
+        {
+            (<any>this).amap.setStatus({ jogEnable: value });
+        },
+
+        scrollWheel: function(value: boolean)
+        {
+            (<any>this).amap.setStatus({ scrollWheel: value });
+        }
+    };
+
+    /**
      * 获取解析后的插件列表。
      * @protected
      * @property
@@ -92,117 +136,124 @@ export default class AMapComponent extends Component
     {
         return this.$refs.amap as HTMLDivElement;
     }
-
+    
     /**
-     * 获取或设置地图容器的ID。
-     * @description 静态属性，仅支持初始化配置。
-     * @public
-     * @config
-     * @returns string
-     */
-    @config({type: String})
-    public vid: string;
-
-    /**
-     * 获取或设置地图图层数组，数组可以是图层 中的一个或多个，默认为普通二维地图。
+     * 获取或设置地图图层数组，数组可以是图层中的一个或多个，默认为普通二维地图。
      * 当叠加多个图层时，普通二维地图需通过实例化一个 TileLayer 类实现。
-     * @description 静态属性，仅支持初始化配置。
+     * @description 动态属性，支持响应式。
      * @public
      * @config
-     * @returns Array<object>
+     * @returns Array<Object>
      */
     @config({type: Array})
     public layers: Array<object>;
 
     /**
      * 获取或设置一个布尔值，用于控制地图是否可缩放。
-     * @description 静态属性，仅支持初始化配置。
+     * @description 动态属性，支持响应式。
      * @public
      * @config
      * @default true
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean, default: true})
     public zoomEnable: boolean;
 
     /**
      * 获取或设置地图显示的缩放级别。
-     * @description 静态属性，仅支持初始化配置。3D地图下，zoom值，可以设置为浮点数。
+     * 3D地图下，zoom值，可以设置为浮点数。
+     * @description 动态属性，支持响应式。
      * @public
      * @config
-     * @returns number
+     * @returns Number
      */
     @config({type: Number})
     public zoom: number;
 
     /**
      * 获取或设置地图显示的缩放级别范围，在PC上，默认范围[3,18]，取值范围[3-18]；在移动设备上，默认范围[3,19]，取值范围[3-19]
-     * @description 动态属性，支持响应式。
+     * @description 静态属性，仅支持初始化配置。
      * @public
      * @config
-     * @returns Array<number>
+     * @returns Array<Number>
      */
     @config({type: Array})
     public zooms: [number, number];
     
     /**
-     * 获取或设置地图中心点坐标值[经度，纬度]。
+     * 获取或设置设置地图显示的中心点[经度，纬度]。
      * @description 动态属性，支持响应式。
      * @public
      * @config
-     * @returns Array<number>
+     * @returns Array<Number>
      */
     @config({type: Array})
     public center: [number, number];
-
+    
     /**
-     * 获取或设置地图标注显示顺序，大于110即可将底图上的默认标注显示在覆盖物（圆、折线、面）之上。。
-     * @description 静态属性，仅支持初始化配置。
+     * 获取或设置一个行政区名称或 adcode，用于设置地图显示的中心点。
+     * 注意：不要同时使用 center 属性，如一起使用将以 city 属性作为最终呈现结果。 
+     * @description 动态属性，支持响应式。
      * @public
      * @config
-     * @returns number
+     * @returns String
+     */
+    @config({type: String})
+    public city: string;
+
+    /**
+     * 获取或设置地图标注显示顺序，大于110可将底图上的默认标注显示在覆盖物（圆、折线、面）之上。。
+     * @description 动态属性，支持响应式。
+     * @public
+     * @config
+     * @returns Number
      */
     @config({type: Number})
     public labelzIndex: number;
 
     /**
      * 获取或设置地图渲染模式。
-     * @description 静态属性，仅支持初始化配置。取值范围 "2D" 或 "3D"
+     * 取值范围 "2D" 或 "3D"
+     * @description 静态属性，仅支持初始化配置。
      * @public
      * @config
      * @default "2D"
-     * @returns string
+     * @returns String
      */
     @config({type: String})
     public viewMode: "2D" | "3D";
 
     /**
-     * 获取或设置一个布尔值，用于控制地图是否开启俯仰效果。
-     * @description 静态属性，仅支持初始化配置。3D视图下为true，2D视图下无效。
+     * 获取或设置一个布尔值，表示是否允许设置俯仰角度。
+     * 3D视图下为true，2D视图下设置无效。
+     * @description 静态属性，仅支持初始化配置。
      * @public
      * @config
-     * @default false
-     * @returns boolean
+     * @default true
+     * @returns Boolean
      */
     @config({type: Boolean})
     public pitchEnable: boolean;
 
     /**
      * 获取或设置地图处于3D渲染模式下的俯仰角度(0°-83°)。
-     * @description 静态属性，仅支持初始化配置。取值范围 0 至 83。
+     * 取值范围 0 至 83。
+     * @description 动态属性，支持响应式。。
      * @public
      * @config
-     * @returns number
+     * @default 0
+     * @returns Number
      */
     @config({type: Number})
     public pitch: number;
 
     /**
      * 获取或设置一个布尔值，用于控制地图是否可旋转。
-     * @description 静态属性，仅支持初始化配置。3D视图默认为true，2D视图默认false。
+     * 3D视图默认为true，2D视图默认false。
+     * @description 动态属性，支持响应式。
      * @public
      * @config
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean})
     public rotateEnable: boolean;
@@ -212,60 +263,62 @@ export default class AMapComponent extends Component
      * @description 静态属性，仅支持初始化配置。
      * @public
      * @config
-     * @returns string
+     * @returns String
      */
     @config({type: String})
     public skyColor: string;
 
     /**
-     * 获取或设置一个布尔值，用于控制渲染楼块时是否带动画效果。
+     * 获取或设置一个布尔值，用于控制渲染楼块时是否带动画效果，3D视图有效，PC端默认true，手机端默认false。
      * @description 静态属性，仅支持初始化配置。
      * @public
      * @config
-     * @default false
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean})
     public buildingAnimation: boolean;
 
     /**
      * 获取或设置地图的语言类型。
-     * @description 动态属性，支持响应式。可选值：zh_cn(中文简体)，en(英文)，zh_en(中英文对照)。
+     * 可选值：zh_cn(中文简体)，en(英文)，zh_en(中英文对照)。
+     * @description 动态属性，支持响应式。
      * @public
      * @config
      * @default zh_cn
-     * @returns string
+     * @returns String
      */
     @config({type: String, default: "zh_cn"})
     public lang: "zh_cn" | "en" | "zh_en";
 
     /**
      * 获取或设置地图默认鼠标样式。
-     * @description 静态属性，仅支持初始化配置。该参数应符合 CSS 的 cursor 属性规范。
+     * 该参数应符合 CSS 的 cursor 属性规范。
+     * @description 动态属性，支持响应式。
      * @public
      * @config
-     * @returns string
+     * @returns String
      */
     @config({type: String})
     public defaultCursor: string;
     
     /**
      * 获取或设置地图显示的参考坐标系。
-     * @description 静态属性，仅支持初始化配置。地图显示的参考坐标系，取值范围："EPSG3857"，"EPSG3395"，"EPSG4326"
+     * 地图显示的参考坐标系，取值范围："EPSG3857"，"EPSG3395"，"EPSG4326"。
+     * @description 静态属性，仅支持初始化配置。
      * @public
      * @config
-     * @returns string
+     * @returns String
      */
     @config({type: String})
     public crs: "EPSG3857" | "EPSG3395" | "EPSG4326";
     
     /**
      * 获取或设置一个布尔值，用于控制地图平移过程中是否使用动画。
-     * @description 静态属性，仅支持初始化配置。如调用 panBy、panTo、setCenter、setZoomAndCenter 等函数，将对地图产生平移操作，是否使用动画平移的效果。
+     * @description 静态属性，仅支持初始化配置。
      * @public
      * @config
      * @default true
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean, default: true})
     public animateEnable: boolean;
@@ -276,7 +329,7 @@ export default class AMapComponent extends Component
      * @public
      * @config
      * @default false
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean})
     public isHotspot: boolean;
@@ -287,7 +340,7 @@ export default class AMapComponent extends Component
      * @public
      * @config
      * @default false
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean})
     public resizeEnable: boolean;
@@ -297,75 +350,74 @@ export default class AMapComponent extends Component
      * @description 静态属性，仅支持初始化配置。
      * @public
      * @config
-     * @default false
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean})
     public showIndoorMap: boolean;
 
     /**
      * 获取或设置一个布尔值，表示是否支持可以扩展最大缩放级别。
-     * @description 静态属性，仅支持初始化配置。和 zooms 属性配合使用设置为 true 的时候，zooms 的最大级别在PC上可以扩大到20级，移动端还是高清19/非高清20。
+     * 和 zooms 属性配合使用设置为 true 的时候，zooms 的最大级别在PC上可以扩大到20级，移动端还是高清19/非高清20。
+     * @description 静态属性，仅支持初始化配置。
      * @public
      * @config
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean})
     public expandZoomRange: boolean;
 
     /**
      * 获取或设置一个布尔值，用于控制地图是否可通过鼠标拖拽平移。
-     * @description 静态属性，仅支持初始化配置。此属性可被 setStatus / getStatus 方法控制。
+     * @description 动态属性，支持响应式。
      * @public
      * @config
      * @default true
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean, default: true})
     public dragEnable: boolean;
 
     /**
      * 获取或设置一个布尔值，用于控制地图是否可通过双击鼠标放大地图。
-     * @description 静态属性，仅支持初始化配置。此属性可被 setStatus / getStatus 方法控制。
+     * @description 动态属性，支持响应式。
      * @public
      * @config
      * @default true
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean, default: true})
     public doubleClickZoom: boolean;
 
     /**
      * 获取或设置一个布尔值，用于控制地图是否可通过键盘控制。
-     * @description 静态属性，仅支持初始化配置。
-     *              方向键控制地图平移，"+"和"-"可以控制地图的缩放，Ctrl+“→”顺时针旋转，Ctrl+“←”逆时针旋转。
-     *              此属性可被setStatus/getStatus 方法控制。
+     * 方向键控制地图平移，"+"和"-"可以控制地图的缩放，Ctrl+"→"顺时针旋转，Ctrl+"←"逆时针旋转。
+     * @description 动态属性，支持响应式。
      * @public
      * @config
      * @default true
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean, default: true})
     public keyboardEnable: boolean;
 
     /**
      * 获取或设置一个布尔值，用于控制地图是否使用缓动效果。
-     * @description 静态属性，仅支持初始化配置。此属性可被 setStatus/getStatus 方法控制。
+     * @description 动态属性，支持响应式。
      * @public
      * @config
      * @default true
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean, default: true})
     public jogEnable: boolean;
 
     /**
      * 获取或设置一个布尔值，用于控制地图是否可通过鼠标滚轮缩放浏览。
-     * @description 静态属性，仅支持初始化配置。此属性可被 setStatus/getStatus 方法控制。
+     * @description 动态属性，支持响应式。
      * @public
      * @config
      * @default true
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean, default: true})
     public scrollWheel: boolean;
@@ -376,27 +428,30 @@ export default class AMapComponent extends Component
      * @public
      * @config
      * @default true
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean, default: true})
     public touchZoom: boolean;
 
     /**
-     * 可缺省，当 touchZoomCenter = 1 的时候，手机端双指缩放的以地图中心为中心，否则默认以双指中间点为中心。
+     * 获取或设置触控缩放中心，当 touchZoomCenter = 1 的时候，手机端双指缩放的以地图中心为中心，否则默认以双指中间点为中心。
      * @description 静态属性，仅支持初始化配置。
      * @public
      * @config
-     * @returns number
+     * @returns Number
      */
     @config({type: Number})
     public touchZoomCenter: number;
     
     /**
-     * 获取或设置地图的显示样式，目前支持官方样式模板，如：“amap://styles/grey” 或用户自定义地图样式，如：“amap://styles/d6bf8c1d69cea9f5c696185ad4ac4c86”
+     * 获取或设置地图的显示样式。
+     * 目前支持官方样式模板，如："amap://styles/grey"。
+     * 或用户自定义地图样式，如："amap://styles/d6bf8c1d69cea9f5c696185ad4ac4c86"。
      * @description 动态属性，支持响应式。
      * @public
      * @config
-     * @returns string
+     * @default "amap://styles/normal"
+     * @returns String
      */
     @config({type: String})
     public mapStyle: string;
@@ -406,7 +461,7 @@ export default class AMapComponent extends Component
      * @description 静态属性，仅支持初始化配置。
      * @public
      * @config
-     * @returns Array<string | object>
+     * @returns Array<String | Object>
      */
     @config({type: Array})
     public plugins: Array<string | object>;
@@ -414,10 +469,10 @@ export default class AMapComponent extends Component
     /**
      * 获取或设置地图上显示的元素种类。
      * 支持"bg"（地图背景）、"point"（POI点）、"road"（道路）、"building"（建筑物）
-     * @description 静态属性，仅支持初始化配置。
+     * @description 动态属性，支持响应式。
      * @public
      * @config
-     * @returns Array<string>
+     * @returns Array<String>
      */
     @config({type: Array})
     public features: Array<"bg" | "point" | "road" | "building">;
@@ -428,7 +483,7 @@ export default class AMapComponent extends Component
      * @public
      * @config
      * @default true
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean, default: true})
     public showBuildingBlock: boolean;
@@ -439,7 +494,7 @@ export default class AMapComponent extends Component
      * @public
      * @config
      * @default true
-     * @returns boolean
+     * @returns Boolean
      */
     @config({type: Boolean, default: true})
     public preloadMode: boolean;
@@ -453,14 +508,15 @@ export default class AMapComponent extends Component
     {
         super(EVENTS);
     }
-    
+
     /**
-     * 设置地图的显示状态，包括是否可鼠标拖拽移动地图、地图是否可缩放、地图是否可旋转（rotateEnable）、是否可双击放大地图、是否可以通过键盘控制地图旋转（keyboardEnable）等。  
+     * 设置地图的显示状态。
+     * 包括是否可鼠标拖拽移动地图、地图是否可缩放、地图是否可旋转（rotateEnable）、是否可双击放大地图、是否可以通过键盘控制地图旋转（keyboardEnable）等。  
      * @public
-     * @param  {any} status
+     * @param  {object} status
      * @returns void
      */
-    public setStatus(status: any): void
+    public setStatus(status: object): void
     {
         if(this.amap)
         {
@@ -499,9 +555,9 @@ export default class AMapComponent extends Component
     {
         // 调用基类方法
         super.mounted();
-
+        
         // 初始化高德地图
-        this.initialize();
+        this.initializeMap();
     }
     
     /**
@@ -512,6 +568,8 @@ export default class AMapComponent extends Component
      */
     protected destroyed(): void
     {
+        super.destroyed();
+
         if(this.amap)
         {
             this.amap.destroy();
@@ -523,7 +581,7 @@ export default class AMapComponent extends Component
      * @private
      * @returns void
      */
-    private async initialize(): Promise<void>
+    private async initializeMap(): Promise<void>
     {
         if(this.amap)
         {
@@ -538,7 +596,7 @@ export default class AMapComponent extends Component
 
         // 初始化地图实例
         this.amap = this.amapComponent = new window.AMap.Map(this.$amap, options);
-        
+
         // 通知外部组件高德地图已准备就绪
         this.$emit(events.amapReady, this.amap);
 
@@ -550,6 +608,13 @@ export default class AMapComponent extends Component
 
         // 初始化地图插件
         this.initializePlugins();
+
+        // AMap.event.addDomListener()
+
+        // console.log(AMap);
+
+        // const layers = this.amap.getLayers();
+        // console.log(layers);
     }
     
     /**

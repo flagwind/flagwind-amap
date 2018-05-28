@@ -10,7 +10,6 @@ import Component from "../component";
 import events from "config/events";
 import MapConvert from "common/map-convert";
 import { IMapLngLat, IMapPixel } from "models";
-// import "./marker.less";
 
 const window: any = global;
 
@@ -41,31 +40,38 @@ const EVENTS =
 ];
 
 /**
+ * 路径定义。
+ * @private
+ * @const
+ */
+const PATHS =
+{
+    simple: "overlay/SimpleMarker",
+    awesome: "overlay/AwesomeMarker",
+    svg: "overlay/SvgMarker"
+};
+
+/**
  * 高德地图marker组件。
  * @class
  * @version 1.0.0
  */
-@component
-export default class AMapMarker extends Component
+@component({ name: "fw-amap-marker" })
+export default class Marker extends Component
 {
-    /**
-     * 是否有slot元素
-     * @protected
-     * @member
-     * @returns boolean
-     */
-    protected withSlots: boolean = false;
+    protected withSlots: boolean = false;            // 是否以自定义插槽的方式进行渲染
 
     /**
-     * 获取或设置地图容器的ID。
+     * 标记类型，可选值为 "default"、"simple"、"awesome"、"svg"。
      * @description 静态属性，仅支持初始化配置。
      * @public
      * @config
-     * @returns string
+     * @default default
+     * @returns String
      */
-    @config({type: String})
-    public vid: string;
-
+    @config({type: String, default: "default"})
+    public type: "default" | "simple" | "awesome" | "svg";
+    
     /**
      * 点标记在地图上显示的位置，默认为地图中心点。
      * @description 动态属性，支持响应式。
@@ -272,25 +278,30 @@ export default class AMapMarker extends Component
      */
     @config({type: Object})
     public label: any;
-
+    
     public constructor()
     {
         super(EVENTS);
     }
 
-    public $$getExtData()
+    /**
+     * 当组件开始渲染时调用的钩子方法。
+     * @protected
+     * @override
+     * @returns void
+     */
+    protected render(createElement: Function): void
     {
-        return this.amapComponent.getExtData();
-    }
-  
-    public $$getPosition()
-    {
-        return MapConvert.lngLatTo(this.amapComponent.getPosition());
-    }
-  
-    public $$getOffset()
-    {
-        return MapConvert.pixelTo(this.amapComponent.getOffset());
+        const slots = this.$slots.default || [];
+
+        this.withSlots = !!slots.length;
+
+        if (this.withSlots)
+        {
+            return createElement("div", slots);
+        }
+
+        return null;
     }
 
     /**
@@ -303,9 +314,50 @@ export default class AMapMarker extends Component
     {
         // 调用基类方法
         super.mounted();
+    }
 
-        // 初始化标记组件
-        this.$on(events.amapReady, this.initialize);
+    /**
+     * 根据指定配置项初始化组件。
+     * @protected
+     * @override
+     * @param  {object} options
+     * @returns void
+     */
+    protected initialize(options: any): any
+    {
+        // const AMap = window.AMap;
+        // const AMapUI = window.AMapUI;
+        const type = this.type;
+
+        switch(type)
+        {
+            case "simple":
+            case "awesome":
+            case "svg":
+            {
+                const path = PATHS[type];
+
+                return new Promise<any>((resolve, reject) =>
+                {
+                    // tslint:disable-next-line:variable-name
+                    window.AMapUI.loadUI([path], function(Marker: any)
+                    {
+                        const marker = new Marker(options);
+
+                        resolve(marker);
+                    });
+                });
+            }
+            default:
+            {
+                if(this.withSlots)
+                {
+                    options.content = this.$el;
+                }
+                
+                return new window.AMap.Marker(options);
+            }
+        }
     }
 
     /**
@@ -320,47 +372,5 @@ export default class AMapMarker extends Component
         {
             this.amap.remove(this.amapComponent);
         }
-    }
-
-    /**
-     * 当组件开始绘制dom是调用。
-     * @protected
-     * @override
-     * @returns void
-     */
-    protected render(h: any): void
-    {
-        const slots = this.$slots.default || [];
-
-        this.withSlots = !!slots.length;
-
-        if (this.withSlots)
-        {
-            return h("div", slots);
-        }
-
-        return null;
-    }
-
-    /**
-     * 初始化高德地图。
-     * @private
-     * @returns void
-     */
-    private initialize(amap: any): void
-    {
-        if(!amap)
-        {
-            return;
-        }
-
-        // 初始化地图实例
-        this.amap = amap;
-
-        // 解析配置选项
-        const options = this.resolveOptions();
-
-        // 初始化地图实例
-        this.amapComponent = new window.AMap.Marker({map: amap, ...options});
     }
 }

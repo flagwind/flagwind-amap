@@ -20,13 +20,24 @@ const menus =
         children:
         [
             {
-                title: "基本",
+                title: "基础",
                 children:
                 [
                     {
                         title: "地图",
                         path: "/components/amap",
                         icon: "map"
+                    }
+                ]
+            },
+            {
+                title: "覆盖物",
+                children:
+                [
+                    {
+                        title: "点标记",
+                        path: "/components/marker",
+                        icon: "ios-location-outline"
                     }
                 ]
             }

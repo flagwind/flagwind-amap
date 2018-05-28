@@ -75,6 +75,19 @@ export default class Workbench extends WorkbenchBase
     {
         let context = this.applicationContext as ApplicationContext;
 
+        // 关闭生产提示
+        Vue.config.productionTip = false;
+
+        Vue.config.errorHandler = (err, vm, info) =>
+        {
+            console.error(err, vm, info);
+        };
+        
+        Vue.config.warnHandler = (msg, vm, trace) =>
+        {
+            console.warn(msg, vm, trace);
+        };
+
         // 初始化组件
         this.initializeComponent(context);
         

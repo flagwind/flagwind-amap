@@ -35,7 +35,7 @@ export default abstract class Component extends ComponentBase
      * @member
      * @returns object
      */
-    protected watchHandlers: object;
+    protected watchHandlers: object = {};
     
     /**
      * 获取或设置高德地图实例。
@@ -99,8 +99,10 @@ export default abstract class Component extends ComponentBase
         }
         else
         {
-            this.$on(events.amapReady, () =>
+            this.$on(events.amapReady, (map: any) =>
             {
+                this.amap = map;
+                
                 this.register();
             });
         }
@@ -148,7 +150,7 @@ export default abstract class Component extends ComponentBase
 
     protected register(): void
     {
-        const result: any = this.initializeComponent(this.resolveOptions());
+        const result: any = this.initialize(this.resolveOptions());
 
         if(result && result.then)
         {
@@ -161,6 +163,16 @@ export default abstract class Component extends ComponentBase
         {
             this.registerComponent(result);
         }
+    }
+
+    /**
+     * 根据指定
+     * @param  {object} options
+     * @returns void
+     */
+    protected initialize(options: object): any
+    {
+        // virtual method
     }
     
     protected registerComponent(component: any): void
@@ -176,16 +188,6 @@ export default abstract class Component extends ComponentBase
 
         // 注册属性监听器
         this.registerWatchers();
-    }
-
-    /**
-     * 根据指定
-     * @param  {object} options
-     * @returns void
-     */
-    protected initializeComponent(options: object): void
-    {
-        // virtual method
     }
     
     /**
@@ -240,13 +242,22 @@ export default abstract class Component extends ComponentBase
         
         Object.keys(props).forEach((prop: string) =>
         {
-            const handler = this.resolveWatchHandler(prop);
-
+            const [handlerName, handler] = this.resolveWatchHandler(prop);
+            
             if(handler)
             {
+                if(this.watchHandlers[handlerName])
+                {
+                    handler.call(this, props[prop]);
+                }
+
                 this.$watch(prop, (value: any) =>
                 {
-                    if(handler === this.amapComponent.setOptions)
+                    if(this.watchHandlers[handlerName])
+                    {
+                        handler.call(this, value);
+                    }
+                    else if(handler === this.amapComponent.setOptions)
                     {
                         handler.call(this.amapComponent, { [prop]: value });
                     }
@@ -262,18 +273,28 @@ export default abstract class Component extends ComponentBase
     /**
      * 解析指定属性的侦听处理程序。
      * @param  {string} prop 属性名。
-     * @returns Function
+     * @returns [string, Function] 一个元组，表示处理程序名称，处理程序函数。
      */
-    private resolveWatchHandler(prop: string): Function
+    private resolveWatchHandler(prop: string): [string, Function]
     {
         const amapComponent = this.amapComponent;
         const handlers = this.watchHandlers;
         
+        // 1.首先从自定义侦听处理程序中查找
         if(handlers && handlers[prop])
         {
-            return handlers[prop];
+            return [prop, handlers[prop]];
         }
 
-        return amapComponent[`set${upperCamelCase(prop)}`] || amapComponent.setOptions;
+        // 2.其次尝试从高德原生组件中查找对应的属性set方法，例如 setLang
+        let methodName = `set${upperCamelCase(prop)}`;
+        
+        if(!amapComponent[methodName])
+        {
+            // 3.如果属性没有对应的set方法，则统一交由 setOptions 处理
+            methodName = "setOptions";
+        }
+
+        return [methodName, amapComponent[methodName]];
     }
 }

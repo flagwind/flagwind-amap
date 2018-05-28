@@ -16,6 +16,7 @@ import IMapConfig from "models/map-config";
 const MAP_CONFIG: IMapConfig =
 {
     version: "1.4.5",
+    uiVersion: "1.0.11",
     protocol: "https",
     host: "webapi.amap.com/maps",
     lazyload: true,
