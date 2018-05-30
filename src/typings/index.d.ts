@@ -10,3 +10,4 @@
 /// <reference path="./amap-event.d.ts" />
 /// <reference path="./amap-core.d.ts" />
 /// <reference path="./amap-layer.d.ts" />
+/// <reference path="./amap-overlay.d.ts" />

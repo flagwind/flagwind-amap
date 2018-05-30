@@ -96,13 +96,13 @@ declare namespace AMap
          * @returns object
          */
         target?: object;
-
+        
         /**
          * 发生事件时光标所在处的经纬度坐标。
          * @member
-         * @returns LngLat
+         * @returns LngLat | [number, number]
          */
-        lnglat?: LngLat;
+        lnglat?: LngLat | [number, number];
 
         /**
          * 发生事件时光标所在处的像素坐标。

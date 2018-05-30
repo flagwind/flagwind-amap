@@ -114,7 +114,7 @@ declare namespace AMap
          * @param  {LngLat|[number, number]}
          * @returns number
          */
-        distance(lnglat: LngLat| [number, number]): number;
+        distance(lnglat: LngLat | [number, number]): number;
         
         /**
          * 获取经度值。
@@ -130,10 +130,10 @@ declare namespace AMap
         
         /**
          * 判断当前坐标对象与传入坐标对象是否相等。
-         * @param  {LngLat} lnglat
+         * @param  {LngLat | [number, number]} lnglat
          * @returns boolean
          */
-        equals(lnglat: LngLat): boolean;
+        equals(lnglat: LngLat | [number, number]): boolean;
         
         /**
          * LngLat对象以字符串的形式返回。
@@ -152,35 +152,35 @@ declare namespace AMap
         /**
          * 矩形范围的构造函数。
          * 参数southWest、northEast分别代表地物对象西南角经纬度和东北角经纬度值。
-         * @param  {LngLat} southWest
-         * @param  {LngLat} northEast
+         * @param  {LngLat | [number, number]} southWest
+         * @param  {LngLat | [number, number]} northEast
          */
-        constructor(southWest: LngLat, northEast: LngLat);
+        constructor(southWest: LngLat | [number, number], northEast: LngLat | [number, number]);
         
         /**
          * 指定点坐标是否在矩形范围内。
-         * @param  {LngLat} point
+         * @param  {LngLat | [number, number]} point
          * @returns boolean
          */
-        contains(point: LngLat): boolean;
+        contains(point: LngLat | [number, number]): boolean;
         
         /**
          * 获取当前Bounds的中心点经纬度坐标。
-         * @returns LngLat
+         * @returns LngLat | [number, number]
          */
-        getCenter(): LngLat;
+        getCenter(): LngLat | [number, number];
         
         /**
          * 获取西南角坐标。
-         * @returns LngLat
+         * @returns LngLat | [number, number]
          */
-        getSouthWest(): LngLat;
+        getSouthWest(): LngLat | [number, number];
         
         /**
          * 获取东北角坐标。
-         * @returns LngLat
+         * @returns LngLat | [number, number]
          */
-        getNorthEast(): LngLat;
+        getNorthEast(): LngLat | [number, number];
         
         /**
          * 以字符串形式返回地物对象的矩形范围。

@@ -17,9 +17,9 @@ declare namespace AMap
         /**
          * 地图中心点坐标值。
          * @member
-         * @returns LngLat
+         * @returns LngLat | [number, number]
          */
-        center?: LngLat;
+        center?: LngLat | [number, number];
 
         /**
          * 地图顺时针旋转角度，取值范围 [0-360]，默认值：0。

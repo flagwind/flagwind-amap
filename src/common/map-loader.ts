@@ -184,10 +184,11 @@ export default class MapLoader
             
             config.plugins = config.plugins.map(item =>
             {
-                return (amapPrefix.test(item)) ? item : "AMap." + item;
+                return item;
+                // return (amapPrefix.test(item)) ? item : "AMap." + item;
             });
         }
-
+        
         const params = Object.keys(config)
                              .filter(key => ~paramKeys.indexOf(key))
                              .filter(key => config[key] !== null && config[key] !== undefined)

@@ -609,8 +609,166 @@ export default class AMapComponent extends Component
         // 初始化地图插件
         this.initializePlugins();
 
-        const layers = this.amap.getLayers();
-        console.log(layers);
+        const ellipse = new AMap.Ellipse
+        ({
+            map: this.amap,
+            center: [114.065835, 22.56814],
+            radius: [ 4000, 6000 ],
+            strokeColor: "red",
+            strokeWeight: 10,
+            strokeOpacity: 0.5,
+            strokeDasharray: [30,10],
+            strokeStyle: "dashed",
+            fillColor: "blue",
+            fillOpacity: 0.5,
+            zIndex: 10,
+            bubble: true,
+            visible: false,
+            cursor: "pointer"
+        });
+
+        console.log(ellipse);
+        // ellipse.show();
+        // console.log(ellipse.getVisible());
+
+        // const lineArr =
+        // [
+        //     [116.39, 39.91, 116.37, 39.91],
+        //     [116.380298, 39.907771, 116.38, 39.90],
+        //     [116.385298, 39.907771, 116.40, 39.90],
+        //     [
+        //         [116.392872, 39.887391],
+        //         [116.40772, 39.909252],
+        //         [116.41, 39.89]
+        //     ],
+        //     [116.423857, 39.889498, 116.422312, 39.899639, 116.425273, 39.902273]
+        // ];
+
+        // const curve = new AMap.BezierCurve
+        // ({
+        //     map: this.amap,
+        //     path: lineArr,
+        //     strokeColor: "#FF33FF",
+        //     strokeOpacity: 1,
+        //     strokeWeight: 3,
+        //     strokeStyle: "solid"
+        // });
+
+        // console.log(curve);
+
+        // const polygonArr = new Array();
+        // polygonArr.push([116.403322, 39.920255]);
+        // polygonArr.push([116.410703, 39.897555]);
+        // polygonArr.push([116.402292, 39.892353]);
+        // polygonArr.push([116.389846, 39.891365]);
+
+        // const polygon = new AMap.Polygon
+        // ({
+        //     map: this.amap,
+        //     path: polygonArr,
+        //     strokeColor: "#FF33FF",
+        //     strokeOpacity: 0.2,
+        //     strokeWeight: 3,
+        //     fillColor: "#1791fc",
+        //     fillOpacity: 0.35
+        // });
+
+        // console.log(polygon);
+
+        // const polyline = new AMap.Polyline
+        // ({
+        //     path:
+        //     [
+        //         [116.368904, 39.913423],
+        //         [116.382122, 39.901176],
+        //         [116.387271, 39.912501],
+        //         [116.398258, 39.904600]
+        //     ],
+        //     map: this.amap,
+        //     strokeColor: "#3366FF",
+        //     strokeOpacity: 1,
+        //     strokeWeight: 5,
+        //     strokeStyle: "solid",
+        //     strokeDasharray: [10, 5]
+        // });
+
+        // console.log(polyline);
+        
+        // const circle = new AMap.CircleMarker
+        // ({
+        //     map: this.amap,
+        //     center: [114.065835, 22.56814],
+        //     radius: 20,
+        //     strokeColor: "white",
+        //     strokeWeight: 2,
+        //     strokeOpacity: 0.5,
+        //     strokeStyle: "dashed",
+        //     fillColor: "rgba(0,0,255,1)",
+        //     fillOpacity: 0.5,
+        //     zIndex: 10,
+        //     bubble: true,
+        //     cursor: "pointer",
+        //     clickable: true
+        // });
+
+        // console.log(circle);
+
+        // const text = new AMap.Text
+        // ({
+        //     text: "纯文本标记",
+        //     textAlign: "center",
+        //     verticalAlign: "middle",
+        //     draggable: true,
+        //     cursor: "pointer",
+        //     map: this.amap,
+        //     // angle: 10,
+        //     style:
+        //     {
+        //         "background-color": "yellow",
+        //         "border": "solid 1px #0088ff",
+        //         "padding": "10px 20px"
+        //     },
+        //     position: [114.065835, 22.56814]
+        // });
+
+        // console.log(text);
+
+        // const trees = new AMap.ElasticMarker
+        // ({
+        //     map: this.amap,
+        //     position: [114.065835, 22.56814],
+        //     zooms: [15,20],
+        //     styles:
+        //     [{
+        //             icon:
+        //             {
+        //                 img: "https://a.amap.com/jsapi_demos/static/resource/img/trees.png",
+        //                 size: [366,201],
+        //                 ancher: [183,101],
+        //                 imageSize: [865,1156],
+        //                 imageOffset: [45,480],
+        //                 fitZoom: 17.5,
+        //                 scaleFactor: 2,
+        //                 maxScale: 2,
+        //                 minScale: 0.125
+        //             }
+        //     }],
+        //     zoomStyleMapping:
+        //     {
+        //         14: 0,
+        //         15: 0,
+        //         16: 0,
+        //         17: 0,
+        //         18: 0,
+        //         19: 0,
+        //         20: 0
+        //     }
+        // });
+
+        // console.log(trees.getBounds());
+
+        // const layers = this.amap.getLayers();
+        // console.log(layers);
     }
     
     /**
