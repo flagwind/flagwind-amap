@@ -9,7 +9,7 @@
 const config =
 {
     mapKey: "fef37c12ffcfec32fe33d06081430de8",
-    mapPlugins: ["ToolBar", "ElasticMarker"]
+    mapPlugins: ["ToolBar", "ElasticMarker", "AMap.AdvancedInfoWindow"]
 };
 
 export default config;

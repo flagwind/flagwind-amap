@@ -609,25 +609,52 @@ export default class AMapComponent extends Component
         // 初始化地图插件
         this.initializePlugins();
 
-        const ellipse = new AMap.Ellipse
+        const content = '<div class="info-title">高德地图</div><div class="info-content">' +
+        '<img src="http://webapi.amap.com/images/amap.jpg">' +
+        "高德是中国领先的数字地图内容、导航和位置服务解决方案提供商。<br/>" +
+        '<a target="_blank" href = "http://mobile.amap.com/">点击下载高德地图</a></div>';
+
+        const infowindow1 = new AMap.AdvancedInfoWindow
         ({
-            map: this.amap,
-            center: [114.065835, 22.56814],
-            radius: [ 4000, 6000 ],
-            strokeColor: "red",
-            strokeWeight: 10,
-            strokeOpacity: 0.5,
-            strokeDasharray: [30,10],
-            strokeStyle: "dashed",
-            fillColor: "blue",
-            fillOpacity: 0.5,
-            zIndex: 10,
-            bubble: true,
-            visible: false,
-            cursor: "pointer"
+            content: content,
+            offset: new AMap.Pixel(0, -30)
         });
 
-        console.log(ellipse);
+        infowindow1.open(this.amap, this.amap.getCenter());
+
+        // const info = [];
+        // info.push("<div><div><img style=\"float:left;\" src=\" http://webapi.amap.com/images/autonavi.png \"/></div> ");
+        // info.push("<div style=\"padding:0px 0px 0px 4px;\"><b>高德软件</b>");
+        // info.push("电话 : 010-84107000   邮编 : 100102");
+        // info.push("地址 :北京市朝阳区望京阜荣街10号首开广场4层</div></div>");
+
+        // const infoWindow: any = new AMap.InfoWindow
+        // ({
+        //     content: info.join("<br/>")
+        // });
+
+        // infoWindow.open(this.amap, this.amap.getCenter());
+        // console.log(infoWindow);
+
+        // const ellipse = new AMap.Ellipse
+        // ({
+        //     map: this.amap,
+        //     center: [114.065835, 22.56814],
+        //     radius: [ 4000, 6000 ],
+        //     strokeColor: "red",
+        //     strokeWeight: 10,
+        //     strokeOpacity: 0.5,
+        //     strokeDasharray: [30,10],
+        //     strokeStyle: "dashed",
+        //     fillColor: "blue",
+        //     fillOpacity: 0.5,
+        //     zIndex: 10,
+        //     bubble: true,
+        //     visible: false,
+        //     cursor: "pointer"
+        // });
+
+        // console.log(ellipse);
         // ellipse.show();
         // console.log(ellipse.getVisible());
 

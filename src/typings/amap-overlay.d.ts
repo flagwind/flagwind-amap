@@ -690,10 +690,11 @@ declare namespace AMap
          */
         zoomStyleMapping?: object;
     }
-
+    
     /**
      * 灵活点标记，一种可以随着地图级别变化而改变图标和大小的点标记。
      * @class
+     * @description 插件类，插件名："ElasticMarker"
      * @see http://lbs.amap.com/api/javascript-api/reference/overlay#elasticmarker
      */
     class ElasticMarker extends Marker

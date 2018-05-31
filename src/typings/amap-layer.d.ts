@@ -383,6 +383,7 @@ declare namespace AMap
      * API引用了heatmap.js最新版本v2.0，v2.0基于新的渲染模型，具有更高的渲染效率和更强的性能。
      * 支持chrome、firefox、safari、ie9及以上浏览器。
      * @class
+     * @description 插件类，插件名："AMap.Heatmap"
      * @see http://lbs.amap.com/api/javascript-api/reference/layer#m_Heatmap
      */
     class Heatmap extends Layer
