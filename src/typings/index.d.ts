@@ -12,3 +12,4 @@
 /// <reference path="./amap-layer.d.ts" />
 /// <reference path="./amap-overlay.d.ts" />
 /// <reference path="./amap-window.d.ts" />
+/// <reference path="./amap-service.d.ts" />
