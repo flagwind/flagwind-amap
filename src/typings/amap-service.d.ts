@@ -731,30 +731,598 @@ declare namespace AMap
         setCityLimit(value: boolean): void;
     }
 
+    /**
+     * PlaceSearch 类配置项。
+     * @interface
+     */
     interface PlaceSearchOptions
     {
+        /**
+         * 兴趣点城市。
+         * 可选值：城市名（中文或中文全拼）、citycode、adcode
+         * 默认值：“全国”
+         * @member
+         * @returns string
+         */
         city?: string;
 
+        /**
+         * 是否强制限制在设置的城市内搜索，默认值为：false。
+         * true：强制限制设定城市，false：不强制限制设定城市
+         * @member
+         * @default false
+         * @returns boolean
+         */
         citylimit?: boolean;
 
+        /**
+         * 是否按照层级展示子POI数据,默认0，children=1，展示子节点POI数据，children=0，不展示子节点数据。
+         * @member
+         * @default 0
+         * @returns number
+         */
         children?: number;
 
+        /**
+         * 兴趣点类别，多个类别用“|”分割，如“餐饮|酒店|电影院”
+         * POI搜索类型共分为以下20种：
+         * 汽车服务|汽车销售|汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|
+         * 医疗保健服务|住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|
+         * 交通设施服务|金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施
+         * 默认值：餐饮服务、商务住宅、生活服务
+         * @member
+         * @returns string
+         */
         type?: string;
-
+        
+        /**
+         * 检索语言类型。
+         * 可选值：
+         * zh_cn：中文简体
+         * en：英文
+         * @member
+         * @default zh_cn
+         * @returns string
+         */
         lang?: string;
 
+        /**
+         * 单页显示结果条数
+         * 默认值：10
+         * 取值范围：1-50，超出取值范围按最大值返回
+         * @member
+         * @default 10
+         * @returns number
+         */
         pageSize?: number;
 
+        /**
+         * 页码。（如pageIndex为2，pageSize为10，那么显示的应是第11-20条返回结果）
+         * 默认值：1
+         * 取值范围：1-100，超过实际页数不返回poi
+         * @member
+         * @default 1
+         * @returns number
+         */
         pageIndex?: number;
 
+        /**
+         * 此项默认值：base，返回基本地址信息
+         * 取值：all，返回基本+详细信息
+         * @member
+         * @default base
+         * @returns string
+         */
         extensions?: string;
 
+        /**
+         * AMap.Map对象, 展现结果的地图实例。
+         * 当指定此参数后，搜索结果的标注、线路等均会自动添加到此地图上。
+         * 可选值
+         * @member
+         * @returns Map
+         */
         map?: Map;
 
+        /**
+         * 结果列表的HTML容器id或容器元素，提供此参数后，结果列表将在此容器中进行展示。
+         * 可选值
+         * @member
+         * @returns string | HTMLElement
+         */
         panel?: string | HTMLElement;
-    }
 
+        /**
+         * 在使用map属性时，是否在地图上显示周边搜索的圆或者范围搜索的多边形，默认为true。
+         * @member
+         * @default true
+         * @returns boolean
+         */
+        showCover?: boolean;
+
+        /**
+         * 如使用了map或panel属性，renderStyle可以用来设定绘制的UI风格，缺省为'newpc'
+         * 可选值:'newpc'或'default'，'newpc'为带图片展示的新样式，'default'为原有简单样式。
+         * @member
+         * @default newpc
+         * @returns string
+         */
+        renderStyle?: string;
+
+        /**
+         * 用于控制在搜索结束后，是否自动调整地图视野使绘制的Marker点都处于视口的可见范围。
+         * @member
+         * @returns boolean
+         */
+        autoFitView?: boolean;
+    }
+    
+    /**
+     * 地点搜索服务，提供某一特定地区的位置查询服务。PlaceSearch构造函数的参数为可选，表达为参数对象PlaceSearchOptions。
+     * PlaceSearchOptions允许设置搜索城市、搜索数据类别、搜索结果详略、搜索结果排序规则等。用户可以通过自定义回调函数取回并显示查询结果。若服务请求失败，系统将返回错误信息。
+     * @class
+     * @description 插件类，插件名："AMap.PlaceSearch"
+     * @see http://lbs.amap.com/api/javascript-api/reference/search#m_AMap.PlaceSearch
+     */
     class PlaceSearch extends EventProvider
     {
+        /**
+         * 创建地点查询类的实例。
+         * @constructor
+         * @param  {PlaceSearchOptions} opts
+         */
+        constructor(opts: PlaceSearchOptions);
+        
+        /**
+         * 根据关键字搜索，关键字支持中文|中文全拼、繁体、英文
+         * 当status为complete时，result为SearchResult；
+         * 当status为error时，result为错误信息info；
+         * 当status为no_data时，代表检索返回0结果
+         * @param  {string} keyword
+         * @param  {Function} callback
+         * @returns void
+         */
+        search(keyword: string, callback: (status: string, result: string | SearchResult) => void): void;
+        
+        /**
+         * 根据中心点经纬度、半径以及关键字进行周边查询
+         * radius取值范围：0-50000
+         * @param  {string} keyword
+         * @param  {LngLat | [number, number]} center
+         * @param  {number} radius
+         * @param  {Function} callback
+         * @returns void
+         */
+        searchNearBy(keyword: string, center: LngLat | [number, number], radius: number, callback: (status: string, result: string | SearchResult) => void): void;
+        
+        /**
+         * 根据范围和关键词进行范围查询。
+         * @param  {string} keyword
+         * @param  {Bounds|Polygon} bounds
+         * @param  {Function} callback
+         * @returns void
+         */
+        searchInBounds(keyword: string, bounds: Bounds | Polygon, callback: (status: string, result: string | SearchResult) => void): void;
+        
+        /**
+         * 根据POIID 查询POI 详细信息。
+         * @param  {string} POIID
+         * @param  {Function} callback
+         * @returns void
+         */
+        getDetails(POIID: string, callback: (status: string, result: string | SearchResult) => void): void;
+        
+        /**
+         * 设置查询类别，多个类别用“|”分割。
+         * 默认值：所有类别
+         * @param  {string} type
+         * @returns void
+         */
+        setType(type: string): void;
+        
+        /**
+         * 设置是否强制限制城市。
+         * @param  {boolean} value
+         * @returns void
+         */
+        setCityLimit(value: boolean): void;
+        
+        /**
+         * 设置查询结果特定页数
+         * 默认值：1
+         * 取值范围：1-100，超过实际页数不返回poi
+         * @param  {number} pageIndex
+         * @returns void
+         */
+        setPageIndex(pageIndex: number): void;
+        
+        /**
+         * 设置查询单页结果数
+         * 默认值：10
+         * 取值范围：1-50，超出取值范围按最大值返回
+         * @param  {number} pageSize
+         * @returns void
+         */
+        setPageSize(pageSize: number): void;
+        
+        /**
+         * 设置查询城市。
+         * 支持cityname（中文或中文全拼）、citycode、adcode
+         * @param  {string} city
+         * @returns void
+         */
+        setCity(city: string): void;
+        
+        /**
+         * 设置检索语言类型。
+         * @param  {string} lang
+         * @returns void
+         */
+        setLang(lang: string): void;
+        
+        /**
+         * 获取placeSearch检索语言类型。
+         * @returns string
+         */
+        getLang(): string;
+        
+        /**
+         * 清除搜索结果。
+         * @returns void
+         */
+        clear(): void;
+        
+        /**
+         * 唤起高德地图客户端marker页
+         * Object参数形如：
+         * {
+         *     id: "B000A7BD6C",POIID
+         *     name:String, 必要参数
+         *     location:LngLat|position属性  必须参数
+         * }
+         * @param  {object} obj
+         * @returns void
+         */
+        poiOnAMAP(obj: object): void;
+        
+        /**
+         * 唤起高德地图客户端POI详情页
+         * Object参数形如：
+         * {
+         *     id: "B000A7BD6C",POIID
+         *     name:String, 必要参数
+         *     location:LngLat|position属性  必须参数
+         * }
+         * @param  {object} obj
+         * @returns void
+         */
+        detailOnAMAP(obj: object): void;
+    }
+
+    interface SelectChangeEvent
+    {
+        /**
+         * 事件类别。
+         * @member
+         * @returns string
+         */
+        type?: string;
+
+        /**
+         * 当前选中的 POI 的ID。
+         * @member
+         * @returns string
+         */
+        id?: string;
+
+        /**
+         * 当前选中的 POI 对应的在地图中的 Marker 对象。
+         * @member
+         * @returns Marker
+         */
+        marker?: Marker;
+
+        /**
+         * 当前选中的 POI 在结果面板中对应的列表项。
+         * @member
+         * @returns HTMLLIElement
+         */
+        listElement?: HTMLLIElement;
+        
+        /**
+         * 当前选中的POI的信息。
+         * @member
+         * @returns Poi
+         */
+        data?: Poi;
+    }
+
+    interface SearchResult
+    {
+        /**
+         * 成功状态说明。
+         * @member
+         * @returns string
+         */
+        info?: string;
+
+        /**
+         * 发生事件时返回兴趣点列表。
+         * @member
+         * @returns PoiList
+         */
+        poiList?: PoiList;
+
+        /**
+         * 发生事件且查无此关键字时，返回建议关键字列表，可根据建议关键字查询。
+         * @member
+         * @returns Array<string>
+         */
+        keywordList?: Array<string>;
+
+        /**
+         * 发生事件且查无此关键字且 city 为“全国”时，返回城市建议列表，该列表中每个城市包含一个或多个相关Poi点信息。
+         * @member
+         * @returns Array<CityInfo>
+         */
+        cityList?: Array<CityInfo>;
+    }
+
+    interface PoiList
+    {
+        /**
+         * Poi 列表。
+         * @member
+         * @returns Array<Poi>
+         */
+        pois?: Array<Poi>;
+
+        /**
+         * 页码。
+         * @member
+         * @returns number
+         */
+        pageIndex?: number;
+
+        /**
+         * 单页结果数。
+         * @member
+         * @returns number
+         */
+        pageSize?: number;
+
+        /**
+         * 查询结果总数。
+         * @member
+         * @returns number
+         */
+        count?: number;
+    }
+
+    interface CityInfo
+    {
+        /**
+         * 建议城市名称。
+         * @member
+         * @returns string
+         */
+        name?: string;
+
+        /**
+         * 城市编码。
+         * @member
+         * @returns string
+         */
+        citycode?: string;
+
+        /**
+         * 行政区编码。
+         * @member
+         * @returns string
+         */
+        adcode?: string;
+
+        /**
+         * 该城市的建议结果数目。
+         * @member
+         * @returns number
+         */
+        count?: number;
+    }
+
+    interface Poi
+    {
+        /**
+         * 全局唯一ID。
+         * @member
+         * @returns string
+         */
+        id?: string;
+
+        /**
+         * 名称。
+         * @member
+         * @returns string
+         */
+        name?: string;
+
+        /**
+         * 兴趣点类型。
+         * @member
+         * @returns string
+         */
+        type?: string;
+
+        /**
+         * 兴趣点经纬度。
+         * @member
+         * @returns LngLat | [number, number]
+         */
+        location?: LngLat | [number, number];
+
+        /**
+         * 地址。
+         * @member
+         * @returns string
+         */
+        address?: string;
+
+        /**
+         * 离中心点距离，仅周边查询返回。
+         * @member
+         * @returns number
+         */
+        distance?: number;
+
+        /**
+         * 电话。
+         * @member
+         * @returns string
+         */
+        tel?: string;
+
+        /**
+         * 网址。
+         * @member
+         * @returns string
+         */
+        website?: string;
+
+        /**
+         * poi 所在省份编码。
+         * @member
+         * @returns string
+         */
+        pcode?: string;
+
+        /**
+         * POI 所在城市编码。
+         * @member
+         * @returns string
+         */
+        citycode?: string;
+
+        /**
+         * POI 所在区域编码。
+         * @member
+         * @returns string
+         */
+        adcode?: string;
+
+        /**
+         * 邮编。
+         * @member
+         * @returns string
+         */
+        postcode?: string;
+
+        /**
+         * POI 所在省份名称。
+         * @member
+         * @returns string
+         */
+        pname?: string;
+
+        /**
+         * POI 所在城市名称。
+         * @member
+         * @returns string
+         */
+        cityname?: string;
+
+        /**
+         * POI 所在区域名称。
+         * @member
+         * @returns string
+         */
+        adname?: string;
+
+        /**
+         * 邮箱。
+         * @member
+         * @returns string
+         */
+        email?: string;
+
+        /**
+         * 入口经纬度，POI点有出入口信息时返回，否则返回空字符串。
+         * @member
+         * @returns string | LngLat | [number, number]
+         */
+        entr_location?: string | LngLat | [number, number];
+
+        /**
+         * 出口经纬度，POI点有出入口信息时返回，否则返回空字符串。
+         * @member
+         * @returns string | LngLat | [number, number]
+         */
+        exit_location?: string | LngLat | [number, number];
+
+        /**
+         * POI 是否有团购信息，true为存在团购信息。
+         * @member
+         * @returns boolean
+         */
+        groupbuy?: boolean;
+
+        /**
+         * POI 是否有优惠信息，true为存在优惠信息。
+         * @member
+         * @returns boolean
+         */
+        discount?: boolean;
+
+        /**
+         * 团购信息。
+         * @member
+         * @returns Array<object>
+         */
+        groupbuys?: Array<object>;
+
+        /**
+         * 优惠信息。
+         * @member
+         * @returns Array<object>
+         */
+        discounts?: Array<object>;
+
+        /**
+         * 深度信息类型，返回值为以下中的一个：
+         * DINING：餐饮深度信息类型
+         * HOTEL：酒店深度信息类型
+         * CINEMA：影院深度信息类型
+         * SCENIC：景点深度信息类型
+         * @member
+         * @returns string
+         */
+        deep_type?: string;
+
+        /**
+         * 餐饮类深度信息。
+         * @member
+         * @returns object
+         */
+        dining?: object;
+
+        /**
+         * 酒店类深度信息。
+         * @member
+         * @returns object
+         */
+        hotel?: object;
+
+        /**
+         * 影院类深度信息。
+         * @member
+         * @returns object
+         */
+        cinema?: object;
+
+        /**
+         * 景点类深度信息。
+         * @member
+         * @returns object
+         */
+        scenic?: object;
     }
 }
