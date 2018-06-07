@@ -609,6 +609,19 @@ export default class AMapComponent extends Component
         // 初始化地图插件
         this.initializePlugins();
 
+        this.amap.plugin("AMap.PlaceSearchLayer", () =>
+        {
+            const layer = new AMap.PlaceSearchLayer({
+                keywords: "超市"
+            });
+
+            layer.setMap(this.amap);
+
+            console.log(layer);
+        });
+
+        // console.log(this.amap);
+
         // const auto = new AMap.Autocomplete();
         // console.log(auto);
     }

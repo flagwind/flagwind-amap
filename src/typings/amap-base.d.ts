@@ -188,4 +188,4 @@ declare namespace AMap
          */
         toString(): string;
     }
-} 
+}

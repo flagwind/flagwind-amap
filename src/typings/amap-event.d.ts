@@ -13,35 +13,7 @@ declare namespace AMap
      * @interface
      * @see http://lbs.amap.com/api/javascript-api/reference/event
      */
-    interface IEventProvider
-    {
-        /**
-         * 注册指定事件。
-         * @param  {string} eventName 事件名称。
-         * @param  {Function} handler 事件回调函数。
-         * @param  {object} context? 事件回调中的上下文（可选，缺省时，handler 中 this 为调用 on 方法的对象本身，否则 this 指向 context 引用的对象）。
-         * @description 多次绑定时，当 eventName、handler 函数对象、context 对象有任意一个不一样就会再次绑定。
-         * @returns void
-         */
-        on(eventName: string, handler: Function, context?: object): void;
-        
-        /**
-         * 移除指定事件。
-         * @param  {string} eventName 事件名称。
-         * @param  {Function} handler 事件回调函数。
-         * @param  {object} context? 事件回调中的上下文（可选，缺省时为调用 off 方法的对象本身，否则为 context 引用的对象）
-         * @description 只有当 off 与 on 的 eventName、handler 函数对象、context 对象完全一致时才能有效移除监听。
-         * @returns void
-         */
-        off(eventName: string, handler: Function, context?: object): void;
-    }
-    
-    /**
-     * 实现该抽象类能提供事件注册、移除、触发功能。
-     * @interface
-     * @see http://lbs.amap.com/api/javascript-api/reference/event
-     */
-    abstract class EventProvider implements IEventProvider
+    interface EventProvider
     {
         /**
          * 注册指定事件。
@@ -71,7 +43,7 @@ declare namespace AMap
      * @description v1.2 新增
      * @see http://lbs.amap.com/api/javascript-api/reference/event
      */
-    abstract class EventListener
+    interface EventListener
     {
     }
 
@@ -81,35 +53,60 @@ declare namespace AMap
      * @description v1.2 新增
      * @see http://lbs.amap.com/api/javascript-api/reference/event
      */
-    abstract class MapsEvent
+    interface MapsEvent
     {
         /**
          * 事件类型。
-         * @member
-         * @returns string
+         * @member {string}
          */
         type?: string;
 
         /**
          * 发生事件的目标对象。
-         * @member
-         * @returns object
+         * @member {object}
          */
         target?: object;
         
         /**
          * 发生事件时光标所在处的经纬度坐标。
-         * @member
-         * @returns LngLat | [number, number]
+         * @member {LngLat | [number, number]}
          */
         lnglat?: LngLat | [number, number];
-
+        
         /**
          * 发生事件时光标所在处的像素坐标。
-         * @member
-         * @returns Pixel
+         * @member {Pixel}
          */
         pixel?: Pixel;
+    }
+    
+    /**
+     * 提供事件注册、移除、触发功能。
+     * @abstract
+     * @class
+     * @see http://lbs.amap.com/api/javascript-api/reference/event
+     */
+    abstract class EventDispatcher implements EventProvider
+    {
+        /**
+         * 注册指定事件。
+         * @param  {string} eventName 事件名称。
+         * @param  {Function} handler 事件回调函数。
+         * @param  {object} context? 事件回调中的上下文（可选，缺省时，handler 中 this 为调用 on 方法的对象本身，否则 this 指向 context 引用的对象）。
+         * @description 多次绑定时，当 eventName、handler 函数对象、context 对象有任意一个不一样就会再次绑定。
+         * @returns void
+         */
+        on(eventName: string, handler: Function, context?: object): void;
+        
+        /**
+         * 移除指定事件。
+         * @param  {string} eventName 事件名称。
+         * @param  {Function} handler 事件回调函数。
+         * @param  {object} context? 事件回调中的上下文（可选，缺省时为调用 off 方法的对象本身，否则为 context 引用的对象）
+         * @description 只有当 off 与 on 的 eventName、handler 函数对象、context 对象完全一致时才能有效移除监听。
+         * @returns void
+         */
+        off(eventName: string, handler: Function, context?: object): void;
     }
 }
 

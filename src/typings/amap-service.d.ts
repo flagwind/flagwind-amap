@@ -12,50 +12,43 @@ declare namespace AMap
     {
         /**
          * 道路离查询点最近距离。
-         * @member
-         * @returns number
+         * @member {number}
          */
         distance?: number;
 
         /**
          * 与查询点的相对方位。
-         * @member
-         * @returns string
+         * @member {string}
          */
         direction?: string;
 
         /**
          * 路口经纬度。
-         * @member
-         * @returns LngLat | [number, number] 
+         * @member {LngLat | [number, number] }
          */
         location?: LngLat | [number, number];
 
         /**
          * 	第一条道路id。
-         * @member
-         * @returns string
+         * @member {string}
          */
         first_id?: string;
 
         /**
          * 第一条道路名称。
-         * @member
-         * @returns string
+         * @member {string}
          */
         first_name?: string;
 
         /**
          * 第二条道路id。
-         * @member
-         * @returns string
+         * @member {string}
          */
         second_id?: string;
 
         /**
          * 第二条道路名称。
-         * @member
-         * @returns string
+         * @member {string}
          */
         second_name?: string;
     }
@@ -64,36 +57,31 @@ declare namespace AMap
     {
         /**
          * 道路id。
-         * @member
-         * @returns string
+         * @member {string}
          */
         id?: string;
 
         /**
          * 道路名称。
-         * @member
-         * @returns string
+         * @member {string}
          */
         name?: string;
 
         /**
          * 道路离查询点最近距离。
-         * @member
-         * @returns number
+         * @member {number}
          */
         distance?: number;
 
         /**
          * 道路上离查询点最近的点坐标。
-         * @member
-         * @returns LngLat | [number, number] 
+         * @member {LngLat | [number, number]}
          */
         location?: LngLat | [number, number];
 
         /**
          * 与查询点的相对方位。
-         * @member
-         * @returns string
+         * @member {string}
          */
         direction?: string;
     }
@@ -102,22 +90,19 @@ declare namespace AMap
     {
         /**
          * 商圈id。
-         * @member
-         * @returns string
+         * @member {string}
          */
         id?: string;
 
         /**
          * 商圈名称。
-         * @member
-         * @returns string
+         * @member {string}
          */
         name?: string;
 
         /**
          * 商圈中心点经纬度。
-         * @member
-         * @returns LngLat | [number, number]
+         * @member {LngLat | [number, number]}
          */
         location?: LngLat | [number, number];
     }
@@ -126,64 +111,58 @@ declare namespace AMap
     {
         /**
          * Poi的唯一标识id。
-         * @member
-         * @returns string
+         * @member {string}
          */
         id?: string;
 
         /**
          * Poi名称。
-         * @member
-         * @returns string
+         * @member {string}
          */
         name?: string;
 
         /**
          * Poi类型。
-         * @member
-         * @returns string
+         * @member {string}
          */
         type?: string;
 
         /**
          * Poi电话。
-         * @member
-         * @returns string
+         * @member {string}
          */
         tel?: string;
 
         /**
          * 该Poi到请求坐标的距离，单位：米。
-         * @member
-         * @returns number
+         * @member {number}
+         * @returns 
          */
         distance?: number;
 
         /**
          * 该Poi相对于请求坐标的方向。
-         * @member
-         * @returns string
+         * @member {string}
          */
         direction?: string;
 
         /**
          * Poi地址信息。
-         * @member
-         * @returns string
+         * @member {string}
+         * @returns 
          */
         address?: string;
 
         /**
          * Poi坐标。
-         * @member
-         * @returns string
+         * @member {string}
          */
         location?: LngLat | [number, number];
 
         /**
          * Poi所在商圈名称。
-         * @member
-         * @returns string
+         * @member {string}
+         * @returns 
          */
         businessArea?: string;
     }
@@ -192,92 +171,79 @@ declare namespace AMap
     {
         /**
          * 所在省（省编码在城市编码表中可查询到）。
-         * @member
-         * @returns string
+         * @member {string}
          */
         province?: string;
 
         /**
          * 所在城市。
-         * @member
-         * @returns string
+         * @member {string}
          */
         city?: string;
 
         /**
          * 所在城市编码。
-         * @member
-         * @returns string
+         * @member {string}
          */
         citycode?: string;
 
         /**
          * 所在区。
-         * @member
-         * @returns string
+         * @member {string}
          */
         district?: string;
 
         /**
          * 所在区域编码。
-         * @member
-         * @returns string
+         * @member {string}
          */
         adcode?: string;
 
         /**
          * 所在乡镇。
-         * @member
-         * @returns string
+         * @member {string}
          */
         township?: string;
 
         /**
          * 所在街道。
-         * @member
-         * @returns string
+         * @member {string}
          */
         street?: string;
 
         /**
          * 门牌号。
-         * @member
-         * @returns string
+         * @member {string}
          */
         streetNumber?: string;
 
         /**
          * 所在社区。
-         * @member
-         * @returns string
+         * @member {string}
          */
         neighborhood?: string;
 
         /**
          * 社区类型。
-         * @member
-         * @returns string
+         * @member {string}
          */
         neighborhoodType?: string;
 
         /**
          * 所在楼/大厦。
-         * @member
-         * @returns string
+         * @member {string}
          */
         building?: string;
 
         /**
          * 楼类型。
-         * @member
-         * @returns string
+         * @member {string}
          */
         buildingType?: string;
 
         /**
          * 仅逆地理编码时返回，所属商圈信息。
-         * @member
-         * @returns Array<BusinessArea>
+         * @member {Array<BusinessArea>}
          */
         businessAreas?: Array<BusinessArea>;
     }
@@ -286,8 +252,7 @@ declare namespace AMap
     {
         /**
          * 地址组成元素。
-         * @member
-         * @returns AddressComponent
+         * @member {AddressComponent}
          */
         addressComponent?: AddressComponent;
 
@@ -296,29 +261,25 @@ declare namespace AMap
          * 规则：地址信息=基本行政区信息+具体信息；
          * 基本行政信息=省+市+区+乡镇
          * 当给定坐标为poi时直接返回；非poi时，取离给定坐标最近poi返回
-         * @member
-         * @returns string
+         * @member {string}
          */
         formattedAddress?: string;
 
         /**
          * 道路信息列表。
-         * @member
-         * @returns Array<Road>
+         * @member {Array<Road>}
          */
         roads?: Array<Road>;
 
         /**
          * 道路路口列表。
-         * @member
-         * @returns Array<Cross>
+         * @member {Array<Cross>}
          */
         crosses?: Array<Cross>;
 
         /**
          * 兴趣点列表，包含兴趣点基本信息。
-         * @member
-         * @returns Array<ReGeocodePoi>
+         * @member {Array<ReGeocodePoi>}
          */
         pois?: Array<ReGeocodePoi>;
     }
@@ -327,8 +288,7 @@ declare namespace AMap
     {
         /**
          * 地址组成元素。
-         * @member
-         * @returns AddressComponent
+         * @member {AddressComponent}
          */
         addressComponent?: AddressComponent;
 
@@ -337,30 +297,26 @@ declare namespace AMap
          * 规则：地址信息=基本行政区信息+具体信息；
          * 基本行政信息=省+市+区+乡镇
          * 当给定坐标为poi时直接返回；非poi时，取离给定坐标最近poi返回
-         * @member
-         * @returns string
+         * @member {string}
          */
         formattedAddress?: string;
         
         /**
          * 坐标。
-         * @member
-         * @returns LngLat | [number, number] 
+         * @member {LngLat | [number, number]}
          */
         location?: LngLat | [number, number];
 
         /**
          * 区域编码。
-         * @member
-         * @returns string
+         * @member {string}
          */
         adcode?: string;
 
         /**
          * 给定地址匹配级别，返回匹配最详细级别。
          * 如：“北京市海淀区苏州街”匹配级别为“道路”
-         * @member
-         * @returns string
+         * @member {string}
          */
         level?: string;
     }
@@ -369,29 +325,25 @@ declare namespace AMap
     {
         /**
          * 成功状态说明。
-         * @member
-         * @returns string
+         * @member {string}
          */
         info?: string;
         
         /**
          * 地理编码结果，仅地理编码返回。
-         * @member
-         * @returns Array<Geocode>
+         * @member {Array<Geocode>}
          */
         geocodes?: Array<Geocode>;
 
         /**
          * 地理编码结果数目，仅地理编码返回。
-         * @member
-         * @returns number
+         * @member {number}
          */
         resultNum?: number;
 
         /**
          * 逆地理编码结果，仅逆地理编码返回。
-         * @member
-         * @returns ReGeocode
+         * @member {ReGeocode}
          */
         regeocode?: ReGeocode;
     }
@@ -400,15 +352,13 @@ declare namespace AMap
     {
         /**
          * 成功状态说明。
-         * @member
-         * @returns string
+         * @member {string}
          */
         info?: string;
 
         /**
          * 逆地理编码结果，仅逆地理编码返回。
-         * @member
-         * @returns ReGeocode
+         * @member {ReGeocode}
          */
         regeocode?: ReGeocode;
     }
@@ -417,22 +367,19 @@ declare namespace AMap
     {
         /**
          * 成功状态说明。
-         * @member
-         * @returns string
+         * @member {string}
          */
         info?: string;
         
         /**
          * 地理编码结果，仅地理编码返回。
-         * @member
-         * @returns Array<Geocode>
+         * @member {Array<Geocode>}
          */
         geocodes?: Array<Geocode>;
 
         /**
          * 地理编码结果数目，仅地理编码返回。
-         * @member
-         * @returns number
+         * @member {number}
          */
         resultNum?: number;
     }
@@ -446,8 +393,7 @@ declare namespace AMap
         /**
          * 城市，地理编码时，设置地址描述所在城市，可选值：城市名（中文或中文全拼）、citycode、adcode；
          * 默认值："全国"
-         * @member
-         * @returns string
+         * @member {string}
          */
         city?: string;
 
@@ -455,23 +401,20 @@ declare namespace AMap
          * 逆地理编码时，以给定坐标为中心点，单位：米。
          * 取值范围：0-3000
          * 默认值：1000
-         * @member
+         * @member {number}
          * @default 1000
-         * @returns number
          */
         radius?: number;
 
         /**
          * 设置语言类型。
-         * @member
-         * @returns string
+         * @member {string}
          */
         lang?: string;
 
         /**
          * 是否批量查询。当值为false时即使传入多个点也只返回第一个点结果。
-         * @member
-         * @returns batch
+         * @member {batch}
          */
         batch?: boolean;
 
@@ -479,8 +422,7 @@ declare namespace AMap
          * 逆地理编码时，返回信息的详略。
          * 默认值：base，返回基本地址信息；
          * 取值为：all，返回地址信息及附近poi、道路、道路交叉口等信息。
-         * @member
-         * @returns string
+         * @member {string}
          */
         extensions?: string;
     }
@@ -492,7 +434,7 @@ declare namespace AMap
      * @description 插件类，插件名："AMap.Geocoder"
      * @see http://lbs.amap.com/api/javascript-api/reference/lnglat-to-address#m_AMap.Geocoder
      */
-    class Geocoder extends EventProvider
+    class Geocoder extends EventDispatcher
     {
         /**
          * 构造函数，提供地理编码或逆地理编码功能。
@@ -537,15 +479,13 @@ declare namespace AMap
     {
         /**
          * 成功状态文字描述。
-         * @member
-         * @returns string
+         * @member {string}
          */
         info?: string;
 
         /**
          * 返回高德坐标集合。
-         * @member
-         * @returns Array<LngLat | [number, number]>
+         * @member {Array<LngLat | [number, number]>}
          */
         locations?: Array<LngLat | [number, number]>;
     }
@@ -564,22 +504,19 @@ declare namespace AMap
     {
         /**
          * 名称。
-         * @member
-         * @returns string
+         * @member {string}
          */
         name?: string;
 
         /**
          * 所属区域。
-         * @member
-         * @returns string
+         * @member {string}
          */
         district?: string;
 
         /**
          * 区域编码。
-         * @member
-         * @returns string
+         * @member {string}
          */
         adcode?: string;
     }
@@ -588,22 +525,19 @@ declare namespace AMap
     {
         /**
          * 查询状态说明。
-         * @member
-         * @returns string
+         * @member {string}
          */
         info?: string;
 
         /**
          * 输入提示条数。
-         * @member
-         * @returns number
+         * @member {number}
          */
         count?: number;
 
         /**
          * 输入提示列表。
-         * @member
-         * @returns Array<Tip>
+         * @member {Array<Tip>}
          */
         tips?: Array<Tip>;
     }
@@ -618,9 +552,8 @@ declare namespace AMap
          * 输入提示时限定POI类型，多个类型用“|”分隔，POI相关类型请在网站“相关下载”处下载
          * 目前只支持Poi类型编码如“050000”
          * 默认值：所有类别
-         * @member
+         * @member {string}
          * @default 所有类别
-         * @returns string
          */
         type?: string;
 
@@ -628,9 +561,8 @@ declare namespace AMap
          * 输入提示时限定城市。
          * 可选值：城市名（中文或中文全拼）、citycode、adcode；
          * 默认值：“全国”
-         * @member
+         * @member {string}
          * @default 全国
-         * @returns string
          */
         city?: string;
 
@@ -642,39 +574,34 @@ declare namespace AMap
          * bus-返回公交站点数据类型、
          * busline-返回公交线路数据类型
          * 目前暂时不支持多种类型
-         * @member
-         * @returns string
+         * @member {string}
          */
         datatype?: string;
 
         /**
          * 是否强制限制在设置的城市内搜索，默认值为：false。
          * @description true：强制限制设定城市，false：不强制限制设定城市
-         * @member
+         * @member {boolean}
          * @default false
-         * @returns boolean
          */
         citylimit?: boolean;
 
         /**
          * 用来指定一个input输入框，设定之后，在input输入文字将自动生成下拉选择列表。支持传入输入框DOM对象的id值，或直接传入输入框的DOM对象。
-         * @member
-         * @returns string | HTMLInputElement
+         * @member {string | HTMLInputElement}
          */
         input?: string | HTMLInputElement;
 
         /**
          * 指定一个现有的div的id或者元素，作为展示提示结果的容器，当指定了input的时候有效，缺省的时候将自动创建一个显示结果面板。
-         * @member
-         * @returns string | HTMLDivElement
+         * @member {string | HTMLDivElement}
          */
         output?: string | HTMLDivElement;
 
         /**
          * 默认为true，表示是否在input位于页面较下方的时候自动将输入面板显示在input上方以避免被遮挡。
-         * @member
+         * @member {boolean}
          * @default true
-         * @return boolean
          */
         outPutDirAuto?: boolean;
     }
@@ -687,7 +614,7 @@ declare namespace AMap
      * @description 插件类，插件名："AMap.Autocomplete"
      * @see http://lbs.amap.com/api/javascript-api/reference/search#m_AMap.Autocomplete
      */
-    class Autocomplete extends EventProvider
+    class Autocomplete extends EventDispatcher
     {
         /**
          * 构造函数，提供输入提示功能。
@@ -741,25 +668,22 @@ declare namespace AMap
          * 兴趣点城市。
          * 可选值：城市名（中文或中文全拼）、citycode、adcode
          * 默认值：“全国”
-         * @member
-         * @returns string
+         * @member {string}
          */
         city?: string;
 
         /**
          * 是否强制限制在设置的城市内搜索，默认值为：false。
          * true：强制限制设定城市，false：不强制限制设定城市
-         * @member
+         * @member {boolean}
          * @default false
-         * @returns boolean
          */
         citylimit?: boolean;
 
         /**
          * 是否按照层级展示子POI数据,默认0，children=1，展示子节点POI数据，children=0，不展示子节点数据。
-         * @member
+         * @member {number}
          * @default 0
-         * @returns number
          */
         children?: number;
 
@@ -770,8 +694,7 @@ declare namespace AMap
          * 医疗保健服务|住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|
          * 交通设施服务|金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施
          * 默认值：餐饮服务、商务住宅、生活服务
-         * @member
-         * @returns string
+         * @member {string}
          */
         type?: string;
         
@@ -780,9 +703,8 @@ declare namespace AMap
          * 可选值：
          * zh_cn：中文简体
          * en：英文
-         * @member
+         * @member {string}
          * @default zh_cn
-         * @returns string
          */
         lang?: string;
 
@@ -790,9 +712,8 @@ declare namespace AMap
          * 单页显示结果条数
          * 默认值：10
          * 取值范围：1-50，超出取值范围按最大值返回
-         * @member
+         * @member {number}
          * @default 10
-         * @returns number
          */
         pageSize?: number;
 
@@ -800,18 +721,16 @@ declare namespace AMap
          * 页码。（如pageIndex为2，pageSize为10，那么显示的应是第11-20条返回结果）
          * 默认值：1
          * 取值范围：1-100，超过实际页数不返回poi
-         * @member
+         * @member {number}
          * @default 1
-         * @returns number
          */
         pageIndex?: number;
 
         /**
          * 此项默认值：base，返回基本地址信息
          * 取值：all，返回基本+详细信息
-         * @member
+         * @member {string}
          * @default base
-         * @returns string
          */
         extensions?: string;
 
@@ -819,40 +738,35 @@ declare namespace AMap
          * AMap.Map对象, 展现结果的地图实例。
          * 当指定此参数后，搜索结果的标注、线路等均会自动添加到此地图上。
          * 可选值
-         * @member
-         * @returns Map
+         * @member {Map}
          */
         map?: Map;
 
         /**
          * 结果列表的HTML容器id或容器元素，提供此参数后，结果列表将在此容器中进行展示。
          * 可选值
-         * @member
-         * @returns string | HTMLElement
+         * @member {string | HTMLElement}
          */
         panel?: string | HTMLElement;
 
         /**
          * 在使用map属性时，是否在地图上显示周边搜索的圆或者范围搜索的多边形，默认为true。
-         * @member
+         * @member {boolean}
          * @default true
-         * @returns boolean
          */
         showCover?: boolean;
 
         /**
          * 如使用了map或panel属性，renderStyle可以用来设定绘制的UI风格，缺省为'newpc'
          * 可选值:'newpc'或'default'，'newpc'为带图片展示的新样式，'default'为原有简单样式。
-         * @member
+         * @member {string}
          * @default newpc
-         * @returns string
          */
         renderStyle?: string;
 
         /**
          * 用于控制在搜索结束后，是否自动调整地图视野使绘制的Marker点都处于视口的可见范围。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         autoFitView?: boolean;
     }
@@ -864,14 +778,14 @@ declare namespace AMap
      * @description 插件类，插件名："AMap.PlaceSearch"
      * @see http://lbs.amap.com/api/javascript-api/reference/search#m_AMap.PlaceSearch
      */
-    class PlaceSearch extends EventProvider
+    class PlaceSearch extends EventDispatcher
     {
         /**
          * 创建地点查询类的实例。
          * @constructor
-         * @param  {PlaceSearchOptions} opts
+         * @param  {PlaceSearchOptions} opts?
          */
-        constructor(opts: PlaceSearchOptions);
+        constructor(opts?: PlaceSearchOptions);
         
         /**
          * 根据关键字搜索，关键字支持中文|中文全拼、繁体、英文
@@ -1003,36 +917,31 @@ declare namespace AMap
     {
         /**
          * 事件类别。
-         * @member
-         * @returns string
+         * @member {string}
          */
         type?: string;
 
         /**
          * 当前选中的 POI 的ID。
-         * @member
-         * @returns string
+         * @member {string}
          */
         id?: string;
 
         /**
          * 当前选中的 POI 对应的在地图中的 Marker 对象。
-         * @member
-         * @returns Marker
+         * @member {Marker}
          */
         marker?: Marker;
 
         /**
          * 当前选中的 POI 在结果面板中对应的列表项。
-         * @member
-         * @returns HTMLLIElement
+         * @member {HTMLLIElement}
          */
         listElement?: HTMLLIElement;
         
         /**
          * 当前选中的POI的信息。
-         * @member
-         * @returns Poi
+         * @member {Poi}
          */
         data?: Poi;
     }
@@ -1041,29 +950,26 @@ declare namespace AMap
     {
         /**
          * 成功状态说明。
-         * @member
-         * @returns string
+         * @member {string}
          */
         info?: string;
 
         /**
          * 发生事件时返回兴趣点列表。
-         * @member
-         * @returns PoiList
+         * @member {PoiList}
          */
         poiList?: PoiList;
 
         /**
          * 发生事件且查无此关键字时，返回建议关键字列表，可根据建议关键字查询。
-         * @member
-         * @returns Array<string>
+         * @member {Array<string>}
          */
         keywordList?: Array<string>;
 
         /**
          * 发生事件且查无此关键字且 city 为“全国”时，返回城市建议列表，该列表中每个城市包含一个或多个相关Poi点信息。
-         * @member
-         * @returns Array<CityInfo>
+         * @member {Array<CityInfo>}
+         * @returns 
          */
         cityList?: Array<CityInfo>;
     }
@@ -1072,29 +978,26 @@ declare namespace AMap
     {
         /**
          * Poi 列表。
-         * @member
-         * @returns Array<Poi>
+         * @member {Array<Poi>}
          */
         pois?: Array<Poi>;
 
         /**
          * 页码。
-         * @member
-         * @returns number
+         * @member {number}
          */
         pageIndex?: number;
 
         /**
          * 单页结果数。
-         * @member
-         * @returns number
+         * @member {number}
          */
         pageSize?: number;
 
         /**
          * 查询结果总数。
-         * @member
-         * @returns number
+         * @member {number}
+         * @returns 
          */
         count?: number;
     }
@@ -1103,29 +1006,25 @@ declare namespace AMap
     {
         /**
          * 建议城市名称。
-         * @member
-         * @returns string
+         * @member {string}
          */
         name?: string;
 
         /**
          * 城市编码。
-         * @member
-         * @returns string
+         * @member {string}
          */
         citycode?: string;
 
         /**
          * 行政区编码。
-         * @member
-         * @returns string
+         * @member {string}
          */
         adcode?: string;
 
         /**
          * 该城市的建议结果数目。
-         * @member
-         * @returns number
+         * @member {number}
          */
         count?: number;
     }
@@ -1134,155 +1033,133 @@ declare namespace AMap
     {
         /**
          * 全局唯一ID。
-         * @member
-         * @returns string
+         * @member {string}
          */
         id?: string;
 
         /**
          * 名称。
-         * @member
-         * @returns string
+         * @member {string}
          */
         name?: string;
 
         /**
          * 兴趣点类型。
-         * @member
-         * @returns string
+         * @member {string}
          */
         type?: string;
 
         /**
          * 兴趣点经纬度。
-         * @member
-         * @returns LngLat | [number, number]
+         * @member {LngLat | [number, number]}
          */
         location?: LngLat | [number, number];
 
         /**
          * 地址。
-         * @member
-         * @returns string
+         * @member {string}
          */
         address?: string;
 
         /**
          * 离中心点距离，仅周边查询返回。
-         * @member
-         * @returns number
+         * @member {number}
          */
         distance?: number;
 
         /**
          * 电话。
-         * @member
-         * @returns string
+         * @member {string}
          */
         tel?: string;
 
         /**
          * 网址。
-         * @member
-         * @returns string
+         * @member {string}
          */
         website?: string;
 
         /**
          * poi 所在省份编码。
-         * @member
-         * @returns string
+         * @member {string}
          */
         pcode?: string;
 
         /**
          * POI 所在城市编码。
-         * @member
-         * @returns string
+         * @member {string}
          */
         citycode?: string;
 
         /**
          * POI 所在区域编码。
-         * @member
-         * @returns string
+         * @member {string}
          */
         adcode?: string;
 
         /**
          * 邮编。
-         * @member
-         * @returns string
+         * @member {string}
          */
         postcode?: string;
 
         /**
          * POI 所在省份名称。
-         * @member
-         * @returns string
+         * @member {string}
          */
         pname?: string;
 
         /**
          * POI 所在城市名称。
-         * @member
-         * @returns string
+         * @member {string}
          */
         cityname?: string;
 
         /**
          * POI 所在区域名称。
-         * @member
-         * @returns string
+         * @member {string}
          */
         adname?: string;
 
         /**
          * 邮箱。
-         * @member
-         * @returns string
+         * @member {string}
          */
         email?: string;
 
         /**
          * 入口经纬度，POI点有出入口信息时返回，否则返回空字符串。
-         * @member
-         * @returns string | LngLat | [number, number]
+         * @member {string | LngLat | [number, number]}
          */
         entr_location?: string | LngLat | [number, number];
 
         /**
          * 出口经纬度，POI点有出入口信息时返回，否则返回空字符串。
-         * @member
-         * @returns string | LngLat | [number, number]
+         * @member {string | LngLat | [number, number]}
          */
         exit_location?: string | LngLat | [number, number];
 
         /**
          * POI 是否有团购信息，true为存在团购信息。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         groupbuy?: boolean;
 
         /**
          * POI 是否有优惠信息，true为存在优惠信息。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         discount?: boolean;
 
         /**
          * 团购信息。
-         * @member
-         * @returns Array<object>
+         * @member {Array<object>}
          */
         groupbuys?: Array<object>;
 
         /**
          * 优惠信息。
-         * @member
-         * @returns Array<object>
+         * @member {Array<object>}
          */
         discounts?: Array<object>;
 
@@ -1292,37 +1169,231 @@ declare namespace AMap
          * HOTEL：酒店深度信息类型
          * CINEMA：影院深度信息类型
          * SCENIC：景点深度信息类型
-         * @member
-         * @returns string
+         * @member {string}
          */
         deep_type?: string;
 
         /**
          * 餐饮类深度信息。
-         * @member
-         * @returns object
+         * @member {object}
          */
         dining?: object;
 
         /**
          * 酒店类深度信息。
-         * @member
-         * @returns object
+         * @member {object}
          */
         hotel?: object;
 
         /**
          * 影院类深度信息。
-         * @member
-         * @returns object
+         * @member {object}
          */
         cinema?: object;
 
         /**
          * 景点类深度信息。
-         * @member
-         * @returns object
+         * @member {object}
          */
         scenic?: object;
+    }
+
+    interface PlaceSearchLayerOptions
+    {
+        /**
+         * 要叠加该麻点图层的Map对象。
+         * @member {Map}
+         */
+        map?: Map;
+        
+        /**
+         * 搜索关键字，支持中文，此项为必填。
+         * @member {string}
+         */
+        keywords?: string;
+    }
+
+    /**
+     * 麻点图插件，提供海量搜索结果的辅助显示功能。
+     * @class
+     * @description 插件类，插件名："AMap.PlaceSearchLayer"
+     * @see http://lbs.amap.com/api/javascript-api/reference/search#m_AMap.PlaceSearchLayer
+     */
+    class PlaceSearchLayer extends EventDispatcher
+    {
+        /**
+         * 构造函数，构造麻点图层类。
+         * @constructor
+         * @param  {PlaceSearchLayerOptions} opts?
+         */
+        constructor(opts?: PlaceSearchLayerOptions);
+        
+        /**
+         * 设置添加该图层的地图对象。
+         * @param  {Map} map
+         * @returns void
+         */
+        setMap(map: Map): void;
+        
+        /**
+         * 设置查询关键字。
+         * @param  {string} keywords
+         * @returns void
+         */
+        setKeywords(keywords: string): void;
+    }
+
+    interface DistrictSearchOptions
+    {
+        /**
+         * 关键字对应的行政区级别或商圈，可选值：
+         * country：国家
+         * province：省/直辖市
+         * city：市
+         * district：区/县
+         * biz_area：商圈
+         * @member {string}
+         */
+        level?: string;
+
+        /**
+         * 是否显示商圈，默认值true
+         * 可选为true/false，为了能够精准的定位到街道，特别是在快递、物流、送餐等场景下，强烈建议将此设置为false
+         * @member {boolean}
+         * @default true
+         */
+        showbiz?: boolean;
+
+        /**
+         * 是否返回行政区边界坐标点
+         * 默认值：base，不返回行政区边界坐标点
+         * 取值：all，返回完整行政区边界坐标点
+         * @member {string}
+         * @default "base"
+         */
+        extensions?: string;
+
+        /**
+         * 显示下级行政区级数（行政区级别包括：国家、省/直辖市、市、区/县4个级别），商圈为区/县下一级                                  可选值：0、1、2、3
+         * 0：不返回下级行政区
+         * 1：返回下一级行政区
+         * 2：返回下两级行政区
+         * 3：返回下三级行政区
+         * 默认值：1
+         * @member {number}
+         * @default 1
+         */
+        subdistrict?: number;
+    }
+
+    /**
+     * 行政区查询服务，提供行政区相关信息。
+     * @class
+     * @description 插件类，插件名："AMap.DistrictSearch"
+     * @see http://lbs.amap.com/api/javascript-api/reference/search#m_AMap.DistrictSearch
+     */
+    class DistrictSearch extends EventDispatcher
+    {
+        /**
+         * 构造函数，实例化一个行政区查询实例。
+         * @constructor
+         * @param  {DistrictSearchOptions} opts?
+         */
+        constructor(opts?: DistrictSearchOptions);
+        
+        /**
+         * 根据关键字查询行政区或商圈信息 关键字支持：行政区名、citycode、adcode、商圈名。
+         * 默认值："全国"
+         * 当status为complete时，result为DistrictSearchResult；
+         * 当status为error时，result为错误信息info；
+         * 当status为no_data时，代表检索返回0结果
+         * @param  {string} keywords
+         * @param  {Function} callback
+         * @param  {DistrictSearchOptions} opts?
+         * @returns void
+         */
+        search(keywords: string, callback: (status: string, result: string | DistrictSearchResult) => void, opts?: DistrictSearchOptions): void;
+        
+        /**
+         * 设置关键字对应的行政区级别或商圈，可选值：
+         * country：国家
+         * province：省/直辖市
+         * city：市
+         * district：区/县
+         * biz_area：商圈
+         * @param  {string} level
+         * @returns void
+         */
+        setLevel(level: string): void;
+        
+        /**
+         * 设置下级行政区级数（行政区级别包括：国家、省/直辖市、市、区/县4个级别），商圈为区/县下一级，默认值：1
+         * 可选值：0、1、2、3
+         * 0：不返回下级行政区；
+         * 1：返回下一级行政区；
+         * 2：返回下两级行政区；
+         * 3：返回下三级行政区；
+         * @param  {number} district
+         * @returns void
+         */
+        setSubdistrict(district: number): void;
+    }
+
+    interface DistrictSearchResult
+    {
+        info?: string;
+
+        districtList?: Array<District>;
+    }
+
+    interface District
+    {
+        /**
+         * 行政区名称。
+         * @member
+         * @returns string
+         */
+        name?: string;
+
+        /**
+         * 城市中心点经纬度坐标。
+         * @member
+         * @returns LngLat | [number, number]
+         */
+        center?: LngLat | [number, number];
+
+        /**
+         * 城市编码。
+         * @member
+         * @returns string
+         */
+        citycode?: string;
+
+        /**
+         * 区域编码。
+         * @member {string}
+         */
+        adcode?: string;
+        
+        /**
+         * 行政区划级别。
+         * @member {string}
+         */
+        level?: string;
+        
+        /**
+         * extensions为“all”时，行政区边界坐标集合若行政区包含群岛，则坐标点为各岛的边界，岛间边界经纬度使用"|"分隔。
+         * @member
+         * @returns Array<LngLat | [number, number]>
+         */
+        boundaries?: Array<LngLat | [number, number]>;
+
+        /**
+         * 下级行政区信息列表。
+         * subdistrict为 0 时，不返回该对象。
+         * @member
+         * @returns Array<District>
+         */
+        districtList?: Array<District>;
     }
 }

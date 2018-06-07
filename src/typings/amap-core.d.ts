@@ -16,41 +16,39 @@ declare namespace AMap
     {
         /**
          * 地图中心点坐标值。
-         * @member
-         * @returns LngLat | [number, number]
+         * @member {LngLat | [number, number]}
          */
         center?: LngLat | [number, number];
 
         /**
-         * 地图顺时针旋转角度，取值范围 [0-360]，默认值：0。
-         * @member
-         * @returns number
+         * 地图顺时针旋转角度，取值范围 [0-360]。
+         * @member {number}
+         * @default 0
          */
         rotation?: number;
 
         /**
          * 地图显示的缩放级别。若center与zoom未赋值，地图初始化默认显示用户所在城市范围。
-         * @member
-         * @returns number
+         * @member {number}
          */
         zoom?: number;
 
         /**
-         * 地图显示的参考坐标系，取值：'EPSG3857' 'EPSG3395' 'EPSG4326' 默认值：'EPSG3857'
-         * @member
-         * @returns string
+         * 地图显示的参考坐标系，取值范围："EPSG3857"、"EPSG3395"、"EPSG4326"。
+         * @member {string}
+         * @default "EPSG3857"
          */
         crs?: "EPSG3857" | "EPSG3395" | "EPSG4326"
     }
-
+    
     /**
-     * 二维地图显示视口，用于定义二维地图静态显示属性，如地图缩放级别“zoom”、地图中心点“center”等。
+     * 二维地图显示视口，用于定义二维地图静态显示属性，如地图缩放级别"zoom"、地图中心点"center"等。
      * @class
      */
     class View2D
     {
         /**
-         * 构造一个二维地图显示视口对象，opts二维地图视口对象初始化属性，详见View2Doptions。
+         * 构造一个二维地图显示视口对象，opts二维地图视口对象初始化属性，详见 View2Doptions。
          * @constructor
          * @param  {View2DOptions} opts
          */

@@ -16,29 +16,25 @@ declare namespace AMap
     {
         /**
          * 图标尺寸，默认值(36,36)。
-         * @member
-         * @returns Size
+         * @member {Size}
          */
         size?: Size;
 
         /**
          * 图标的取图地址。默认为蓝色图钉图片。
-         * @member
-         * @returns string
+         * @member {string}
          */
         image?: string;
 
         /**
          * 图标取图偏移量。当image中指定了一个大图时，可通过size和imageOffset配合，显示图标的指定范围。
-         * @member
-         * @returns Pixel
+         * @member {Pixel}
          */
         imageOffset?: Pixel;
 
         /**
          * 图标所用图片大小，根据所设置的大小拉伸或压缩图片，等同于CSS中的background-size属性。可用于实现高清屏的高清效果。
-         * @member
-         * @returns Size
+         * @member {Size}
          */
         imageSize?: Size;
     }
@@ -54,9 +50,9 @@ declare namespace AMap
         /**
          * 构造点覆盖物图标，通过IconOptions设置图标属性。
          * @constructor
-         * @param  {IconOptions} opts
+         * @param  {IconOptions} opts?
          */
-        constructor(opts: IconOptions);
+        constructor(opts?: IconOptions);
 
         /**
          * 设置图标图片大小。
@@ -83,8 +79,7 @@ declare namespace AMap
          * - circle:圆形
          * - poly:多边形
          * - rect:矩形
-         * @member
-         * @returns string
+         * @member {string}
          */
         type?: string;
 
@@ -94,8 +89,7 @@ declare namespace AMap
          * - poly: coords格式为 [x1, y1, x2, y2 … xn, yn]，各x，y表示多边形边界像素坐标
          * - rect: coords格式为 [x1, y1, x2, y2]，x1，y1为矩形左上角像素坐标，x2，y2为矩形右下角像素坐标
          * Markshape的像素坐标是指相对于marker的左上角的像素坐标偏移量
-         * @member
-         * @returns Array<number>
+         * @member {Array<number>}
          */
         coords?: Array<number>;
     }
@@ -111,9 +105,9 @@ declare namespace AMap
         /**
          * 构造一个Marker可点击区域对象，通过MarkerShapeOptions设置可点击区域属性。
          * @constructor
-         * @param  {MarkerOptions} opts
+         * @param  {MarkerOptions} opts?
          */
-        constructor(opts: MarkerOptions);
+        constructor(opts?: MarkerOptions);
     }
 
     /**
@@ -124,46 +118,40 @@ declare namespace AMap
     {
         /**
          * 要显示该覆盖物的地图对象。
-         * @member
-         * @returns Map
+         * @member {Map}
          */
         map?: Map;
 
         /**
          * 覆盖物的叠加顺序。
          * 地图上存在多个覆盖物叠加时，通过该属性使级别较高的覆盖物在上层显示。
-         * @member
-         * @returns number
+         * @member {number}
          */
         zIndex?: number;
 
         /**
          * 是否将覆盖物的鼠标或 touch 等事件冒泡到地图上，默认值：false。
-         * @member
          * @description v1.3 新增
+         * @member {boolean}
          * @default false
-         * @returns boolean
          */
         bubble?: boolean;
 
         /**
          * 指定鼠标悬停时的鼠标样式，自定义 cursor，IE仅支持 cur/ani/ico 格式，Opera 不支持自定义 cursor。
-         * @member
-         * @returns string
+         * @member {string}
          */
         cursor?: string;
 
         /**
          * 自定义扩展数据，支持 JavaScript 中任意数据类型，如 Marker 的 id 等。
-         * @member
-         * @returns any
+         * @member {any}
          */
         extData?: any;
 
         /**
          * 是否显示覆盖物。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         visible?: boolean;
     }
@@ -173,7 +161,7 @@ declare namespace AMap
      * @abstract
      * @class
      */
-    abstract class Overlay extends AMap.EventProvider
+    abstract class Overlay extends AMap.EventDispatcher
     {
         /**
          * 为覆盖物指定目标显示地图。
@@ -265,45 +253,39 @@ declare namespace AMap
         /**
          * 点标记显示位置偏移量，默认值为Pixel(-10,-34)。
          * Marker指定position后，默认以marker左上角位置为基准点，对准所给定的position位置，若需使marker指定位置对准在position处，需根据marker的尺寸设置一定的偏移量。
-         * @member
-         * @returns Pixel
+         * @member {Pixel}
          */
         offset?: Pixel;
 
         /**
          * 需在点标记中显示的图标。可以是一个本地图标地址，或者Icon对象。有合法的content内容时，此属性无效。
-         * @member
-         * @returns string | Icon
+         * @member {string | Icon}
          */
         icon?: string | Icon;
 
         /**
          * 点标记显示内容，可以是HTML要素字符串或者HTML DOM对象。content有效时，icon属性将被覆盖。
-         * @member
-         * @returns string | HTMLElement
+         * @member {string | HTMLElement}
          */
         content?: string | HTMLElement;
 
         /**
          * 设置拖拽点标记时是否开启点标记离开地图的效果。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         raiseOnDrag?: boolean;
 
         /**
          * 点标记的旋转角度，广泛用于改变车辆行驶方向。
          * 注：angle属性是使用CSS3来实现的，支持IE9及以上版本。
-         * @member
-         * @returns number
+         * @member {number}
          */
         angle?: number;
 
         /**
          * 是否自动旋转。点标记在使用moveAlong动画时，路径方向若有变化，点标记是否自动调整角度，默认为false。
          * 广泛用于自动调节车辆行驶方向。IE8以下不支持旋转，autoRotation属性无效
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         autoRotation?: boolean;
 
@@ -314,79 +296,69 @@ declare namespace AMap
          * “AMAP_ANIMATION_NONE”，无动画效果 
          * “AMAP_ANIMATION_DROP”，点标掉落效果 
          * “AMAP_ANIMATION_BOUNCE”，点标弹跳效果 
-         * @member
-         * @returns string
+         * @member {string}
          */
         animation?: string;
 
         /**
          * 点标记阴影，不设置该属性则点标记无阴影。
-         * @member
-         * @returns Icon
+         * @member {Icon}
          */
         shadow?: Icon;
 
         /**
          * 设置Marker的可点击区域，在定义的区域内可触发Marker的鼠标点击事件。
-         * @member
-         * @returns MarkerShape
+         * @member {MarkerShape}
          */
         shape?: MarkerShape;
 
         /**
          * 添加文本标注，content为文本标注的内容，offset为偏移量，左上角为偏移量为（0,0）。
-         * @member
-         * @returns object
+         * @member {object}
+         * @returns 
          */
         label?: { content: string,  offset: Pixel};
 
         /**
          * 标记在地图上显示的位置，默认为地图中心点。
-         * @member
-         * @returns LngLat | [number, number]
+         * @member {LngLat | [number, number]}
          */
         position?: LngLat | [number, number];
 
         /**
          * 标记是否可见，默认为true。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         visible?: boolean;
 
         /**
          * 标记是否可点击。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         clickable?: boolean;
 
         /**
          * 设置标记是否可拖拽移动，默认为false。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         draggable?: boolean;
 
         /**
          * 鼠标点击时marker是否置顶，默认false，不置顶。
-         * @member
          * @description v1.3 新增
-         * @returns boolean
+         * @member {boolean}
          */
         topWhenClick?: boolean;
 
         /**
          * 鼠标滑过标记时的文字提示，不设置则鼠标滑过标记时无文字提示。
-         * @member
-         * @returns string
+         * @member {string}
          */
         title?: string;
 
         /**
          * 支持的缩放级别范围。
-         * @member
-         * @returns [number, number]
+         * @member {[number, number]}
          */
         zooms?: [number, number];
     }
@@ -401,9 +373,9 @@ declare namespace AMap
         /**
          * 构造一个点标记对象，通过MarkerOptions设置点标记对象的属性。
          * @constructor
-         * @param  {MarkerOptions} opts
+         * @param  {MarkerOptions} opts?
          */
-        constructor(opts: MarkerOptions);
+        constructor(opts?: MarkerOptions);
 
         /**
          * 唤起高德地图客户端标注页。
@@ -666,8 +638,7 @@ declare namespace AMap
          *         minZoom: 15                      // label的最小显示级别
          *     }
          * }
-         * @member
-         * @returns Array<object>
+         * @member {Array<object>}
          */
         styles?: Array<object>;
         
@@ -685,8 +656,7 @@ declare namespace AMap
          *     20: 1
          * }
          * 表示14到15级使用styles中的第0个样式，16-20级使用第二个样式。
-         * @member
-         * @returns object
+         * @member {object}
          */
         zoomStyleMapping?: object;
     }
@@ -701,9 +671,9 @@ declare namespace AMap
     {
         /**
          * 构造一个灵活点标记对象，通过 ElasticMarkerOptions 设置点标记对象的属性。
-         * @param  {ElasticMarkerOptions} opts
+         * @param  {ElasticMarkerOptions} opts?
          */
-        constructor(opts: ElasticMarkerOptions);
+        constructor(opts?: ElasticMarkerOptions);
     }
 
     /**
@@ -714,29 +684,25 @@ declare namespace AMap
     {
         /**
          * 标记显示的文本内容。
-         * @member
-         * @returns string
+         * @member {string}
          */
         text?: string;
 
         /**
          * 标记的文本样式。如同 CSS 样式表，如：{"background-color": "red"}
-         * @member
-         * @returns object
+         * @member {object}
          */
         style?: object;
 
         /**
          * 横向位置，"left", "right", "center" 可选。
-         * @member
-         * @returns string
+         * @member {string}
          */
         textAlign?: "left" | "right" | "center";
 
         /**
          * 纵向位置，"top"，"middle"，"bottom" 可选。
-         * @member
-         * @returns string
+         * @member {string}
          */
         verticalAlign?: "top" | "middle" | "bottom";
     }
@@ -751,9 +717,9 @@ declare namespace AMap
     {
         /**
          * 构造一个点标记对象，通过 TextOptions 设置点标记对象的属性。
-         * @param  {TextOptions} opts
+         * @param  {TextOptions} opts?
          */
-        constructor(opts: TextOptions);
+        constructor(opts?: TextOptions);
         
         /**
          * 修改文本内容。
@@ -810,61 +776,53 @@ declare namespace AMap
     {
         /**
          * 圆心位置。
-         * @member
-         * @returns LngLat | [number, number]
+         * @member {LngLat | [number, number]}
          */
         center?: LngLat | [number, number];
 
         /**
          * 圆点半径，单位：像素。
-         * @member
-         * @returns number
+         * @member {number}
          */
         radius?: number;
 
         /**
          * 线条颜色，使用16进制颜色代码赋值。
-         * @member
+         * @member {string}
          * @default #006600
-         * @returns string
          */
         strokeColor?: string;
 
         /**
          * 轮廓线透明度，取值范围 0 - 1，0表示完全透明，1表示不透明。
-         * @member
+         * @member {number}
          * @default 0.9
-         * @returns number
          */
         strokeOpacity?: number;
         
         /**
          * 轮廓线宽度。
-         * @member
-         * @returns number
+         * @member {number}
          */
         strokeWeight?: number;
 
         /**
          * 线条样式，实线：solid、虚线：dashed。
-         * @member
-         * @returns string
+         * @member {string}
          */
         strokeStyle?: string;
 
         /**
          * 圆形填充颜色,使用16进制颜色代码赋值。
-         * @member
+         * @member {string}
          * @default #006600
-         * @returns string
          */
         fillColor?: string;
 
         /**
          * 圆形填充透明度，取值范围0 - 1，0表示完全透明，1表示不透明。
-         * @member
+         * @member {number}
          * @default 0.9
-         * @returns number
          */
         fillOpacity?: number;
     }
@@ -880,9 +838,9 @@ declare namespace AMap
         /**
          * 构造圆点标记，通过 CircleMarkerOptions 设置圆点标记的属性。
          * @constructor
-         * @param  {CircleMarkerOptions} opts
+         * @param  {CircleMarkerOptions} opts?
          */
-        constructor(opts: CircleMarkerOptions);
+        constructor(opts?: CircleMarkerOptions);
         
         /**
          * 设置圆点中心。
@@ -932,70 +890,61 @@ declare namespace AMap
     {
         /**
          * 是否绘制成大地线，默认false。
-         * @member
+         * @member {boolean}
          * @default false
-         * @returns boolean
          */
         geodesic?: boolean;
 
         /**
          * 线条是否带描边，默认false。
-         * @member
+         * @member {boolean}
          * @default false
-         * @returns boolean
          */
         isOutline?: boolean;
 
         /**
          * 描边的宽度，默认为1。
-         * @member
+         * @member {number}
          * @default 1
-         * @returns number
          */
         borderWeight?: number;
 
         /**
          * 线条描边颜色，此项仅在isOutline为true时有效，默认：#000000。
-         * @member
+         * @member {string}
          * @default #000000
-         * @returns string
          */
         outlineColor?: string;
 
         /**
          * 折线的节点坐标数组。
-         * @member
-         * @returns Array<LngLat | [number, number]>
+         * @member {Array<LngLat | [number, number]>}
          */
         path?: Array<LngLat | [number, number]>;
 
         /**
          * 线条颜色，使用16进制颜色代码赋值。
-         * @member
+         * @member {string}
          * @default #006600
-         * @returns string
          */
         strokeColor?: string;
 
         /**
          * 线条透明度，取值范围 0 - 1，0表示完全透明，1表示不透明。
-         * @member
+         * @member {number}
          * @default 0.9
-         * @returns number
          */
         strokeOpacity?: number;
         
         /**
          * 线条宽度，单位：像素。
-         * @member
-         * @returns number
+         * @member {number}
          */
         strokeWeight?: number;
 
         /**
          * 线条样式，实线：solid、虚线：dashed。
-         * @member
-         * @returns string
+         * @member {string}
          */
         strokeStyle?: string;
 
@@ -1004,38 +953,33 @@ declare namespace AMap
          * 实线：[0,0,0] 
          * 虚线：[10,10] ，[10,10] 表示10个像素的实线和10个像素的空白（如此反复）组成的虚线
          * 点画线：[10,2,10]， [10,2,10] 表示10个像素的实线和2个像素的空白 + 10个像素的实线和10个像素的空白 （如此反复）组成的虚线
-         * @member
-         * @returns Array<number>
+         * @member {Array<number>}
          */
         strokeDasharray?: Array<number>;
         
         /**
          * 折线拐点的绘制样式，默认值为"miter"尖角，其他可选值："round"圆角、"bevel"斜角。
-         * @member
-         * @returns string
+         * @member {string}
          */
         lineJoin?: string;
 
         /**
          * 折线两端线帽的绘制样式，默认值为"butt"无头，其他可选值："round"圆头、"square"方头。
-         * @member
-         * @returns string
+         * @member {string}
          */
         lineCap?: string;
 
         /**
          * 设置折线是否可拖拽移动，默认为false。
-         * @member
+         * @member {boolean}
          * @default false
-         * @returns boolean
          */
         draggable?: boolean;
 
         /**
          * 是否延路径显示白色方向箭头,默认false。
          * Canvas绘制时有效，建议折线宽度大于6时使用；在3D视图下不支持显示方向箭头（自V1.4.0版本参数效果变更）
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         showDir?: boolean;
     }
@@ -1049,9 +993,9 @@ declare namespace AMap
     {
         /**
          * 构造折线对象，通过 PolylineOptions 指定折线样式。
-         * @param  {PolylineOptions} opts
+         * @param  {PolylineOptions} opts?
          */
-        constructor(opts: PolylineOptions);
+        constructor(opts?: PolylineOptions);
         
         /**
          * 设置组成该折线的节点数组。
@@ -1096,62 +1040,54 @@ declare namespace AMap
          * 多边形轮廓线的节点坐标数组，当为“环”多边形时（多边形区域在多边形内显示为“岛”），path为
          * 二维数组，数组元素为多边形轮廓线的节点坐标数组“环”多边形时，要求数组第一个元素为外多边形，其余为“岛”多边形，
          * 外多边形需包含“岛”多边形，否则程序不作处理。
-         * @member
-         * @returns Array<LngLat | [number, number]> | Array<Array<LngLat | [number, number]>>
+         * @member {Array<LngLat | [number, number]> | Array<Array<LngLat | [number, number]>>}
          */
         path: Array<LngLat | [number, number]> | Array<Array<LngLat | [number, number]>>;
 
         /**
          * 线条颜色，使用16进制颜色代码赋值。
-         * @member
+         * @member {string}
          * @default #006600
-         * @returns string
          */
         strokeColor?: string;
 
         /**
          * 轮廓线透明度，取值范围 0 - 1，0表示完全透明，1表示不透明。
-         * @member
+         * @member {number}
          * @default 0.9
-         * @returns number
          */
         strokeOpacity?: number;
         
         /**
          * 轮廓线宽度。
-         * @member
-         * @returns number
+         * @member {number}
          */
         strokeWeight?: number;
         
         /**
          * 线条样式，实线：solid、虚线：dashed。
-         * @member
-         * @returns string
+         * @member {string}
          */
         strokeStyle?: string;
 
         /**
          * 圆形填充颜色,使用16进制颜色代码赋值。
-         * @member
+         * @member {string}
          * @default #006600
-         * @returns string
          */
         fillColor?: string;
 
         /**
          * 圆形填充透明度，取值范围0 - 1，0表示完全透明，1表示不透明。
-         * @member
+         * @member {number}
          * @default 0.9
-         * @returns number
          */
         fillOpacity?: number;
 
         /**
          * 设置多边形否可拖拽移动，默认为false。
-         * @member
+         * @member {boolean}
          * @default false
-         * @returns boolean
          */
         draggable?: boolean;
 
@@ -1160,8 +1096,7 @@ declare namespace AMap
          * 实线：[0,0,0] 
          * 虚线：[10,10] ，[10,10] 表示10个像素的实线和10个像素的空白（如此反复）组成的虚线
          * 点画线：[10,2,10]， [10,2,10] 表示10个像素的实线和2个像素的空白 + 10个像素的实线和10个像素的空白 （如此反复）组成的虚线
-         * @member
-         * @returns Array<number>
+         * @member {Array<number>}
          */
         strokeDasharray?: Array<number>;
     }
@@ -1175,9 +1110,9 @@ declare namespace AMap
     {
         /**
          * 构造多边形对象，通过 PolygonOptions 指定多边形样式。
-         * @param  {PolygonOptions} opts
+         * @param  {PolygonOptions} opts?
          */
-        constructor(opts: PolygonOptions);
+        constructor(opts?: PolygonOptions);
         
         /**
          * 设置多边形轮廓线节点数组，当为“环”多边形时，path为二维数组，数组元素为多边形轮廓线的节点坐标数组。
@@ -1242,38 +1177,33 @@ declare namespace AMap
          *     [ [lng,lat] , [lng,lat] , [lng,lat]],    // 控制点、控制点、途经点2
          *     [ [lng,lat] , [lng,lat] ]                // 控制点、途经点3
          * ]
-         * @member
-         * @returns Array<Array<number | Array<number>>>
+         * @member {Array<Array<number | Array<number>>>}
          */
         path?: Array<Array<number | Array<number>>>;
         
         /**
          * 线条颜色，使用16进制颜色代码赋值。
-         * @member
+         * @member {string}
          * @default #006600
-         * @returns string
          */
         strokeColor?: string;
 
         /**
          * 轮廓线透明度，取值范围 0 - 1，0表示完全透明，1表示不透明。
-         * @member
+         * @member {number}
          * @default 0.9
-         * @returns number
          */
         strokeOpacity?: number;
         
         /**
          * 轮廓线宽度。
-         * @member
-         * @returns number
+         * @member {number}
          */
         strokeWeight?: number;
         
         /**
          * 线条样式，实线：solid、虚线：dashed。
-         * @member
-         * @returns string
+         * @member {string}
          */
         strokeStyle?: string;
 
@@ -1282,36 +1212,31 @@ declare namespace AMap
          * 实线：[0,0,0] 
          * 虚线：[10,10] ，[10,10] 表示10个像素的实线和10个像素的空白（如此反复）组成的虚线
          * 点画线：[10,2,10]， [10,2,10] 表示10个像素的实线和2个像素的空白 + 10个像素的实线和10个像素的空白 （如此反复）组成的虚线
-         * @member
-         * @returns Array<number>
+         * @member {Array<number>}
          */
         strokeDasharray?: Array<number>;
         
         /**
          * 是否显示白色方向箭头。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         showDir?: boolean;
 
         /**
          * 是否描边。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         isOutline?: boolean;
 
         /**
          * 描边颜色。
-         * @member
-         * @returns boolean
+         * @member {string}
          */
         outlineColor?: string;
         
         /**
          * 描边宽度。
-         * @member
-         * @returns number
+         * @member {number}
          */
         borderWeight?: number;
     }
@@ -1327,9 +1252,9 @@ declare namespace AMap
         /**
          * 用于创建贝瑟尔曲线的构造函数。
          * @constructor
-         * @param  {BezierCurveOptions} opts
+         * @param  {BezierCurveOptions} opts?
          */
-        constructor(opts: BezierCurveOptions);
+        constructor(opts?: BezierCurveOptions);
         
         /**
          * 设置组成该折线的节点数组。
@@ -1372,61 +1297,53 @@ declare namespace AMap
     {
         /**
          * 圆心位置。
-         * @member
-         * @returns LngLat | [number, number]
+         * @member {LngLat | [number, number]}
          */
         center?: LngLat | [number, number];
 
         /**
          * 圆半径，单位:米。
-         * @member
-         * @returns number
+         * @member {number}
          */
         radius?: number;
 
         /**
          * 线条颜色，使用16进制颜色代码赋值。
-         * @member
+         * @member {string}
          * @default #006600
-         * @returns string
          */
         strokeColor?: string;
 
         /**
          * 轮廓线透明度，取值范围 0 - 1，0表示完全透明，1表示不透明。
-         * @member
+         * @member {number}
          * @default 0.9
-         * @returns number
          */
         strokeOpacity?: number;
         
         /**
          * 轮廓线宽度。
-         * @member
-         * @returns number
+         * @member {number}
          */
         strokeWeight?: number;
         
         /**
          * 线条样式，实线：solid、虚线：dashed。
-         * @member
-         * @returns string
+         * @member {string}
          */
         strokeStyle?: string;
 
         /**
          * 圆形填充颜色,使用16进制颜色代码赋值。
-         * @member
+         * @member {string}
          * @default #006600
-         * @returns string
          */
         fillColor?: string;
 
         /**
          * 圆形填充透明度，取值范围0 - 1，0表示完全透明，1表示不透明。
-         * @member
+         * @member {number}
          * @default 0.9
-         * @returns number
          */
         fillOpacity?: number;
 
@@ -1435,8 +1352,7 @@ declare namespace AMap
          * 实线：[0,0,0] 
          * 虚线：[10,10] ，[10,10] 表示10个像素的实线和10个像素的空白（如此反复）组成的虚线
          * 点画线：[10,2,10]， [10,2,10] 表示10个像素的实线和2个像素的空白 + 10个像素的实线和10个像素的空白 （如此反复）组成的虚线
-         * @member
-         * @returns Array<number>
+         * @member {Array<number>}
          */
         strokeDasharray?: Array<number>;
     }
@@ -1449,9 +1365,9 @@ declare namespace AMap
     {
         /**
          * 构造圆形覆盖物，通过 CircleOptions 设置属性。
-         * @param  {CircleOptions} opts
+         * @param  {CircleOptions} opts?
          */
-        constructor(opts: CircleOptions);
+        constructor(opts?: CircleOptions);
 
         /**
          * 设置圆中心点。
@@ -1508,8 +1424,7 @@ declare namespace AMap
     {
         /**
          * 椭圆的圆心位置。
-         * @member
-         * @returns LngLat | [number, number]
+         * @member {LngLat | [number, number]}
          */
         center?: LngLat | [number, number];
 
@@ -1517,55 +1432,48 @@ declare namespace AMap
          * 椭圆的半径，用2个元素的数组表示，单位：米
          * 如： radius: [1000, 2000] 表示横向半径是1000，纵向的半径是2000 
          * 默认值：[1000, 1000]
-         * @member
+         * @member {[number, number]}
          * @default [1000, 1000]
-         * @returns [number, number]
          */
         radius?: [number, number];
 
         /**
          * 线条颜色，使用16进制颜色代码赋值。
-         * @member
+         * @member {string}
          * @default #006600
-         * @returns string
          */
         strokeColor?: string;
 
         /**
          * 轮廓线透明度，取值范围 0 - 1，0表示完全透明，1表示不透明。
-         * @member
+         * @member {number}
          * @default 0.9
-         * @returns number
          */
         strokeOpacity?: number;
         
         /**
          * 轮廓线宽度。
-         * @member
-         * @returns number
+         * @member {number}
          */
         strokeWeight?: number;
         
         /**
          * 线条样式，实线：solid、虚线：dashed。
-         * @member
-         * @returns string
+         * @member {string}
          */
         strokeStyle?: string;
 
         /**
          * 椭圆填充颜色,使用16进制颜色代码赋值。
-         * @member
+         * @member {string}
          * @default #006600
-         * @returns string
          */
         fillColor?: string;
 
         /**
          * 椭圆填充透明度，取值范围0 - 1，0表示完全透明，1表示不透明。
-         * @member
+         * @member {number}
          * @default 0.9
-         * @returns number
          */
         fillOpacity?: number;
 
@@ -1574,8 +1482,7 @@ declare namespace AMap
          * 实线：[0,0,0] 
          * 虚线：[10,10] ，[10,10] 表示10个像素的实线和10个像素的空白（如此反复）组成的虚线
          * 点画线：[10,2,10]， [10,2,10] 表示10个像素的实线和2个像素的空白 + 10个像素的实线和10个像素的空白 （如此反复）组成的虚线
-         * @member
-         * @returns Array<number>
+         * @member {Array<number>}
          */
         strokeDasharray?: Array<number>;
     }
@@ -1590,9 +1497,9 @@ declare namespace AMap
     {
         /**
          * 构造椭圆覆盖物，通过 EllipseOptions 设置椭圆。
-         * @param  {EllipseOptions} opts
+         * @param  {EllipseOptions} opts?
          */
-        constructor(opts: EllipseOptions);
+        constructor(opts?: EllipseOptions);
 
         /**
          * 设置椭圆中心点。
@@ -1649,54 +1556,48 @@ declare namespace AMap
     {
         /**
          * 矩形的范围。
-         * @member
-         * @returns Bounds
+         * @member {Bounds}
          */
         bounds?: Bounds;
 
         /**
          * 线条颜色，使用16进制颜色代码赋值。
-         * @member
+         * @member {string}
          * @default #006600
-         * @returns string
          */
         strokeColor?: string;
 
         /**
          * 轮廓线透明度，取值范围 0 - 1，0表示完全透明，1表示不透明。
-         * @member
+         * @member {number}
          * @default 0.9
-         * @returns number
          */
         strokeOpacity?: number;
         
         /**
          * 轮廓线宽度。
-         * @member
-         * @returns number
+         * @member {number}
          */
         strokeWeight?: number;
         
         /**
          * 线条样式，实线：solid、虚线：dashed。
-         * @member
-         * @returns string
+         * @member {string}
          */
         strokeStyle?: string;
 
         /**
          * 矩形填充颜色,使用16进制颜色代码赋值。
-         * @member
+         * @member {string}
          * @default #006600
-         * @returns string
          */
         fillColor?: string;
 
         /**
          * 矩形填充透明度，取值范围0 - 1，0表示完全透明，1表示不透明。
-         * @member
+         * @member {number}
          * @default 0.9
-         * @returns number
+         * @returns 
          */
         fillOpacity?: number;
 
@@ -1705,8 +1606,7 @@ declare namespace AMap
          * 实线：[0,0,0] 
          * 虚线：[10,10] ，[10,10] 表示10个像素的实线和10个像素的空白（如此反复）组成的虚线
          * 点画线：[10,2,10]， [10,2,10] 表示10个像素的实线和2个像素的空白 + 10个像素的实线和10个像素的空白 （如此反复）组成的虚线
-         * @member
-         * @returns Array<number>
+         * @member {Array<number>}
          */
         strokeDasharray?: Array<number>;
     }
@@ -1721,9 +1621,9 @@ declare namespace AMap
     {
         /**
          * 构造矩形覆盖物，通过RectangleOptions设置矩形。
-         * @param  {RectangleOptions} opts
+         * @param  {RectangleOptions} opts?
          */
-        constructor(opts: RectangleOptions);
+        constructor(opts?: RectangleOptions);
 
         /**
          * 设置矩形范围。
@@ -1760,7 +1660,7 @@ declare namespace AMap
      * @class
      * @see http://lbs.amap.com/api/javascript-api/reference/overlay#overlaygroup
      */
-    class OverlayGroup extends EventProvider
+    class OverlayGroup extends EventDispatcher
     {
         /**
          * 构造覆盖物集合，传入的参数是一个覆盖物实例的数组。
@@ -1868,32 +1768,28 @@ declare namespace AMap
     {
         /**
          * 要加载的标准GeoJSON对象。
-         * @member
-         * @returns object
+         * @member {object}
          */
         geoJSON?: object;
         
         /**
          * 指定点要素的绘制方式，缺省时为Marker的默认样式。
          * geojson为当前要素对应的GeoJSON对象，lnglat为对应的点的位置
-         * @member
-         * @returns Function
+         * @member {Function}
          */
         getMarker?: (geojson: GeoJSON, lnglat: LngLat | [number, number]) => void;
         
         /**
          * 指定线要素的绘制方式，缺省时为Polyline的默认样式。
          * geojson为当前要素对应的GeoJSON对象，lnglats为对应的线的路径
-         * @member
-         * @returns Function
+         * @member {Function}
          */
         getPolyline?: (geojson: GeoJSON, lnglats: Array<LngLat | [number, number]>) => void;
 
         /**
          * 指定面要素的绘制方式，缺省时为Polygon的默认样式。
          * geojson为当前要素对应的GeoJSON对象，lnglats为对应的面的路径
-         * @member
-         * @returns Function
+         * @member {Function}
          */
         getPolygon?: (geojson: GeoJSON, lnglats: Array<LngLat | [number, number]> | Array<Array<LngLat | [number, number]>>) => void;
     }
@@ -1933,8 +1829,7 @@ declare namespace AMap
     {
         /**
          * 右键菜单内容（针对自定义菜单时，添加菜单内容及功能。可以是HTML要素字符串或者HTML DOM对象。）
-         * @member
-         * @returns string | HTMLElement
+         * @member {string | HTMLElement}
          */
         content?: string | HTMLElement;
     }
@@ -1944,14 +1839,14 @@ declare namespace AMap
      * @class
      * @see http://lbs.amap.com/api/javascript-api/reference/overlay#contextmenu
      */
-    class ContextMenu extends EventProvider
+    class ContextMenu extends EventDispatcher
     {
         /**
          * 构造一个右键菜单对象。
          * @constructor
-         * @param  {ContextMenuOptions} opts
+         * @param  {ContextMenuOptions} opts?
          */
-        constructor(opts: ContextMenuOptions);
+        constructor(opts?: ContextMenuOptions);
         
         /**
          * 右键菜单中添加菜单项。

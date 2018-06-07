@@ -15,31 +15,27 @@ declare namespace AMap
     {
         /**
          * 要显示该图层的地图对象。
-         * @member
-         * @returns Map
+         * @member {Map}
          */
         map?: Map;
 
         /**
          * 图层叠加的顺序值，0表示最底层。
-         * @member
+         * @member {number}
          * @default 1
-         * @returns number
          */
         zIndex?: number;
 
         /**
          * 图层的透明度，取值范围[0,1]，1代表完全不透明，0代表完全透明。
-         * @member
-         * @returns number | [number, number]
+         * @member {number | [number, number]}
          */
         opacity?: number | [number, number];
 
         /**
          * 支持的缩放级别范围，默认范围[3-18]，在PC上，取值范围为[3-18]；在移动设备上，取值范围为[3-19]。
-         * @member
+         * @member {[number, number]}
          * @default PC: [3, 18] APP: [3, 19]
-         * @returns [number, number]
          */
         zooms?: [number, number];
     }
@@ -47,7 +43,7 @@ declare namespace AMap
     /**
      * 表示一个图层基础类。
      */
-    class Layer extends EventProvider
+    class Layer extends EventDispatcher
     {
         /**
          * 设置图层的所在地图对象。
@@ -119,24 +115,21 @@ declare namespace AMap
          * 128，表示切片大小为128x128， 
          * 64，表示切片大小为64x64。
          * 默认值为256 
-         * @member
+         * @member {number}
          * @default 256
-         * @returns number
          */
         tileSize?: number;
 
         /**
          * 切片取图地址(自1.3版本起，该属性与getTileUrl属性合并)
          * 如："http://abc.amap.com/tile?x=[x]&y=[y]&z=[z]" [x]、[y]、[z]分别替代切片的xyz。
-         * @member
-         * @returns string
+         * @member {string}
          */
         tileUrl?: string;
 
         /**
          * 取图错误时的代替地址。
-         * @member
-         * @returns string
+         * @member {string}
          */
         errorUrl?: string;
         
@@ -145,17 +138,15 @@ declare namespace AMap
          * 字符串如："http://abc.amap.com/tile?x=[x]&y=[y]&z=[z]"
          * 函数参数z为地图缩放级别，x,y分别为相应缩放级别下图块横向、纵向索引号， 
          * 该属性可以用来改变取图地址，实现自定义栅格图。
-         * @member
-         * @returns string | ((x: number, y: number, z: number) => string)
+         * @member {string | Function}
          */
         getTileUrl?: string | ((x: number, y: number, z: number) => string);
 
         /**
          * 是否在高清屏下进行清晰度适配，默认为true。
          * 将根据移动设备屏幕设备像素比，采用相应的技术手段，保证图层在不同设备像素比下的清晰度。
-         * @member
+         * @member {boolean}
          * @default true
-         * @returns boolean
          */
         detectRetina?: boolean;
     }
@@ -170,9 +161,9 @@ declare namespace AMap
         /**
          * 构造一个切片图层对象，通过TileLayerOptions设置图层属性。
          * @constructor
-         * @param  {TileLayerOptions} tileOpt
+         * @param  {TileLayerOptions} opts?
          */
-        constructor(opts: TileLayerOptions);
+        constructor(opts?: TileLayerOptions);
 
         /**
          * 获取当前图层所有切片号。
@@ -202,15 +193,13 @@ declare namespace AMap
     {
         /**
          * 高度比例系数，可控制3D视图下的楼块高度。
-         * @member
-         * @returns number
+         * @member {number}
          */
         heightFactor?: number;
 
         /**
          * 是否可见。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         visible?: boolean;
     }
@@ -238,32 +227,28 @@ declare namespace AMap
     interface MassMarksStyle
     {
         /**
-         * 必填参数，图标显示位置偏移量，以图标的左上角为基准点（0,0）点。
+         * 图标显示位置偏移量，以图标的左上角为基准点（0,0）点。
          * 例如：anchor: new Pixel(5, 5)
-         * @member
-         * @returns Pixel
+         * @member {Pixel}
          */
-        anchor: Pixel;
+        anchor?: Pixel;
 
         /**
-         * 必填参数，图标的地址。
-         * @member
-         * @returns string
+         * 图标的地址。
+         * @member {string}
          */
-        url: string;
+        url?: string;
         
         /**
-         * 必填参数，图标的尺寸。
+         * 图标的尺寸。
          * 例如：size:new Size(11,11)
-         * @member
-         * @returns Size
+         * @member {Size}
          */
-        size: Size;
+        size?: Size;
 
         /**
          * 旋转角度。
-         * @member
-         * @returns number
+         * @member {number}
          */
         rotation?: number;
     }
@@ -276,29 +261,26 @@ declare namespace AMap
     {
         /**
          * 指定鼠标悬停时的鼠标样式，自定义cursor，IE仅支持cur/ani/ico格式，Opera不支持自定义cursor。
-         * @member
-         * @returns string
+         * @member {string}
          */
         cursor?: string;
 
         /**
          * 表示是否在拖拽缩放过程中实时重绘，默认true，建议超过10000的时候设置false。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         alwaysRender?: boolean;
 
         /**
          * 用于设置点的样式，当点样式一致时传入单个MassMarksStyle即可；
          * 当需要展示多种点样式时，传入MassMarksStyle的数组，此时需要为 Data中每个元素指定 style 字段为该元素要显示的样式在MassMarksStyle数组中的索引。
-         * @member
-         * @returns MassMarksStyle | Array<MassMarksStyle>
+         * @member {MassMarksStyle | Array<MassMarksStyle>}
          */
         style?: MassMarksStyle | Array<MassMarksStyle>;
     }
 
     /**
-     * 量点类，利用该类可同时在地图上展示万级别的点，目前仅适用于html5浏览器。
+     * 量点类，利用该类可同时在地图上展示万级别的点，目前仅适用于 HTML5 浏览器。
      * @class
      * @see http://lbs.amap.com/api/javascript-api/reference/layer#MassMarks
      */
@@ -308,10 +290,10 @@ declare namespace AMap
          * 创建海量点类。data为点对象的数组，点对象为包含经纬度lnglat属性的Object，opts为点与点集合的绘制样式。
          * 数据集格式为：Array 坐标数据集，例：data: [{lnglat: [116.405285, 39.904989], name: "南山区", id: 10056}, {}, …]
          * @constructor
-         * @param  {Array<object>} data
-         * @param  {MassMarksOptions} opts
+         * @param  {Array<object>} data?
+         * @param  {MassMarksOptions} opts?
          */
-        constructor(data: Array<object>, opts: MassMarksOptions);
+        constructor(data?: Array<object>, opts?: MassMarksOptions);
         
         /**
          * 设置MassMark的显示样式。
@@ -357,8 +339,7 @@ declare namespace AMap
     {
         /**
          * 热力图中单个点的半径，默认：30，单位：pixel。
-         * @member
-         * @returns number
+         * @member {number}
          */
         radius?: number;
 
@@ -371,8 +352,7 @@ declare namespace AMap
          *    1.0: "rgb(100, 0, 255)"
          * } 
          * 其中 key 表示间隔位置，取值范围： [0,1]，value 为颜色值。默认：heatmap.js标准配色方案。
-         * @member
-         * @returns object
+         * @member {object}
          */
         gradient?: object;
     }
@@ -390,10 +370,9 @@ declare namespace AMap
     {
         /**
          * 构造一个热力图插件对象，map为要叠加热力图的地图对象，opts属性参考HeatmapOptions列表中的说明。
-         * @param  {Map} map
-         * @param  {HeatmapOptions} opts
+         * @param  {HeatmapOptions} opts?
          */
-        constructor(map: Map, opts: HeatmapOptions);
+        constructor(opts?: HeatmapOptions);
 
         /**
          * 设置热力图属性，参考HeatmapOptions列表中的说明。
@@ -463,13 +442,13 @@ declare namespace AMap
      * @description v1.4.2 新增
      * @see http://lbs.amap.com/api/javascript-api/reference/layer#LayerGroup
      */
-    class LayerGroup extends EventProvider
+    class LayerGroup extends EventDispatcher
     {
         /**
          * 构造图层集合，传入的参数是一个图层实例的数组。
-         * @param  {Array<Layer>} layers
+         * @param  {Array<Layer>} layers?
          */
-        constructor(layers: Array<Layer>);
+        constructor(layers?: Array<Layer>);
         
         /**
          * 添加单个图层到集合中，不支持添加重复的图层。
@@ -576,22 +555,19 @@ declare namespace AMap
     {
         /**
          * ImageLayer 显示的范围。
-         * @member
-         * @returns Bounds
+         * @member {Bounds}
          */
         bounds?: Bounds;
 
         /**
          * 需要显示的 Image 的 Url。
-         * @member
-         * @returns string
+         * @member {string}
          */
         url?: string;
 
         /**
          * 是否显示。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         visible?: boolean;
     }
@@ -607,9 +583,9 @@ declare namespace AMap
          * 构造一个ImageLayer图层对象，需要提供一个Image的url，以及它覆盖的Bounds。
          * Image的内容会根据Bounds大小显示。
          * @constructor
-         * @param  {ImageLayerOptions} opts
+         * @param  {ImageLayerOptions} opts?
          */
-        constructor(opts: ImageLayerOptions);
+        constructor(opts?: ImageLayerOptions);
         
         /**
          * 设置 ImageLayer 显示的范围。
@@ -652,22 +628,19 @@ declare namespace AMap
     {
         /**
          * CanvasLayer 覆盖的范围。
-         * @member
-         * @returns Bounds
+         * @member {Bounds}
          */
         bounds?: Bounds;
 
         /**
          * 需要显示的Canvas对象。
-         * @member
-         * @returns HTMLCanvasElement
+         * @member {HTMLCanvasElement}
          */
         canvas?: HTMLCanvasElement;
 
         /**
          * 是否显示。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         visible?: boolean;
     }
@@ -684,9 +657,9 @@ declare namespace AMap
          * 构造一个CanvasLayer图层对象，需要提供一个Canvas，以及它覆盖的Bounds。
          * 显示的内容会根据Bounds大小显示。
          * @constructor
-         * @param  {CanvasLayerOptions} opts
+         * @param  {CanvasLayerOptions} opts?
          */
-        constructor(opts: CanvasLayerOptions);
+        constructor(opts?: CanvasLayerOptions);
         
         /**
          * 当canvas的内容发生改变是用于刷新图层，3D视图下调用，2D视图不需要调用。
@@ -716,36 +689,31 @@ declare namespace AMap
     {
         /**
          * 加载完成是否自动播放。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         autoplay?: boolean;
         
         /**
          * 是否循环播放。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         loop?: boolean;
 
         /**
          * VideoLayer覆盖的范围。
-         * @member
-         * @returns Bounds
+         * @member {Bounds}
          */
         bounds?: Bounds;
 
         /**
          * 需要显示的Video的Url，可使用同一视频的不同视频格式的url的数组来实现视频的浏览器兼容。
-         * @member
-         * @returns string | Array<string>
+         * @member {string | Array<string>}
          */
         url?: string | Array<string>;
 
         /**
          * 是否显示图层。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         visible?: boolean;
     }
@@ -762,9 +730,9 @@ declare namespace AMap
          * 构造一个VideoLayer图层对象，需要提供一个Video的url，以及它覆盖的Bounds。
          * Video的内容会根据Bounds大小显示。
          * @constructor
-         * @param  {VideoLayerOptions} opts
+         * @param  {VideoLayerOptions} opts?
          */
-        constructor(opts: VideoLayerOptions);
+        constructor(opts?: VideoLayerOptions);
 
         /**
          * 返回 Video 对象。
@@ -803,16 +771,15 @@ declare namespace AMap
     {
         /**
          * 初始化完成时候，开发者需要给该图层设定render方法，该方法需要实现图层的绘制，API会在合适的时机自动调用该方法。
-         * @property
-         * @returns Function
+         * @property {Function}
          */
         render: Function;
         
         /**
          * 用于构建自定义图层。
-         * @param  {CustomLayerOptions} opts
+         * @param  {CustomLayerOptions} opts?
          */
-        constructor(opts: CustomLayerOptions);
+        constructor(opts?: CustomLayerOptions);
     }
 }
 
@@ -837,9 +804,9 @@ declare namespace TileLayer
         /**
          * 构造一个卫星切片图层对象，通过SatelliteOptions设置图层属性。
          * @constructor
-         * @param  {SatelliteOptions} opts
+         * @param  {SatelliteOptions} opts?
          */
-        constructor(opts: SatelliteOptions);
+        constructor(opts?: SatelliteOptions);
     }
     
     /**
@@ -861,9 +828,9 @@ declare namespace TileLayer
         /**
          * 构造路网图层对象，通过RoadNetOptions设置图层属性。
          * @constructor
-         * @param  {RoadNetOptions} opts
+         * @param  {RoadNetOptions} opts?
          */
-        constructor(opts: RoadNetOptions);
+        constructor(opts?: RoadNetOptions);
     }
 
     /**
@@ -874,17 +841,15 @@ declare namespace TileLayer
     {
         /**
          * 是否设置可以自动刷新实时路况信息，默认为false。
-         * @member
+         * @member {boolean}
          * @default false;
-         * @returns boolean
          */
         autoRefresh?: boolean;
 
         /**
          * 设置刷新间隔时长，单位：秒，默认180s刷新一次。
-         * @member
+         * @member {number}
          * @default 180;
-         * @returns number
          */
         interval?: number;
     }
@@ -899,9 +864,9 @@ declare namespace TileLayer
         /**
          * 构造一个实时交通图层对象。
          * @constructor
-         * @param  {TrafficOptions} opts
+         * @param  {TrafficOptions} opts?
          */
-        constructor(opts: TrafficOptions);
+        constructor(opts?: TrafficOptions);
     }
 
     /**
@@ -919,15 +884,13 @@ declare namespace TileLayer
 
         /**
          * 内存中缓存的切片的数量上限。
-         * @member
-         * @returns number 
+         * @member {number}
          */
         cacheSize?: number;
         
         /**
          * 是否显示。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         visible?: boolean;
     }
@@ -943,9 +906,9 @@ declare namespace TileLayer
         /**
          * 创建自定义切片图层。
          * @constructor
-         * @param  {FlexibleOptions} opts
+         * @param  {FlexibleOptions} opts?
          */
-        constructor(opts: FlexibleOptions)
+        constructor(opts?: FlexibleOptions)
     }
 
     /**
@@ -954,30 +917,26 @@ declare namespace TileLayer
     interface WMSOptions extends AMap.LayerOptions
     {
         /**
-         * wms服务的url地址，如："https://ahocevar.com/geoserver/wms"
-         * @member
-         * @returns string
+         * WMS 服务的 url 地址，如："https://ahocevar.com/geoserver/wms"
+         * @member {string}
          */
         url?: string;
 
         /**
          * 地图级别切换时，不同级别的图片是否进行混合，如图层的图像内容为部分透明请设置为false。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         blend?: boolean;
 
         /**
          * 加载WMS图层服务时，图片的分片大小，可自由设定，不易过大，建议[256,512]。
-         * @member
-         * @returns number
+         * @member {number}
          */
         tileSize?: number;
 
         /**
          * 初始时时候是否显示。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         visible?: boolean;
 
@@ -989,8 +948,7 @@ declare namespace TileLayer
          *     VERSION: "1.3.0",
          *     FORMAT: "image/png"
          * } 
-         * @member
-         * @returns object
+         * @member {object}
          */
         params?: object;
     }
@@ -1006,9 +964,9 @@ declare namespace TileLayer
         /**
          * 创建WMS图层，WMSOptions为创建图层所需要的属性组对象。
          * @constructor
-         * @param  {WMSOptions} opts
+         * @param  {WMSOptions} opts?
          */
-        constructor(opts: WMSOptions);
+        constructor(opts?: WMSOptions);
 
         /**
          * 设置wms服务地址。
@@ -1044,48 +1002,46 @@ declare namespace TileLayer
     interface WMTSOptions extends AMap.LayerOptions
     {
         /**
-         * wmts服务的url地址，如："https://services.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/WMTS/"
-         * @member
-         * @returns string
+         * WMTS 服务的 URL 地址。
+         * 如："https://services.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/WMTS/"
+         * @member {string}
          */
         url?: string;
 
         /**
          * 地图级别切换时，不同级别的图片是否进行混合，如图层的图像内容为部分透明请设置为false。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         blend?: boolean;
 
         /**
-         * WMTS图层的分片大小，需要和WMTS服务支持的大小一致。
-         * @member
-         * @returns number
+         * WMTS 图层的分片大小，需要和 WMTS 服务支持的大小一致。
+         * @member {number}
          */
         tileSize?: number;
 
         /**
          * 初始时时候是否显示。
-         * @member
-         * @returns boolean
+         * @member {boolean}
          */
         visible?: boolean;
 
         /**
-         * OGC标准的WMTS地图服务的GetTile接口的参数，包括Version、Layer、Style、Format、Service等，TileMatrixSet、TileRow、TileCol、Request 等参数请勿添加，例如：
+         * OGC 标准的 WMTS 地图服务的GetTile接口的参数，
+         * 包括 Version、Layer、Style、Format、Service 等，
+         * TileMatrixSet、TileRow、TileCol、Request 等参数请勿添加，例如：
          * {
          *     Layer: "0",
          *     Version: "1.0.0",
          *     Format: "image/png"
          * }
-         * @member
-         * @returns object
+         * @member {object}
          */
         params?: object;
     }
 
     /**
-     * 用于加载OGC标准的WMTS地图服务的一种图层类，自v1.4.3新增，仅支持EPSG3857坐标系统的WMTS图层。
+     * 用于加载 OGC 标准的 WMTS 地图服务的一种图层类，自v1.4.3新增，仅支持 EPSG3857 坐标系统的 WMTS 图层。
      * @class
      * @description v1.4.3 新增
      * @see http://lbs.amap.com/api/javascript-api/reference/wms#wmts
@@ -1094,9 +1050,9 @@ declare namespace TileLayer
     {
         /**
          * 创建WMTS图层，WMTSOptions为创建图层所需要的属性组对象。
-         * @param  {WMTSOptions} opts
+         * @param  {WMTSOptions} opts?
          */
-        constructor(opts: WMTSOptions);
+        constructor(opts?: WMTSOptions);
 
         /**
          * 设置wmts服务地址。
