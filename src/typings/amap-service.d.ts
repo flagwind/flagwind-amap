@@ -1985,4 +1985,349 @@ declare namespace AMap
          */
         end_stop?: string;
     }
+
+    interface GeolocationOptions
+    {
+        /**
+         * 是否使用高精度。
+         * 默认值：true
+         * @member {boolean}
+         * @default true
+         */
+        enableHighAccuracy?: boolean;
+
+        /**
+         * 超时毫秒数，若在指定时间内未定位成功，返回超时错误信息“TIMEOUT”。
+         * 默认值：无穷大
+         * @member {number}
+         */
+        timeout?: number;
+
+        /**
+         * 是否禁止使用IP定位，默认值为0，可选值0-3
+         * 0: 可以使用IP定位
+         * 1: 手机设备禁止使用IP定位
+         * 2: PC上禁止使用IP定位
+         * 3: 所有终端禁止使用IP定位
+         * @member {number}
+         * @default 0
+         */
+        noIpLocate?: number;
+
+        /**
+         * 是否禁止使用浏览器Geolocation定位，默认值为0，可选值0-3
+         * 0: 可以使用浏览器定位
+         * 1: 手机设备禁止使用浏览器定位
+         * 2: PC上禁止使用浏览器定位
+         * 3: 所有终端禁止使用浏览器定位
+         * @member {number}
+         * @default 0
+         */
+        noGeoLocation?: number;
+
+        /**
+         * 默认为false，设置为true的时候可以调整PC端为优先使用浏览器定位，失败后使用IP定位。
+         * @member {boolean}
+         * @default false
+         */
+        GeoLocationFirst?: boolean;
+
+        /**
+         * 缓存毫秒数。定位成功后，定位结果的保留时间
+         * 默认值：0
+         * @member {number}
+         * @default 0
+         */
+        maximumAge?: number;
+
+        /**
+         * 是否使用坐标偏移，取值true:为高德地图坐标，取值false:为浏览器定位坐标
+         * 默认值：true
+         * @member {boolean}
+         * @default true
+         */
+        convert?: boolean;
+
+        /**
+         * 是否显示定位按钮。
+         * 默认值：true
+         * @member {boolean}
+         * @default true
+         */
+        showButton?: boolean;
+
+        /**
+         * 自定义定位按钮的内容。可支持HTML代码或Dom元素对象，不设置该属性则使用默认按钮样式。
+         * @member {string | HTMLElement}
+         */
+        buttonDom?: string | HTMLElement;
+
+        /**
+         * 定位按钮可停靠的位置
+         * “LT”：左上角
+         * “LB”：左下角
+         * “RT”：右上角
+         * “RB”：右下角
+         * 默认值：“LB”
+         * @member {string}
+         * @default "LB"
+         */
+        buttonPosition?: string;
+
+        /**
+         * 按钮距离停靠位置的偏移量
+         * 默认值：Pixel(10,20)
+         * @member {Pixel}
+         * @default AMap.Pixel(10,20)
+         */
+        buttonOffset?: Pixel;
+
+        /**
+         * 定位成功时是否在定位位置显示一个 Marker。
+         * 默认值：true
+         * @member {boolean}
+         * @default true
+         */
+        showMarker?: boolean;
+
+        /**
+         * 定位点 Marker 的配置，不设置该属性则使用默认 Marker 样式。
+         * @member {MarkerOptions}
+         */
+        markerOptions?: MarkerOptions;
+
+        /**
+         * 定位成功并且有精度信息时，是否用一个圆圈circle表示精度范围
+         * 默认值：true
+         * @member {boolean}
+         * @default true
+         */
+        showCircle?: boolean;
+
+        /**
+         * 定位点Circle的配置，不设置该属性则使用默认Circle样式。
+         * @member {CircleOptions}
+         */
+        circleOptions?: CircleOptions;
+
+        /**
+         * 定位成功后，是否把定位得到的坐标设置为地图中心点坐标。
+         * 默认值：true
+         * @member {boolean}
+         * @default true
+         */
+        panToLocation?: boolean;
+
+        /**
+         * 定位成功且显示精度范围时，是否把地图视野调整到正好显示精度范围。
+         * 默认值：false
+         * @member {boolean}
+         * @default false
+         */
+        zoomToAccuracy?: boolean;
+
+        /**
+         * 是否使用安卓定位sdk用来进行定位，默认：false
+         * 适用于同时在APP中使用安卓定位sdk并在APP WebView中使用了JSAPI的开发者。
+         * 开启后，将优先尝试使用sdk进行定位，失败后依次尝试浏览器定位和IP定位。
+         * 注：如果要使用辅助定位的功能，除了需要将useNative属性设置为true以外，还需要调用高德定位sdk中，LocationManagerProxy类的startSocket()方法，开启辅助H5定位功能；如果不用，就调用stopSocket()方法停止辅助H5定位功能。
+         * @member {boolean}
+         * @default false
+         */
+        useNative?: boolean;
+
+        /**
+         * JSAPI在定位成功的时候会将得到的经纬度进行逆地理编码后获取地址信息，以方便开发者的进一步使用;
+         * extensions用来设定是否需要周边POI、道路交叉口等信息，可选值'base'、'all'。
+         * 默认为'base',只返回地址信息；
+         * 设定为'all'的时候将返回周边POI、道路交叉口等信息。
+         * @member {string}
+         */
+        extensions?: string;
+    }
+
+    /**
+     * AMap.Geolocation定位服务插件。融合了浏览器定位、高精度IP定位、安卓定位sdk辅助定位等多种手段，提供了获取当前准确位置、获取当前城市信息、持续定位(浏览器定位)等功能。用户可以通过两种当时获得定位的成败和结果，一种是在getCurrentPosition的时候传入回调函数来处理定位结果，一种是通过事件监听来取得定位结果。Geolocation定位常见问题说明
+     * 注：默认情况下，PC端优先使用精确IP定位，解决多数浏览器无法完成定位的现状，IP定位失败后使用浏览器定位；手机端优先使用浏览器定位，失败后使用IP定位；对于安卓WebView页面的开发者，可以结合定位sdk进行辅助定位，详细说明见useNative参数。IP定位的精度值为'null'。
+     * 由于Chrome、IOS10等已不再支持非安全域的浏览器定位请求，为保证定位成功率和精度，请尽快升级您的站点到HTTPS。
+     * @class
+     * @description 插件类，插件名："AMap.Geolocation"
+     * @see http://lbs.amap.com/api/javascript-api/reference/location#m_AMap.Geolocation
+     */
+    class Geolocation
+    {
+        /**
+         * 构造函数，创建浏览器定位实例。
+         * @constructor
+         * @param  {GeolocationOptions} opts?
+         */
+        constructor(opts?: GeolocationOptions);
+        
+        /**
+         * 是否支持浏览器定位，当不支持是getCurrentPosition也会使用尝试进行精确IP定位。
+         * @returns boolean
+         */
+        isSupported(): boolean;
+        
+        /**
+         * 获取用户当前的精确位置信息。
+         * 当回调函数中的status为complete的时候表示定位成功，result为GeolocationResult对象;。
+         * 当回调函数中的status为error的时候表示定位失败，result为GeolocationError对象；
+         * callback的方式和事件监听的方式二者选择一种即可。
+         * @param  {Function} callback
+         * @returns void
+         */
+        getCurrentPosition(callback: (status: string, result: GeolocationResult | GeolocationError) => void): void;
+        
+        /**
+         * 使用浏览器定位接口监控当前位置，移动端有效。在监控过程中，每隔一段时间会自动调用定位成功或失败的回调函数。
+         * 注：由于时间间隔受浏览器限制，如您想自定义时间间隔，建议您使用定时器，每隔一段时间调用一次getCurrentPosition获取当前位置。
+         * @returns number
+         */
+        watchPosition(): number;
+        
+        /**
+         * 取消对当前位置的监控。
+         * @param  {number} watchId
+         * @returns number
+         */
+        clearWatch(watchId: number): number;
+        
+        /**
+         * 进行IP城市查询。
+         * status为complete的时候表示查询成功，result包含省、市、adcode、citycode、城市中心点center等信息；
+         * status为error的时候表示查询失败
+         * @param  {Function} callback
+         * @returns void
+         */
+        getCityInfo(callback: (status: string, result: GeolocationResult | GeolocationError) => void): void;
+    }
+
+    interface GeolocationResult
+    {
+        /**
+         * 定位结果。
+         * @member {LngLat}
+         */
+        position?: LngLat;
+
+        /**
+         * 精度范围，单位：米。
+         * @member {number}
+         */
+        accuracy?: number;
+
+        /**
+         * 定位结果的来源，可能的值有:'html5'、'ip'、'sdk'。
+         * @member {string}
+         */
+        location_type?: string;
+
+        /**
+         * 形成当前定位结果的一些信息。
+         * @member {string}
+         */
+        message?: string;
+
+        /**
+         * 是否经过坐标纠偏。
+         * @member {boolean}
+         */
+        isConverted?: boolean;
+
+        /**
+         * 状态信息 "SUCCESS"。
+         * @member {string}
+         */
+        info?: string;
+
+        /**
+         * 地址信息，详情参考Geocoder。
+         * @member {AddressComponent}
+         */
+        addressComponent?: AddressComponent;
+
+        /**
+         * 地址。
+         * @member {string}
+         */
+        formattedAddress?: string;
+
+        /**
+         * 定位点附近的POI信息，extensions等于'base'的时候为空。
+         * @member {Array<Poi>}
+         */
+        pois?: Array<Poi>;
+
+        /**
+         * 定位点附近的道路信息，extensions等于'base'的时候为空。
+         * @member {Array<Road>}
+         */
+        roads?: Array<Road>;
+        
+        /**
+         * 定位点附近的道路交叉口信息，extensions等于'base'的时候为空。
+         * @member {Array<Cross>}
+         */
+        crosses?: Array<Cross>;
+    }
+
+    interface GeolocationError
+    {
+        /**
+         * 错误信息，参考错误信息列表。
+         * @member {string}
+         */
+        info?: string;
+
+        /**
+         * 造成定位失败结果的一些有用信息message说明。
+         * @member {string}
+         */
+        message?: string;
+    }
+    
+    /**
+     * AMap.CitySearch 根据IP返回对应城市信息，提供根据输入IP或自动获取IP获取对应城市信息功能。
+     * 用户可以通过自定义回调函数取回并显示查询结果。若服务请求失败，系统将返回错误信息。
+     * @class
+     * @description 插件类，插件名："AMap.CitySearch"
+     * @see http://lbs.amap.com/api/javascript-api/reference/location#m_AMap.Geolocation
+     */
+    class CitySearch
+    {
+        /**
+         * 自动获取用户IP，回调返回当前用户所在城市。
+         * 当status为complete时，result为CitySearchResult；
+         * 当status为error时，result为错误信息info；
+         * 当status为no_data时，代表检索返回0结果
+         * @param  {Function} callback
+         * @returns void
+         */
+        getLocalCity(callback: (status: string, result: string | CitySearchResult) => void): void;
+        
+        /**
+         * 根据输入IP地址返回对应城市信息。
+         * status同上
+         * @param  {string} ip
+         * @param  {Function} callback
+         * @returns void
+         */
+        getCityByIp(ip: string, callback: (status: string,  result: string | CitySearchResult) => void): void;
+    }
+
+    interface CitySearchResult
+    {
+        /**
+         * 城市名称。
+         * @member {string}
+         */
+        city?: string;
+
+        /**
+         * 地图展示该城市时使用的矩形区域。
+         * @member {Bounds}
+         */
+        bounds?: Bounds;
+    }
 }
