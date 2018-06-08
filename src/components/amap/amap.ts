@@ -609,13 +609,11 @@ export default class AMapComponent extends Component
         // 初始化地图插件
         this.initializePlugins();
 
-        this.amap.plugin("AMap.PlaceSearchLayer", () =>
+        this.amap.plugin("AMap.ToolBar", () =>
         {
-            const layer = new AMap.PlaceSearchLayer({
-                keywords: "超市"
-            });
+            const layer = new AMap.ToolBar();
 
-            layer.setMap(this.amap);
+            this.amap.addControl(layer);
 
             console.log(layer);
         });

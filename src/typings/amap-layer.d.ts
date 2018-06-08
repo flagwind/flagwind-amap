@@ -781,6 +781,164 @@ declare namespace AMap
          */
         constructor(opts?: CustomLayerOptions);
     }
+ 
+    interface IndoorMapOptions extends LayerOptions
+    {
+        /**
+         * 指定鼠标悬停到店铺面时的鼠标样式，自定义cursor，IE仅支持cur/ani/ico格式，Opera不支持自定义cursor。
+         * @member {string}
+         */
+        cursor?: string;
+
+        /**
+         * 是否隐藏楼层切换控件，默认值：false。
+         * @member {boolean}
+         * @default false
+         */
+        hideFloorBar?: boolean;
+
+        /**
+         * 默认false，默认情况下室内图仅在有矢量底图的时候显示。
+         * @member {boolean}
+         * @default false
+         */
+        alwaysShow?: boolean;
+    }
+
+    /**
+     * 室内地图。
+     * @class
+     * @see http://lbs.amap.com/api/javascript-api/reference/indoormap
+     */
+    class IndoorMap extends Layer
+    {
+        /**
+         * 构造函数，实例化一个室内地图类。
+         * @param  {IndoorMapOptions} opts?
+         */
+        constructor(opts?: IndoorMapOptions);
+        
+        /**
+         * 显示指定室内地图信息, indoorid建筑物ID为必填参数，shopid商铺ID为可选参数。
+         * @param  {string} indoorid
+         * @param  {number} floor
+         * @param  {string} shopid
+         * @returns void
+         */
+        showIndoorMap(indoorid: string, floor: number, shopid?: string): void;
+        
+        /**
+         * 显示指定的楼层，noMove默认为false, true的时候地图不会放生平移。
+         * @param  {number} floor
+         * @param  {boolean} noMove
+         * @returns void
+         */
+        showFloor(floor: number, noMove?: boolean): void;
+        
+        /**
+         * 显示楼层切换控件。
+         * @returns void
+         */
+        showFloorBar(): void;
+        
+        /**
+         * 隐藏楼层切换控件。
+         * @returns void
+         */
+        hideFloorBar(): void;
+        
+        /**
+         * 显示室内地图标注。
+         * @returns void
+         */
+        showLabels(): void;
+        
+        /**
+         * 隐藏室内地图标注。
+         * @returns void
+         */
+        hideLabels(): void;
+
+        /**
+         * 获取处于被选中状态的室内地图的ID。
+         * @returns string
+         */
+        getSelectedBuildingId(): string;
+        
+        /**
+         * 获取处于被选中状态的室内地图的一些基本信息，包含名称、当前楼层、所有楼层信息、ID等
+         * 结构如下：
+         * @example
+         * {
+         *     id: "xx",             // ID
+         *     name: "xx",           // 名称
+         *     lnglat: [],           // LngLat对象，室内所在位置
+         *     floor: 0,             // 整数，当前楼层
+         *     floor_details:        // 所有楼层的信息
+         *     {  
+         *         floor_indexs: [], // 各楼层索引
+         *         floor_nonas: [],  // 各楼层英文
+         *         floor_names: []   // 各楼层名字
+         *     }
+         * }
+         * @returns object
+         */
+        getSelectedBuilding(): object;
+    }
+
+    interface Building
+    {
+        /**
+         * 所属楼宇信息。
+         * @member {string}
+         */
+        id?: string;
+
+        /**
+         * 楼层名称。
+         * @member {string}
+         */
+        name?: string;
+
+        /**
+         * 所在楼层。
+         * @member {string}
+         */
+        floor?: string;
+
+        /**
+         * 楼层的经纬度。
+         * @member {LngLat | [number, number]}
+         */
+        lnglat?: LngLat | [number, number];
+    }
+    
+    interface Shop
+    {
+        /**
+         * 店铺的ID。
+         * @member {string}
+         */
+        id?: string;
+
+        /**
+         * 店铺名称。
+         * @member {string}
+         */
+        name?: string;
+
+        /**
+         * 店铺的经纬度。
+         * @member {LngLat | [number, number]}
+         */
+        lnglat?: LngLat | [number, number];
+
+        /**
+         * 店铺所属楼宇信息。
+         * @member {string}
+         */
+        building_id?: string;
+    }
 }
 
 declare namespace TileLayer
