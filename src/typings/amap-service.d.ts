@@ -1153,15 +1153,15 @@ declare namespace AMap
 
         /**
          * 团购信息。
-         * @member {Array<object>}
+         * @member {Array<Groupbuy>}
          */
-        groupbuys?: Array<object>;
+        groupbuys?: Array<Groupbuy>;
 
         /**
          * 优惠信息。
-         * @member {Array<object>}
+         * @member {Array<Discount>}
          */
-        discounts?: Array<object>;
+        discounts?: Array<Discount>;
 
         /**
          * 深度信息类型，返回值为以下中的一个：
@@ -1175,27 +1175,209 @@ declare namespace AMap
 
         /**
          * 餐饮类深度信息。
-         * @member {object}
+         * @member {Dining}
          */
-        dining?: object;
+        dining?: Dining;
 
         /**
          * 酒店类深度信息。
-         * @member {object}
+         * @member {Hotel}
          */
-        hotel?: object;
+        hotel?: Hotel;
 
         /**
          * 影院类深度信息。
-         * @member {object}
+         * @member {Cinema}
          */
-        cinema?: object;
+        cinema?: Cinema;
 
         /**
          * 景点类深度信息。
-         * @member {object}
+         * @member {Scenic}
          */
-        scenic?: object;
+        scenic?: Scenic;
+    }
+
+    interface Discount
+    {
+        title?: string;
+
+        detail?: string;
+
+        start_time?: string;
+
+        end_time?: string;
+
+        sold_num?: number;
+
+        photos?: Array<Photo>;
+
+        url?: string;
+
+        provider?: string;
+    }
+
+    interface Groupbuy
+    {
+        title?: string;
+
+        type_code?: string;
+
+        type?: string;
+
+        detail?: string;
+
+        stime?: string;
+
+        etime?: string;
+
+        count?: number;
+
+        sold_num?: number;
+
+        original_price?: number;
+
+        groupbuy_price?: number;
+
+        discount?: number;
+
+        ticket_address?: string;
+
+        ticket_tel?: string;
+
+        photos?: Array<Photo>;
+
+        url?: string;
+
+        provider?: string;
+    }
+
+    interface Dining
+    {
+        cuisines?: string;
+
+        tag?: string;
+
+        intro?: string;
+
+        rating?: string;
+
+        cp_rating?: string;
+
+        deep_src?: string;
+
+        taste_rating?: string;
+
+        environment_rating?: string;
+
+        service_rating?: string;
+
+        cost?: string;
+
+        recommend?: string;
+
+        atmosphere?: string;
+
+        ordering_wap_url?: string;
+
+        ordering_web_url?: string;
+
+        ordering_app_url?: string;
+
+        opentime_GDF?: string;
+
+        opentime?: string;
+
+        addition?: string;
+
+        photos?: Array<Photo>;
+    }
+
+    interface Hotel
+    {
+        rating?: string;
+
+        star?: string;
+
+        intro?: string;
+
+        lowest_price?: string;
+
+        faci_rating?: string;
+
+        health_rating?: string;
+
+        environment_rating?: string;
+
+        service_rating?: string;
+
+        traffic?: string;
+
+        addition?: string;
+
+        deep_src?: string;
+
+        photos?: Array<Photo>;
+    }
+
+    interface Cinema
+    {
+        intro?: string;
+
+        rating?: string;
+
+        deep_src?: string;
+
+        parking?: string;
+
+        opentime_GDF?: string;
+
+        openingtime?: string;
+
+        photos?: Array<Photo>;
+    }
+
+    interface Scenic
+    {
+        intro?: string;
+
+        rating?: string;
+
+        deep_src?: string;
+
+        level?: string;
+
+        price?: string;
+
+        season?: string;
+
+        recommened?: string;
+
+        theme?: string;
+
+        ordering_wap_url?: string;
+
+        ordering_web_url?: string;
+
+        opentime_GDF?: string;
+
+        opentime?: string;
+
+        photos?: Array<Photo>;
+    }
+
+    interface Photo
+    {
+        title?: string;
+
+        url?: string;
+    }
+
+    interface Content
+    {
+        id?: string;
+
+        name?: string;
     }
 
     interface PlaceSearchLayerOptions
@@ -1341,8 +1523,16 @@ declare namespace AMap
 
     interface DistrictSearchResult
     {
+        /**
+         * 成功状态文字描述。
+         * @member {string}
+         */
         info?: string;
 
+        /**
+         * 根据查询条件返回行政区划列表。
+         * @member {Array<District>}
+         */
         districtList?: Array<District>;
     }
 
@@ -1350,22 +1540,19 @@ declare namespace AMap
     {
         /**
          * 行政区名称。
-         * @member
-         * @returns string
+         * @member {string}
          */
         name?: string;
 
         /**
          * 城市中心点经纬度坐标。
-         * @member
-         * @returns LngLat | [number, number]
+         * @member {LngLat | [number, number]}
          */
         center?: LngLat | [number, number];
 
         /**
          * 城市编码。
-         * @member
-         * @returns string
+         * @member {string}
          */
         citycode?: string;
 
@@ -1383,17 +1570,419 @@ declare namespace AMap
         
         /**
          * extensions为“all”时，行政区边界坐标集合若行政区包含群岛，则坐标点为各岛的边界，岛间边界经纬度使用"|"分隔。
-         * @member
-         * @returns Array<LngLat | [number, number]>
+         * @member {Array<LngLat | [number, number]>}
          */
         boundaries?: Array<LngLat | [number, number]>;
 
         /**
          * 下级行政区信息列表。
          * subdistrict为 0 时，不返回该对象。
-         * @member
-         * @returns Array<District>
+         * @member {Array<District>}
          */
         districtList?: Array<District>;
+    }
+
+    interface LineSearchOptions
+    {
+        /**
+         * 页码（如pageIndex为2，pageSize为10，那么显示的应是第11-20条返回结果）
+         * 取值范围：1-100，超过取值范围按默认，超出实际页数按最大值返回
+         * 默认值：1
+         * @member {number}
+         * @default 1
+         */
+        pageIndex?: number;
+
+        /**
+         * 单页显示结果条数，默认值：20
+         * 取值范围：1-100，超过取值范围按默认
+         * @member {number}
+         * @default 20
+         */
+        pageSize?: number;
+
+        /**
+         * 公交线路所在城市，默认值：“全国”
+         * 可选值：cityname（中文或中文全拼）、citycode、adcode
+         * @member {string}
+         * @default "全国"
+         */
+        city?: string;
+
+        /**
+         * 此项仅公交路线查询时有效，默认值：base，返回公交路线基本信息，当取值为：all，返回公交路线基本信息+详细信息
+         * @member {string}
+         */
+        extensions?: string;
+    }
+
+    /**
+     * AMap.LineSearch 公交路线查询类，通过extensions属性控制返回信息详略。
+     * 公交线路信息包括起、终点、途径站点，首、末班车时间等信息。
+     * 用户可以通过自定义回调函数取回并显示查询结果。若服务请求失败，系统将返回错误信息。
+     * @class
+     * @description 插件类，插件名："AMap.LineSearch"
+     * @see http://lbs.amap.com/api/javascript-api/reference/search#m_AMap.LineSearch
+     */
+    class LineSearch extends EventDispatcher
+    {
+        /**
+         * 构造一个公交线路查询实例。
+         * @constructor
+         * @param  {LineSearchOptions} opts?
+         */
+        constructor(opts?: LineSearchOptions);
+        
+        /**
+         * 根据给定的公交线路id进行公交站点详情检索，id是公交线路的唯一标识
+         * 当status为complete时，result为LineSearchResult；
+         * 当status为error时，result为错误信息info；
+         * 当status为no_data时，代表检索返回0结果
+         * @param  {string} id
+         * @param  {Function} callback
+         * @returns void
+         */
+        searchById(id: string, callback: (status: string, result: string | LineSearchResult) => void): void;
+        
+        /**
+         * 根据给定公交线路名称进行公交线路详情查询
+         * status说明同上
+         * @param  {string} keyword
+         * @param  {Function} callback
+         * @returns void
+         */
+        search(keyword: string, callback: (status: string, result: string | LineSearchResult) => void): void;
+        
+        /**
+         * 设置查询结果页码，默认值：1
+         * 取值范围：1-100，超过取值范围按默认
+         * @param  {number} pageIndex
+         * @returns void
+         */
+        setPageIndex(pageIndex: number): void;
+        
+        /**
+         * 设置单页显示结果条数，默认值：20
+         * 取值范围：1-100，超过取值范围按默认
+         * @param  {number} pageSize
+         * @returns void
+         */
+        setPageSize(pageSize: number): void;
+        
+        /**
+         * 设置查询城市，默认值：“全国”
+         * 可选值：cityname（中文或中文全拼）、citycode、adcode
+         * @param  {string} city?
+         * @returns void
+         */
+        setCity(city?: string): void;
+    }
+
+    interface LineSearchResult
+    {
+        /**
+         * 成功状态文字描述。
+         * @member {string}
+         */
+        info?: string;
+
+        /**
+         * 根据查询条件返回公交路线信息。
+         * @member {Array<LineInfo>}
+         */
+        lineInfo?: Array<LineInfo>;
+
+        /**
+         * 查无此公交站时，返回的建议关键字列表，可根据建议关键字查询。
+         * @member {Array<string>}
+         */
+        keywordList?: Array<string>;
+
+        /**
+         * 查该城市无此公交站时，返回的建议城市列表。
+         * @member {Array<CityInfo>}
+         */
+        cityList?: Array<CityInfo>;
+    }
+
+    interface LineInfo
+    {
+        /**
+         * 公交线路id，该id是唯一标识。
+         * @member {string}
+         */
+        id?: string;
+
+        /**
+         * 公交线路名称。
+         * @member {string}
+         */
+        name?: string;
+
+        /**
+         * 公交线路经纬度。
+         * @member {Array<LngLat | [number, number]>}
+         */
+        path?: Array<LngLat | [number, number]>;
+
+        /**
+         * 公交线路所在城市的城市编码。
+         * @member {string}
+         */
+        citycode?: string;
+
+        /**
+         * 公交类型列表。
+         * @member {string}
+         */
+        type?: string;
+
+        /**
+         * 首发站。
+         * @member {string}
+         */
+        start_stop?: string;
+
+        /**
+         * 终点站。
+         * @member {string}
+         */
+        end_stop?: string;
+
+        /**
+         * 首班车时间。
+         * @member {string}
+         */
+        stime?: string;
+
+        /**
+         * 末班车时间。
+         * @member {string}
+         */
+        etime?: string;
+
+        /**
+         * 起步票价，单位：元。
+         * @member {string}
+         */
+        basic_price?: string;
+
+        /**
+         * 全程票价，单位：元。
+         * @member {string}
+         */
+        total_price?: string;
+
+        /**
+         * 途径站，包括首发站和终点站。
+         * @member {Array<string>}
+         */
+        via_stops?: Array<string>;
+
+        /**
+         * 全程距离，单位：千米。
+         * @member {number}
+         */
+        distance?: number;
+
+        /**
+         * 此公交路线的地理范围。
+         * @member {Bounds}
+         */
+        bounds?: Bounds;
+
+        /**
+         * 所属公交公司。
+         * @member {string}
+         */
+        company?: string;
+    }
+
+    interface StationSearchOptions
+    {
+        /**
+         * 页码（如pageIndex为2，pageSize为10，那么显示的应是第11-20条返回结果）
+         * 取值范围：1-100，超过取值范围按默认，超出实际页数按最大值返回
+         * 默认值：1
+         * @member {number}
+         * @default 1
+         */
+        pageIndex?: number;
+
+        /**
+         * 单页显示结果条数，默认值：20
+         * 取值范围：1-100，超过取值范围按默认
+         * @member {number}
+         * @default 20
+         */
+        pageSize?: number;
+
+        /**
+         * 公交站点所在城市，默认值：“全国”
+         * 可选值：cityname（中文或中文全拼）、citycode、adcode
+         * @member {string}
+         * @default "全国"
+         */
+        city?: string;
+    }
+
+    /**
+     * AMap.StationSearch 公交站点查询服务，根据输入关键字、ID查询公交站点信息。
+     * 用户可以通过自定义回调函数取回并显示查询结果。若服务请求失败，系统将返回错误信息。
+     * @class
+     * @description 插件类，插件名："AMap.StationSearch"
+     * @see http://lbs.amap.com/api/javascript-api/reference/search#m_AMap.StationSearch
+     */
+    class StationSearch extends EventDispatcher
+    {
+        /**
+         * 构造一个公交站点查询实例。
+         * @constructor
+         * @param  {StationSearchOptions} opts?
+         */
+        constructor(opts?: StationSearchOptions);
+        
+        /**
+         * 根据给定的公交站点id进行公交站点详情检索，id是公交站点的唯一标识
+         * 当status为complete时，result为StationSearchResult；
+         * 当status为error时，result为错误信息info；
+         * 当status为no_data时，代表检索返回0结果
+         * @param  {string} id
+         * @param  {Function} callback
+         * @returns void
+         */
+        searchById(id: string, callback: (status: string, result: string | StationSearchResult) => void): void;
+        
+        /**
+         * 根据给定公交站点名称进行公交站点详情查询，多个关键字用"|"分割
+         * status说明同上
+         * @param  {string} keyword
+         * @param  {Function} callback
+         * @returns void
+         */
+        search(keyword: string, callback: (status: string, result: string | StationSearchResult) => void): void;
+        
+        /**
+         * 设置查询结果页码，默认值：1
+         * 取值范围：1-100，超过取值范围按默认
+         * @param  {number} pageIndex
+         * @returns void
+         */
+        setPageIndex(pageIndex: number): void;
+        
+        /**
+         * 设置单页显示结果条数，默认值：20
+         * 取值范围：1-100，超过取值范围按默认
+         * @param  {number} pageSize
+         * @returns void
+         */
+        setPageSize(pageSize: number): void;
+        
+        /**
+         * 设置查询城市，默认值：“全国”
+         * 可选值：cityname（中文或中文全拼）、citycode、adcode
+         * @param  {string} city?
+         * @returns void
+         */
+        setCity(city?: string): void;
+    }
+
+    interface StationSearchResult
+    {
+        /**
+         * 成功状态文字描述。
+         * @member {string}
+         */
+        info?: string;
+
+        /**
+         * 根据查询条件返回公交站点信息。
+         * @member {Array<StationInfo>}
+         */
+        stationInfo?: Array<StationInfo>;
+
+        /**
+         * 查无此公交站时，返回的建议关键字列表，可根据建议关键字查询。
+         * @member {Array<string>}
+         */
+        keywordList?: Array<string>;
+
+        /**
+         * 查该城市无此公交站时，返回的建议城市列表。
+         * @member {Array<CityInfo>}
+         */
+        cityList?: Array<CityInfo>;
+    }
+
+    interface StationInfo
+    {
+        /**
+         * 公交站点id，该id是唯一标识。
+         * @member {string}
+         */
+        id?: string;
+
+        /**
+         * 公交站点名称。
+         * @member {string}
+         */
+        name?: string;
+
+        /**
+         * 公交站点经纬度。
+         * @member {LngLat | [number, number]}
+         */
+        location?: LngLat | [number, number];
+
+        /**
+         * 区域编码。
+         * @member {string}
+         */
+        adcode?: string;
+
+        /**
+         * 城市编码。
+         * @member {string}
+         */
+        citycode?: string;
+
+        /**
+         * 途经此站点的公交路线列表。
+         * @member {Array<Busline>}
+         */
+        buslines?: Array<Busline>;
+    }
+
+    interface Busline
+    {
+        /**
+         * 公交线路id，该id是唯一标识。
+         * @member {string}
+         */
+        id?: string;
+
+        /**
+         * 公交线路名称。
+         * @member {string}
+         */
+        name?: string;
+
+        /**
+         * 公交线路途经此站的经纬度。
+         * @member {LngLat | [number, number]}
+         */
+        location?: LngLat | [number, number];
+
+        /**
+         * 首发站。
+         * @member {string}
+         */
+        start_stop?: string;
+
+        /**
+         * 终点站。
+         * @member {string}
+         */
+        end_stop?: string;
     }
 }
