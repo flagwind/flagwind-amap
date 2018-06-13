@@ -14,4 +14,6 @@
 /// <reference path="./amap-window.d.ts" />
 /// <reference path="./amap-control.d.ts" />
 /// <reference path="./amap-service.d.ts" />
-/// <reference path="./amap-util.d.ts" />
+/// <reference path="./amap-route.d.ts" />
+/// <reference path="./amap-utils.d.ts" />
+/// <reference path="./amap-tools.d.ts" />

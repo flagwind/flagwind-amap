@@ -609,16 +609,12 @@ export default class AMapComponent extends Component
         // 初始化地图插件
         this.initializePlugins();
 
-        this.amap.plugin("AMap.ToolBar", () =>
-        {
-            const layer = new AMap.ToolBar();
+        let x: AMap.Driving;
 
-            this.amap.addControl(layer);
-
-            console.log(layer);
-        });
-
-        // console.log(this.amap);
+        // this.amap.plugin("AMap.DragRoute", () =>
+        // {
+        //     // console.log(AMap.DrivingPolicy.LEAST_TIME);
+        // });
 
         // const auto = new AMap.Autocomplete();
         // console.log(auto);

@@ -2154,7 +2154,7 @@ declare namespace AMap
      * @description 插件类，插件名："AMap.Geolocation"
      * @see http://lbs.amap.com/api/javascript-api/reference/location#m_AMap.Geolocation
      */
-    class Geolocation
+    class Geolocation extends EventDispatcher
     {
         /**
          * 构造函数，创建浏览器定位实例。
@@ -2294,7 +2294,7 @@ declare namespace AMap
      * @description 插件类，插件名："AMap.CitySearch"
      * @see http://lbs.amap.com/api/javascript-api/reference/location#m_AMap.Geolocation
      */
-    class CitySearch
+    class CitySearch extends EventDispatcher
     {
         /**
          * 自动获取用户IP，回调返回当前用户所在城市。
@@ -2329,5 +2329,376 @@ declare namespace AMap
          * @member {Bounds}
          */
         bounds?: Bounds;
+    }
+
+    interface CloudDataSearchOptions
+    {
+        /**
+         * 云检索关键字，仅支持对建立了文本索引的字段进行模糊检索（请在云数据管理平台中管理文本索引）
+         * 云数据管理平台默认为_name和_address建立文本索引
+         * @member {string}
+         */
+        keywords?: string;
+
+        /**
+         * 云检索的筛选条件
+         * 仅支持对建立了排序筛选索引的字段进行筛选（请在云数据管理平台中管理排序筛选索引）；
+         * 支持多个筛选条件，支持对文本字段的精确匹配和对数值字段的区间筛选。
+         * 筛选条件之间使用“+”代表“与”关系,如：
+         * filter:"_name:酒店+star:[3,5]"(等同于SOL语句的：WHERE_name="酒店" AND star BETWEEN 3 AND 5)
+         * @member {string}
+         */
+        filter?: string;
+
+        /**
+         * 返回数据的排序规则
+         * 1.支持系统预设排序规则：
+         * _distance：坐标与中心点距离升序排序（仅对周边检索有效）
+         * _weight：权重降序排序：
+         * 默认值：
+         * 1)当设置了keywords时，默认按"_weight"权重排序；
+         * 2)当未设置keywords时，默认按"_distance"距离排序
+         * 如：orderBy:"_weight"
+         * 2.支持对建立了排序筛选索引的整数或小数字段进行排序（请在云数据管理平台中管理排序筛选索引），
+         * 升降序分别为"ASC"、"DESC",若仅填字段不填升降序则默认按升序排列
+         * 如：orderBy:"age:ASC"
+         * @member {string}
+         */
+        orderBy?: string;
+
+        /**
+         * 单页显示结果数，取值范围[0-100],超过取值范围取默认值
+         * 默认：20
+         * @member {number}
+         * @default 20
+         */
+        pageSize?: number;
+
+        /**
+         * 当前页码，取值>=1，默认1。
+         * @default 1
+         * @member {number}
+         */
+        pageIndex?: number;
+
+        /**
+         * AMap.Map对象, 展现结果的地图实例。当指定此参数后，搜索结果的标注、线路等均会自动添加到此地图上。
+         * @member {Map}
+         */
+        map?: Map;
+
+        /**
+         * 结果列表的HTML容器id或容器元素，提供此参数后，结果列表将在此容器中进行展示。
+         * @member {string | HTMLElement}
+         */
+        panel?: string | HTMLElement;
+
+        /**
+         * 用于控制在搜索结束后，是否自动调整地图视野使绘制的 Marker 点都处于视口的可见范围。
+         * @member {boolean}
+         */
+        autoFitView?: boolean;
+    }
+
+    interface CloudDataSearchResult
+    {
+        /**
+         * 成功状态文字描述。
+         * @member {string}
+         */
+        info?: string;
+
+        /**
+         * 查询结果总数。
+         * @member {number}
+         */
+        count?: number;
+        
+        /**
+         * 云数据数组，当根据数据id检索时，数据仅包含一个CloudData。
+         * @member {Array<object>}
+         */
+        datas?: Array<object>;
+    }
+
+    interface CloudDataSearchError
+    {
+        info?: string;
+    }
+    
+    /**
+     * AMap.CloudDataSearch云数据检索服务，为开发者提供对业务数据的空间检索服务。
+     * 云数据检索服务包括周边检索、多边形检索以及根据数据id检索。
+     * 注：使用AMap.CloudDataSearch插件之前，请在云图数据管理后台建立存储表格。
+     * 具体创建和管理云数据存储表格的方法可以进入云图开发指南查看。
+     * @class
+     * @description 插件类，插件名："AMap.CloudDataSearch"
+     * @see http://lbs.amap.com/api/javascript-api/reference/cloudlayer#CloudDataSearch
+     */
+    class CloudDataSearch extends EventDispatcher
+    {
+        /**
+         * 构造函数，构造云数据检索示例。
+         * @param  {string} tableId
+         * @param  {CloudDataSearchOptions} opts
+         */
+        constructor(tableId: string, opts?: CloudDataSearchOptions);
+        
+        /**
+         * 周边检索，根据指定的中心点和半径检索位置数据
+         * radius取值范围[0-50000]，超过取值范围按3000，单位：米
+         * 当status为complete时，result为CloudDataSearchResult
+         * 当status为error时，result为错误信息info
+         * 当status为no_data时，代表检索返回0结果
+         * @param  {LngLat | [number, number]} center
+         * @param  {number} radius
+         * @param  {Function} callback
+         * @returns void
+         */
+        searchNearBy(center: LngLat | [number, number], radius: number, callback: (status: string, result: string | CloudDataSearchResult) => void): void;
+        
+        /**
+         * 多边形检索，根据给定的多边形节点坐标数组，检索位置数据
+         * 如果数组只有两个坐标元素，则认为多边形为矩形，这两个点为矩形的左下、右上点
+         * 多边形坐标数组的起、终点必须保证多边形闭合（起、终点坐标相同）
+         * 当status为complete时，result为CloudDataSearchResult
+         * 当status为error时，result为错误信息info
+         * 当status为no_data时，代表检索返回0结果
+         * @param  {Array<LngLat | [number, number]>} paths
+         * @param  {Function} callback
+         * @returns void
+         */
+        searchInPolygon(paths: Array<LngLat | [number, number]>, callback: (status: string, result: string | CloudDataSearchResult) => void): void;
+        
+        /**
+         * 根据行政区划（包括全国/省/市/区县）名称，检索行政区划内位置数据
+         * district为“全国”，则对全表搜索
+         * 当district非法或不正确时，按照district为“全国”返回
+         * 当status为complete时，result为CloudDataSearchResult
+         * 当status为error时，result为错误信息info
+         * 当status为no_data时，代表检索返回0结果
+         * @param  {string} district
+         * @param  {Function} callback
+         * @returns void
+         */
+        searchByDistrict(district: string, callback: (status: string, result: string | CloudDataSearchResult) => void): void;
+        
+        /**
+         * 根据数据id检索位置数据，id检索时不需要设置CloudDataSearchOptions
+         * 当status为complete时，result为CloudDataSearchResult
+         * 当status为error时，result为错误信息info
+         * 当status为no_data时，代表检索返回0结果
+         * @param  {string} id
+         * @param  {Function} callback
+         * @returns void
+         */
+        searchById(id: string, callback: (status: string, result: string | CloudDataSearchResult) => void): void;
+        
+        /**
+         * 设置云数据检索属性。
+         * @param  {CloudDataSearchOptions} options
+         * @returns void
+         */
+        setOptions(options: CloudDataSearchOptions): void;
+        
+        /**
+         * 清除搜索结果。
+         * @returns void
+         */
+        clear(): void;
+    }
+
+    interface WeatherLiveResult
+    {
+        /**
+         * 成功状态说明。
+         * @member {string}
+         */
+        info?: string;
+
+        /**
+         * 省份名。
+         * @member {string}
+         */
+        province?: string;
+
+        /**
+         * 城市名。
+         * @member {string}
+         */
+        city?: string;
+
+        /**
+         * 区域编码。
+         * @member {string}
+         */
+        adcode?: string;
+
+        /**
+         * 天气预报，详见天气预报列表。
+         * @member {string}
+         */
+        weather?: string;
+
+        /**
+         * 实时气温，单位：摄氏度。
+         * @member {number}
+         */
+        temperature?: number;
+
+        /**
+         * 风向，风向编码对应描述。
+         * @member {string}
+         */
+        windDirection?: string;
+
+        /**
+         * 风力，风力编码对应风力级别，单位：级。
+         * @member {number}
+         */
+        windPower?: number;
+
+        /**
+         * 空气湿度（百分比）。
+         * @member {string}
+         */
+        humidity?: string;
+
+        /**
+         * 数据发布的时间。
+         * @member {string}
+         */
+        reportTime?: string;
+    }
+
+    interface WeatherForecastResult
+    {
+         /**
+         * 成功状态说明。
+         * @member {string}
+         */
+        info?: string;
+
+        /**
+         * 省份名。
+         * @member {string}
+         */
+        province?: string;
+
+        /**
+         * 城市名。
+         * @member {string}
+         */
+        city?: string;
+
+        /**
+         * 区域编码。
+         * @member {string}
+         */
+        adcode?: string;
+
+        /**
+         * 数据发布的时间。
+         * @member {string}
+         */
+        reportTime?: string;
+
+        /**
+         * 天气预报数组，包括当天至第三天的预报数据。
+         * @member {Array<Forecast>}
+         */
+        forecasts?: Array<Forecast>;
+    }
+
+    interface Forecast
+    {
+        /**
+         * 日期，格式为"年-月-日"。
+         * @member {string}
+         */
+        date?: string;
+
+        /**
+         * 星期。
+         * @member {string}
+         */
+        week?: string;
+
+        /**
+         * 白天天气现象，详见天气现象列表。
+         * @member {string}
+         */
+        dayWeather?: string;
+        
+        /**
+         * 夜间天气现象，详见天气现象列表。
+         * @member {string}
+         */
+        nightWeather?: string;
+
+        /**
+         * 白天温度。
+         * @member {number}
+         */
+        dayTemp?: number;
+
+        /**
+         * 夜间温度。
+         * @member {number}
+         */
+        nightTemp?: number;
+
+        /**
+         * 白天风向。
+         * @member {string}
+         */
+        dayWindDir?: string;
+
+        /**
+         * 夜间风向。
+         * @member {string}
+         */
+        nightWindDir?: string;
+
+        /**
+         * 白天风力。
+         * @member {string}
+         */
+        dayWindPower?: string;
+
+        /**
+         * 夜间风力。
+         * @member {string}
+         */
+        nightWindPower?: string;
+    }
+
+    /**
+     * AMap.Weather天气查询服务，根据城市名称或区域编码返回城市天气预报信息，包括实时天气信息和4天天气预报。
+     * @class
+     * @description 插件类，插件名："AMap.Weather"
+     * @see http://lbs.amap.com/api/javascript-api/reference/search_plugin#m_AMap.Weather
+     */
+    class Weather extends EventDispatcher
+    {
+        /**
+         * 查询实时天气信息
+         * district支持城市名称/区域编码（如：“杭州市”/“330100”）
+         * 当请求成功时ErrorStatus为null，当请求不成功时ErrorStatus为Obj
+         * @param  {string} district
+         * @param  {Function} callback
+         * @returns void
+         */
+        getLive(district: string, callback: (error: object, result: WeatherLiveResult) => void): void;
+        
+        /**
+         * 查询四天预报天气，包括查询当天天气信息
+         * district支持城市名称/区域编码（如：“杭州市”/“330100”）
+         * 当请求成功时ErrorStatus为null，当请求不成功时ErrorStatus为Obj
+         * @param  {string} district
+         * @param  {Function} callback
+         * @returns void
+         */
+        getForecast(district: string, callback: (error: object, result: WeatherForecastResult) => void): void;
     }
 }

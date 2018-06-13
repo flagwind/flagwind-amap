@@ -939,6 +939,70 @@ declare namespace AMap
          */
         building_id?: string;
     }
+
+    interface CloudDataQuery
+    {
+        /**
+         * 搜索关键字，仅对云数据中建立文本索引的字段有效（请在云数据管理平台中管理文本索引）
+         * 云数据管理平台默认为_name和_address建立文本索引
+         * @member {string}
+         */
+        keywords?: string
+        
+        /**
+         * 云数据筛选条件，仅支持对建立了排序筛选索引的字段进行筛选（请在云数据管理平台中管理排序筛选索引）；
+         * 支持多个筛选条件，支持对文本字段的精确匹配和对数值字段的区间筛选。
+         * 筛选条件之间使用“+”代表与关系,如：
+         * filter:"_name:颐和园+star:[1,2]"（等同于SQL语句的：WHERE_name="颐和园"AND star BETWEEN 1 AND 2）
+         * @member {string}
+         */
+        filter?: string;
+    }
+
+    interface CloudDataLayerOptions extends LayerOptions
+    {
+        /**
+         * 要显示云数据的筛选条件。
+         * @member {CloudDataQuery}
+         */
+        query?: CloudDataQuery;
+
+        /**
+         * 该图层是否响应鼠标点击，默认是：true。
+         * @member {boolean}
+         * @default true
+         */
+        clickable?: boolean;
+    }
+
+    /**
+     * AMap.CloudDataLayer云数据图层，允许开发者将存储在LBS云数据管理平台中的数据作为一个图层叠加到地图上。
+     * 也可以将经过一定筛选条件筛选出来的数据作为一个图层加载到地图上。
+     * 注：使用AMap.CloudDataLayer插件之前，请在云图数据管理后台建立存储表格。
+     * 具体创建和管理云数据存储表格的方法可以进入云图开发指南查看。
+     * @class
+     * @description 插件类，插件名："AMap.CloudDataLayer"
+     * @see http://lbs.amap.com/api/javascript-api/reference/cloudlayer#CloudDataLayer
+     */
+    class CloudDataLayer extends Layer
+    {
+        /**
+         * 构造函数，构造云数据图层
+         * tableId：在云数据管理平台新建地图时，随机生成的数据表id,
+         * 一个tableId可以对应属于同一个开发者名下的多个key值
+         * @constructor
+         * @param  {string} tableId
+         * @param  {CloudDataLayerOptions} opts?
+         */
+        constructor(tableId: string, opts?: CloudDataLayerOptions);
+        
+        /**
+         * 设置云数据图层属性。
+         * @param  {CloudDataLayerOptions} opts
+         * @returns void
+         */
+        setOptions(opts: CloudDataLayerOptions): void;
+    }
 }
 
 declare namespace TileLayer
