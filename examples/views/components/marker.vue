@@ -7,9 +7,7 @@
         <h2>代码示例</h2>
         <u-example title="基本使用" :vertical="true" :hideCode="true">
             <template slot="case">
-                <fw-amap :center="position" :zoom="16" style="height:600px;">
-                    <fw-amap-marker type="default" :position="position"></fw-amap-marker>
-                </fw-amap>
+                <fw-amap viewMode="3D" :pitch="50" :zoom="11" :center="[116.480766, 39.932931]" style="height:600px;"></fw-amap>
             </template>
             <template slot="desc">
             </template>

@@ -41,9 +41,9 @@ declare namespace AMap
     }
     
     /**
-     * 表示一个图层基础类。
+     * 表示一个图层基类。
      */
-    class Layer extends EventDispatcher
+    abstract class Layer extends EventDispatcher
     {
         /**
          * 设置图层的所在地图对象。

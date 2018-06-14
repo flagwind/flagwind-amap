@@ -9,7 +9,7 @@
 const config =
 {
     mapKey: "fef37c12ffcfec32fe33d06081430de8",
-    mapPlugins: ["ToolBar", "AMap.Autocomplete", "AMap.PlaceSearchLayer"]
+    mapPlugins: ["ToolBar", "AMap.Autocomplete", "AMap.PlaceSearchLayer", "Map3D", "AMap.DistrictSearch"]
 };
 
 export default config;

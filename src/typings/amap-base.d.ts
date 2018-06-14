@@ -188,4 +188,20 @@ declare namespace AMap
          */
         toString(): string;
     }
+    
+    class ArrayBounds
+    {
+        /**
+         * 初始化 ArrayBounds 类的新实例。
+         * @param  {Array<LngLat | [number, number] | Pixel} bounds
+         */
+        constructor(bounds: Array<LngLat | [number, number] | Pixel>);
+        
+        /**
+         * 判断传入的点是否在 ArrayBounds 内。
+         * @param  {LngLat | [number, number] | Pixel} point
+         * @returns boolean
+         */
+        contains(point: LngLat | [number, number] | Pixel): boolean;
+    }
 }
