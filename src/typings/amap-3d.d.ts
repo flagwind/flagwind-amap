@@ -29,18 +29,18 @@ declare namespace AMap
         readonly objects: Array<object>;
         
         /**
-         * 添加一个Object3D实例到图层。
-         * @param  {object} object3d
+         * 添加一个 Object3D 实例到图层。
+         * @param  {object} obj
          * @returns void
          */
-        add(object3d: object): void;
+        add(obj: AMap.Object3D.IDisplayObject): void;
         
         /**
-         * 从图层删除一个Object3D实例。
-         * @param  {object} object3d
+         * 从图层删除一个 Object3D 实例。
+         * @param  {object} obj
          * @returns void
          */
-        remove(object3d: object): void;
+        remove(obj: AMap.Object3D.IDisplayObject): void;
         
         /**
          * 清除所有Object3D实例。
@@ -137,12 +137,17 @@ declare namespace AMap.Lights
 
 declare namespace AMap.Object3D
 {
+    interface IDisplayObject
+    {
+
+    }
+
     /**
      * 描述一个三维Mesh对象，支持纹理。
      * @class
      * @see http://lbs.amap.com/api/javascript-api/reference/maps-3d#mesh
      */
-    class Mesh
+    class Mesh implements IDisplayObject
     {
         /**
          * 描述mesh的几何信息的对象，只读，修改其属性来描述mesh的几何信息。
@@ -259,7 +264,7 @@ declare namespace AMap.Object3D
      * @class
      * @see http://lbs.amap.com/api/javascript-api/reference/maps-3d#meshline
      */
-    class MeshLine
+    class MeshLine implements IDisplayObject
     {
         /**
          * 创建MeshLine对象，opts是MeshLine的构造参数。
@@ -298,7 +303,7 @@ declare namespace AMap.Object3D
     }
 
     /**
-     * 描述一个接受光照的Mesh对象，支持纹理。继承Mesh的所有属性和方法
+     * 描述一个接受光照的Mesh对象，支持纹理。继承Mesh的所有属性和方法。
      * @class
      * @see http://lbs.amap.com/api/javascript-api/reference/maps-3d#meshlights
      */
@@ -342,11 +347,21 @@ declare namespace AMap.Object3D
         color?: string | Array<number>;
     }
 
-    class Prism
+    /**
+     * 使用MeshAcceptLights封装的棱柱类型，可使用路径和高度快速构建Mesh，支持光照，不支持纹理。
+     * @class
+     * @see http://lbs.amap.com/api/javascript-api/reference/maps-3d#prism
+     */
+    class Prism implements IDisplayObject
     {
-        constructor(opts?: PrismOptions);
-
         /**
+         * 初始化 Prism 类的新实例。
+         * @param  {PrismOptions} opts?
+         */
+        constructor(opts?: PrismOptions);
+        
+        /**
+         * 获取或设置一个布尔值，用于控制棱柱是否透明。
          * @property {boolean}
          */
         transparent: boolean;

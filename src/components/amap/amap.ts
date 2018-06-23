@@ -611,10 +611,16 @@ export default class AMapComponent extends Component
 
         const map: AMap.Map = this.amap;
 
+        // function x(SvgMarker = AMap.SvgMarker)
+        // {
+        //     let x = new SvgMarker.Shape.SquarePin();
+        // }
+
         map.AmbientLight = new AMap.Lights.AmbientLight([1,1,1],0.5);
         map.DirectionLight = new AMap.Lights.DirectionLight([0,0,1],[1,1,1],1);
 
         const object3Dlayer = new AMap.Object3DLayer();
+        map.add(object3Dlayer);
 
         new AMap.DistrictSearch
         ({
@@ -630,16 +636,18 @@ export default class AMapComponent extends Component
 
             console.log(bounds);
 
-            // let prism = new AMap.Object3D.Prism
-            // ({
-            //     path: bounds,
-            //     height: height,
-            //     color: color
-            // });
+            let prism = new AMap.Object3D.Prism
+            ({
+                path: bounds,
+                height: height,
+                color: color
+            });
 
-            // prism.transparent = true;
+            prism.transparent = true;
 
-            // object3Dlayer.add(prism);
+            object3Dlayer.add(prism);
+
+            console.log(prism);
 
             let text = new AMap.Text
             ({
@@ -664,8 +672,6 @@ export default class AMapComponent extends Component
         });
 
         // map.setLayers([object3Dlayer]);
-
-        // map.add(object3Dlayer);
 
         // this.amap.plugin("AMap.DragRoute", () =>
         // {

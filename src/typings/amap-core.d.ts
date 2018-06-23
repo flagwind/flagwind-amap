@@ -496,17 +496,17 @@ declare namespace AMap
         
         /**
          * 添加地图覆盖物数组，数组为一个或多个覆盖物。
-         * @param  {Overlay | Array<Overlay>} overlayers
+         * @param  {Overlay | Array<Overlay> | Layer | Array<Layer>} overlayers
          * @returns void
          */
-        add(overlayers: Overlay | Array<Overlay>): void;
+        add(overlayers: Overlay | Array<Overlay> | Layer | Array<Layer>): void;
         
         /**
          * 删除地图覆盖物数组，数组为一个或多个覆盖物。
-         * @param  {Overlay | Array<Overlay>} overlayers
+         * @param  {Overlay | Array<Overlay> | Layer | Array<Layer>} overlayers
          * @returns void
          */
-        remove(overlayers: Overlay | Array<Overlay>): void;
+        remove(overlayers: Overlay | Array<Overlay> | Layer | Array<Layer>): void;
         
         /**
          * 返回添加的覆盖物对象，可选类型包括marker、circle、polyline、polygon； 

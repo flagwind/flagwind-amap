@@ -1570,9 +1570,9 @@ declare namespace AMap
         
         /**
          * extensions为“all”时，行政区边界坐标集合若行政区包含群岛，则坐标点为各岛的边界，岛间边界经纬度使用"|"分隔。
-         * @member {Array<LngLat | [number, number]>}
+         * @member {Array<Array<[number, number]>>}
          */
-        boundaries?: Array<LngLat | [number, number]>;
+        boundaries?: Array<Array<[number, number]>>;
 
         /**
          * 下级行政区信息列表。

@@ -18,3 +18,4 @@
 /// <reference path="./amap-route.d.ts" />
 /// <reference path="./amap-utils.d.ts" />
 /// <reference path="./amap-tools.d.ts" />
+/// <reference path="./amap-ui.d.ts" />
