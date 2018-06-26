@@ -610,76 +610,25 @@ export default class AMapComponent extends Component
         this.initializePlugins();
 
         const map: AMap.Map = this.amap;
+        // const AMapUI = window.AMapUI;
 
-        // function x(SvgMarker = AMap.SvgMarker)
-        // {
-        //     let x = new SvgMarker.Shape.SquarePin();
-        // }
-
-        map.AmbientLight = new AMap.Lights.AmbientLight([1,1,1],0.5);
-        map.DirectionLight = new AMap.Lights.DirectionLight([0,0,1],[1,1,1],1);
-
-        const object3Dlayer = new AMap.Object3DLayer();
-        map.add(object3Dlayer);
-
-        new AMap.DistrictSearch
-        ({
-            subdistrict: 0,
-            extensions: "all",
-            level: "city"
-        })
-        .search("朝阳区", function(status, result: AMap.DistrictSearchResult)
+        // tslint:disable-next-line:variable-name
+        AMapUI.load(["ui/overlay/SimpleMarker"], (SimpleMarker: any) =>
         {
-            let bounds = result.districtList[0].boundaries;
-            let height = 5000;
-            let color = "#0088ffcc";
+            console.log(AMapUI);
 
-            console.log(bounds);
-
-            let prism = new AMap.Object3D.Prism
-            ({
-                path: bounds,
-                height: height,
-                color: color
-            });
-
-            prism.transparent = true;
-
-            object3Dlayer.add(prism);
-
-            console.log(prism);
-
-            let text = new AMap.Text
-            ({
-                text: result.districtList[0].name + "</br>(" + result.districtList[0].adcode + ")",
-                verticalAlign: "bottom",
-                position: [116.528261,39.934313],
-                // height: 5000,
-                style:
-                {
-                    "background-color": "transparent",
-                    "-webkit-text-stroke": "red",
-                    "-webkit-text-stroke-width": "0.5px",
-                    "text-align": "center",
-                    "border": "none",
-                    "color": "white",
-                    "font-size": "24px",
-                    "font-weight": 600
-                }
-            });
-
-            text.setMap(map);
+            // const marker: AMapUI.SimpleMarker = new SimpleMarker
+            // ({
+            //     iconLabel: "A",
+            //     iconTheme: "default",
+            //     iconStyle: "red",
+            //     map: map,
+            //     position: map.getCenter()
+            // });
+            // console.log(marker);
+            
+            // console.log(DistrictCluster.ClusterMarkerPositionStrategy.CENTER);
         });
-
-        // map.setLayers([object3Dlayer]);
-
-        // this.amap.plugin("AMap.DragRoute", () =>
-        // {
-        //     // console.log(AMap.DrivingPolicy.LEAST_TIME);
-        // });
-
-        // const auto = new AMap.Autocomplete();
-        // console.log(auto);
     }
     
     /**

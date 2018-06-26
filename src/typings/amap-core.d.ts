@@ -8,6 +8,16 @@
 
 declare namespace AMap
 {
+    /**
+     * 异步加载插件。
+     * 异步加载指的是在 JS API 加载完成之后，在需要使用到某个插件的时候，通过AMap.plugin方法按需引入插件，在plugin回调之后使用插件功能。
+     * @see http://lbs.amap.com/api/javascript-api/guide/abc/plugins#plugin
+     * @param  {string|Array<string>} plugins
+     * @param  {Function} callback
+     * @returns void
+     */
+    function plugin(plugins: string | Array<string>, callback: Function): void;
+    
     interface View2DOptions
     {
         /**
