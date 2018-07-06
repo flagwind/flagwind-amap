@@ -256,7 +256,7 @@ declare namespace AMap
          * @member {Pixel}
          */
         offset?: Pixel;
-
+        
         /**
          * 需在点标记中显示的图标。可以是一个本地图标地址，或者Icon对象。有合法的content内容时，此属性无效。
          * @member {string | Icon}
@@ -551,10 +551,9 @@ declare namespace AMap
          * @returns void
          */
         moveAlong(path: Array<LngLat | [number, number]>, speed: number, func?: Function, circlable?: boolean): void;
-
+        
         /**
          * 以给定速度移动点标记到指定位置。
-         * @param  {number} speed 指定速度，单位：千米/小时。
          * @param  {LngLat | [number, number]} lnglat 指定位置
          * @param  {number} speed 指定速度，单位：千米/小时。
          * @param  {Function} func? 变化曲线函数，缺省为function(k){return k}。

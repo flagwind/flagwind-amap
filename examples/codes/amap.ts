@@ -1,7 +1,7 @@
 const generic = `
 <template>
     <div class="amap-view">
-        <fw-amap :lang="lang" :mapStyle="style" :zoom="zoom" :city="city"></fw-amap>
+        <amap :lang="lang" :mapStyle="style" :zoom="zoom" :city="city"></amap>
         <br />
         <i-form :label-width="80">
             <i-form-item label="语言切换">

@@ -27,6 +27,10 @@ const routes =
     {
         path: "/components/marker",
         component: (resolve: any) => (<any>require)(["views/components/marker.vue"], resolve)
+    },
+    {
+        path: "/components/elastic-marker",
+        component: (resolve: any) => (<any>require)(["views/components/elastic-marker.vue"], resolve)
     }
 ];
 

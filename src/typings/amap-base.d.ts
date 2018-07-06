@@ -166,21 +166,21 @@ declare namespace AMap
         
         /**
          * 获取当前Bounds的中心点经纬度坐标。
-         * @returns LngLat | [number, number]
+         * @returns LngLat
          */
-        getCenter(): LngLat | [number, number];
+        getCenter(): LngLat;
         
         /**
          * 获取西南角坐标。
-         * @returns LngLat | [number, number]
+         * @returns LngLat
          */
-        getSouthWest(): LngLat | [number, number];
+        getSouthWest(): LngLat;
         
         /**
          * 获取东北角坐标。
-         * @returns LngLat | [number, number]
+         * @returns LngLat
          */
-        getNorthEast(): LngLat | [number, number];
+        getNorthEast(): LngLat;
         
         /**
          * 以字符串形式返回地物对象的矩形范围。

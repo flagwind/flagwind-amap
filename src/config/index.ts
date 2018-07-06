@@ -15,11 +15,11 @@ import IMapConfig from "models/map-config";
  */
 const MAP_CONFIG: IMapConfig =
 {
-    version: "1.4.6",
+    version: "1.4.7",
     uiVersion: "1.0.11",
     protocol: "https",
     host: "webapi.amap.com/maps",
-    lazyload: true,
+    lazyload: false,
     plugins: [],
     callback: "onAMapLoaded"
 };

@@ -38,6 +38,11 @@ const menus =
                         title: "点标记",
                         path: "/components/marker",
                         icon: "ios-location-outline"
+                    },
+                    {
+                        title: "灵活点标记",
+                        path: "/components/elastic-marker",
+                        icon: "ios-location-outline"
                     }
                 ]
             }

@@ -2,16 +2,7 @@
  * Authors:
  *      jason <jasonsoop@gmail.com>
  * 
- * Licensed under the MIT License.
  * Copyright (C) 2010-present Flagwind Inc. All rights reserved. 
  */
 
-.fw-amap
-{
-    height: 100%;
-
-    &-map
-    {
-        height: 100%;
-    }
-}
+export { default } from "./elastic-marker";

@@ -238,9 +238,9 @@ export default class MapLoader
 
         // 初始化地图加载器
         MapLoader._instance = new MapLoader(config);
-
+        
         // 延迟加载处理
-        if(config.lazyload !== true)
+        if(config.lazyload === true)
         {
             return Promise.resolve();
         }

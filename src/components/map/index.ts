@@ -6,4 +6,4 @@
  * Copyright (C) 2010-present Flagwind Inc. All rights reserved. 
  */
 
-export { default } from "./amap";
+export { default } from "./map";

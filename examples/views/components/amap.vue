@@ -6,7 +6,7 @@
         <h2>代码示例</h2>
         <u-example title="基本使用" :vertical="true" :hideCode="true">
             <template slot="case">
-                <fw-amap :lang="lang" :mapStyle="style" :zoom="zoom" :city="city"></fw-amap>
+                <amap :lang="lang" :mapStyle="style" :zoom="zoom" :city="city" style="height:500px"></amap>
                 <br />
                 <i-form :label-width="80">
                     <i-form-item label="语言切换">
@@ -118,13 +118,13 @@
                         <td>动态属性</td>
                         <td>zh_cn</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>layers</td>
                         <td>地图图层数组，数组可以是<a href="http://lbs.amap.com/api/javascript-api/reference/layer" target="_blank">图层</a>中的一个或多个，默认为普通二维地图。<br />当叠加多个图层时，普通二维地图需通过实例化一个<a href="http://lbs.amap.com/api/javascript-api/reference/layer#TileLayer" target="_blank">TileLayer</a>类实现。</td>
                         <td>Array</td>
                         <td>动态属性</td>
                         <td>-</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td>zoomEnable</td>
                         <td>地图是否可缩放，默认值为true。</td>
@@ -172,13 +172,6 @@
                         <td>设置鼠标指针默认样式，该属性应符合CSS的cursor属性规范。可为CSS标注中的光标样式，如："pointer"等。</td>
                         <td>String</td>
                         <td>动态属性</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>crs</td>
-                        <td>地图显示的参考坐标系，取值范围："EPSG3857"、"EPSG3395"、"EPSG4326"。</td>
-                        <td>String</td>
-                        <td>静态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
@@ -288,13 +281,13 @@
                         <td>动态属性</td>
                         <td>amap://styles/normal</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>plugins</td>
                         <td>需要加载的地图插件。</td>
                         <td>Array</td>
                         <td>静态属性</td>
                         <td>-</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td>features</td>
                         <td>设置地图上显示的元素种类。<br />支持"bg"（地图背景）、"point"（POI点）、"road"（道路）、"building"（建筑物）</td>
@@ -330,8 +323,13 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td>initialized</td>
+                        <td>组件初始化完成后触发的事件。</td>
+                        <td>Event</td>
+                    </tr>
+                    <tr>
                         <td>complete</td>
-                        <td>地图图块加载完成后触发事件。</td>
+                        <td>地图图块加载完成后触发的事件。</td>
                         <td>-</td>
                     </tr>
                     <tr>
@@ -467,11 +465,11 @@
 </template>
 
 <style lang="less" scoped>
-.fw-amap
-{
-    width: 100%;
-    height: 550px;
-}
+// .fw-amap
+// {
+//     width: 100%;
+//     height: 550px;
+// }
 </style>
 
 <script lang="ts">
@@ -488,49 +486,37 @@ export default class AMapView extends View
 {
     /**
      * 演示需要的代码。
-     * @protected
-     * @member
-     * @returns object
+     * @member {object}
      */
     protected code: object = code;
 
     /**
      * 获取或设置地图的显示语言。
-     * @protected
-     * @member
-     * @returns string
+     * @member {string}
      */
     protected lang: string = "zh_cn";
 
     /**
      * 获取或设置地图的显示样式。
-     * @protected
-     * @member
-     * @returns string
+     * @member {string}
      */
     protected style: string = "amap://styles/normal";
 
     /**
      * 获取或设置地图的中心点（行政区域）。
-     * @protected
-     * @member
-     * @returns string
+     * @member {string}
      */
     protected city: string = "440300";
-
+    
     /**
      * 获取或设置地图的缩放级别。
-     * @protected
-     * @member
-     * @returns number
+     * @member {number}
      */
     protected zoom: number = 11;
 
     /**
      * 获取或设置地图的中心点（经纬度）。
-     * @protected
-     * @member
-     * @returns Array<number>
+     * @member {Array<number>}
      */
     protected center: Array<number> = [114.065835, 22.56814];
 }

@@ -33,6 +33,7 @@ import Article from "examples/layouts/article.vue";
 
 // 倒入全局样式
 import "flagwind-web/dist/styles/flagwind.css";
+import "src/styles/index.less";
 import "examples/styles/index.less";
 
 /**

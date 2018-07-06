@@ -9,16 +9,18 @@
 /// <reference path="./typings/index.d.ts" />
 
 // 地图加载器
-import MapLoader from "./common/map-loader";
+import MapLoader from "./common/loader";
 
 // 组件
-import AMap from "./components/amap";
-import AMapMarker from "./components/marker";
+import AMap from "./components/map";
+import Marker from "./components/marker";
+import ElasticMarker from "./components/elastic-marker";
 
 const components =
 {
-    "fw-amap": AMap,
-    "fw-amap-marker": AMapMarker
+    "amap": AMap,
+    "amap-marker": Marker,
+    "amap-elastic-marker": ElasticMarker
 };
 
 const amap =
