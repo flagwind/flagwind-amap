@@ -1,17 +1,17 @@
 <template>
     <div class="layout-sidebar">
         <i-menu theme="light" width="auto" :active-name="activePath" @on-select="onMenuSelect">
-            <template v-for="(item, index) in menus" v-if="!item.visible">
+            <template v-for="item in menus" v-if="!item.visible">
                 <template v-if="item.children && item.children.length > 0">
                     <i-menu-group :key="item.path" :title="item.title" >
-                        <i-menu-item v-for="(child, index) in item.children" :name="child.path" :key="child.path" v-if="!child.visible">
-                            <i-icon :type="child.icon" v-if="child.icon"></i-icon> {{child.title}}
+                        <i-menu-item v-for="child in item.children" :name="child.path" :key="child.path" v-if="!child.visible">
+                            <i v-if="child.icon" class="iconfont" :class="child.icon"></i> {{child.title}}
                         </i-menu-item>
                     </i-menu-group>
                 </template>
                 <template v-else>
                     <i-menu-item :name="item.path" :key="item.path">
-                        <i-icon :type="item.icon" v-if="item.icon"></i-icon> {{item.title}}
+                        <i v-if="item.icon" class="iconfont" :class="item.icon"></i> {{item.title}}
                     </i-menu-item>
                 </template>
             </template>

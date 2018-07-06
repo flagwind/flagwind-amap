@@ -15,12 +15,14 @@ import MapLoader from "./common/loader";
 import AMap from "./components/map";
 import Marker from "./components/marker";
 import ElasticMarker from "./components/elastic-marker";
+import Polygon from "./components/polygon";
 
 const components =
 {
     "amap": AMap,
     "amap-marker": Marker,
-    "amap-elastic-marker": ElasticMarker
+    "amap-elastic-marker": ElasticMarker,
+    "amap-polygon": Polygon
 };
 
 const amap =

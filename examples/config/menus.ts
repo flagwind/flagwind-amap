@@ -26,7 +26,7 @@ const menus =
                     {
                         title: "地图",
                         path: "/components/amap",
-                        icon: "map"
+                        icon: "icon-map"
                     }
                 ]
             },
@@ -37,12 +37,17 @@ const menus =
                     {
                         title: "点标记",
                         path: "/components/marker",
-                        icon: "ios-location-outline"
+                        icon: "icon-marker"
                     },
                     {
                         title: "灵活点标记",
                         path: "/components/elastic-marker",
-                        icon: "ios-location-outline"
+                        icon: "icon-elastic-marker"
+                    },
+                    {
+                        title: "多边形",
+                        path: "/components/polygon",
+                        icon: "icon-polygon"
                     }
                 ]
             }

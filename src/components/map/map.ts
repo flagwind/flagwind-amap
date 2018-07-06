@@ -356,6 +356,12 @@ export default class Map extends Component
      */
     @config({type: Boolean})
     public preloadMode: boolean;
+
+    @config({type: Boolean})
+    public turboMode: boolean;
+
+    @config({type: Boolean})
+    public forceVector: boolean;
     
     /**
      * 获取配置属性处理程序列表。

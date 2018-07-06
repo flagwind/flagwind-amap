@@ -15,6 +15,9 @@ import Marker from "../marker";
  * @version 1.0.0
  */
 @component
+({
+    name: "amap-elastic-marker"
+})
 export default class ElasticMarker extends Marker
 {
     /**
@@ -82,15 +85,8 @@ export default class ElasticMarker extends Marker
             {
                 const marker = new ElasticMarker(options);
 
-                console.log(marker);
-
                 resolve(marker);
             });
         });
     }
-
-    // protected render(createElement: Function): void
-    // {
-    //     // ddd
-    // }
 }

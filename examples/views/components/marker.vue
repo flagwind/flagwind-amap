@@ -23,9 +23,6 @@
                     <amap-marker :position="position4" :label="position4Label" :content="position4Content" :extData="position4Data" @click="onMarkerClick">
                     </amap-marker>
                 </amap>
-                <br />
-                <i-form :label-width="80">
-                </i-form>
             </template>
             <template slot="desc">
                 <p>使用<code>position</code>属性设置点标记在地图上的显示位置。</p>
