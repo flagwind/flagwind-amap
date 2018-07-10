@@ -72,49 +72,63 @@
                     <tr>
                         <td>viewMode</td>
                         <td>默认为"2D"，可选"3D"，选择"3D"会显示 3D 地图效果。</td>
-                        <td>String</td>
+                        <td>string</td>
                         <td>静态属性</td>
                         <td>2D</td>
                     </tr>
                     <tr>
                         <td>pitchEnable</td>
                         <td>是否允许设置俯仰角度，3D视图下为true，2D视图下设置无效。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>静态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
                         <td>pitch</td>
                         <td>地图处于3D渲染模式下的俯仰角度(0°-83°)。</td>
-                        <td>Number</td>
+                        <td>number</td>
                         <td>动态属性</td>
                         <td>0</td>
                     </tr>
                     <tr>
+                        <td>maxPitch</td>
+                        <td>设置地图的最大倾角。</td>
+                        <td>number</td>
+                        <td>静态属性</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
                         <td>rotateEnable</td>
                         <td>地图是否可旋转，3D视图下为true，2D视图下设置无效。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
+                        <td>动态属性</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>rotation</td>
+                        <td>设置地图的旋转角度。</td>
+                        <td>number</td>
                         <td>动态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
                         <td>skyColor</td>
                         <td>调整天空颜色，配合自定义地图，仅针对3D视图有效，如："#ff0000"。</td>
-                        <td>String</td>
+                        <td>string</td>
                         <td>静态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
                         <td>buildingAnimation</td>
                         <td>用于控制渲染楼块时是否带动画效果，3D视图有效，PC端默认true，手机端默认false。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>静态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
                         <td>lang</td>
                         <td>地图的语言类型。<br />可选值：zh_cn(中文简体)，en(英文)，zh_en(中英文对照)。</td>
-                        <td>String</td>
+                        <td>string</td>
                         <td>动态属性</td>
                         <td>zh_cn</td>
                     </tr>
@@ -128,133 +142,140 @@
                     <tr>
                         <td>zoomEnable</td>
                         <td>地图是否可缩放，默认值为true。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>动态属性</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>zoom</td>
                         <td>地图显示的缩放级别，若<code>center</code>属性未赋值，地图初始化默认显示用户所在城市范围。<br />3D地图下，<code>zoom</code>值，可以设置为浮点数。</td>
-                        <td>Number</td>
+                        <td>number</td>
                         <td>动态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
                         <td>zooms</td>
                         <td>地图显示的缩放级别范围。<br />在PC上，默认为[3,18]，取值范围[3-18]；<br />在移动设备上，默认为[3,19],取值范围[3-19]。</td>
-                        <td>Array</td>
+                        <td>[number, number]</td>
                         <td>静态属性</td>
                         <td>[3,18]</td>
                     </tr>
                     <tr>
                         <td>center</td>
                         <td>设置地图显示的中心点[经度，纬度]。</td>
-                        <td>Array</td>
+                        <td>[number, number]</td>
                         <td>动态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
                         <td>city</td>
                         <td>按照行政区名称或adcode来设置地图显示的中心点。<br />行政区名称支持中国、省、市、区/县名称，如遇重名的情况，会按城市编码表顺序返回第一个。<br />adcode请在<a href="http://a.amap.com/lbs/static/file/AMap_adcode_citycode.xlsx.zip" target="_blank">城市编码表</a>中查询。<br />注意：不要同时使用<code>center</code>和<code>city</code>属性，如一起使用将以<code>city</code>属性作为最终呈现结果。 </td>
-                        <td>String</td>
+                        <td>string</td>
                         <td>动态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
                         <td>labelzIndex</td>
                         <td>地图标注显示顺序，大于110可将底图上的默认标注显示在覆盖物（圆、折线、面）之上。</td>
-                        <td>Number</td>
+                        <td>number</td>
                         <td>动态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
+                        <td>showLabel</td>
+                        <td>设置地图是否显示地标标签。</td>
+                        <td>boolean</td>
+                        <td>静态属性</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
                         <td>defaultCursor</td>
                         <td>设置鼠标指针默认样式，该属性应符合CSS的cursor属性规范。可为CSS标注中的光标样式，如："pointer"等。</td>
-                        <td>String</td>
+                        <td>string</td>
                         <td>动态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
                         <td>animateEnable</td>
                         <td>地图平移过程中是否使用动画。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>静态属性</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>isHotspot</td>
                         <td>是否开启地图热点，默认false 不打开。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>静态属性</td>
                         <td>false</td>
                     </tr>
                     <tr>
                         <td>resizeEnable</td>
                         <td>是否监控地图容器尺寸变化，默认值为false。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>静态属性</td>
                         <td>false</td>
                     </tr>
                     <tr>
                         <td>showIndoorMap</td>
                         <td>是否在有矢量底图的时候自动展示室内地图，PC端默认是true，移动端默认是false。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>静态属性</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>expandZoomRange</td>
                         <td>是否支持可以扩展最大缩放级别，和<code>zooms</code>属性配合使用。<br />设置为true的时候，<code>zooms</code>的最大级别在PC上可以扩大到20级，移动端为：高清19，非高清20。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>静态属性</td>
                         <td>false</td>
                     </tr>
                     <tr>
                         <td>dragEnable</td>
                         <td>地图是否可通过鼠标拖拽平移，默认为true。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>动态属性</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>doubleClickZoom</td>
                         <td>地图是否可通过双击鼠标放大地图，默认为true。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>动态属性</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>keyboardEnable</td>
                         <td>地图是否可通过键盘控制，默认为true。<br />方向键控制地图平移，"+"和"-"可以控制地图的缩放，Ctrl+"→"顺时针旋转，Ctrl+"←"逆时针旋转。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>动态属性</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>jogEnable</td>
                         <td>地图是否使用缓动效果，默认为true。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>动态属性</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>scrollWheel</td>
                         <td>地图是否可通过鼠标滚轮缩放浏览，默认为true。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>动态属性</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>touchZoom</td>
                         <td>地图在移动终端上是否可通过多点触控缩放浏览地图，默认为true。关闭手势缩放地图，请设置为false。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>静态属性</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>touchZoomCenter</td>
                         <td>设置触控缩放中心，当 touchZoomCenter = 1 的时候，手机端双指缩放的以地图中心为中心，否则默认以双指中间点为中心。</td>
-                        <td>Number</td>
+                        <td>number</td>
                         <td>静态属性</td>
                         <td>-</td>
                     </tr>
@@ -277,7 +298,7 @@
                             靛青蓝：amap://styles/blue<br />
                             极夜蓝：amap://styles/darkblue<br />
                         </td>
-                        <td>String</td>
+                        <td>string</td>
                         <td>动态属性</td>
                         <td>amap://styles/normal</td>
                     </tr>
@@ -291,21 +312,21 @@
                     <tr>
                         <td>features</td>
                         <td>设置地图上显示的元素种类。<br />支持"bg"（地图背景）、"point"（POI点）、"road"（道路）、"building"（建筑物）</td>
-                        <td>Array</td>
+                        <td>Array&lt;string&gt;</td>
                         <td>动态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
                         <td>showBuildingBlock</td>
                         <td>设置地图显示3D楼块效果，移动端也可使用。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>静态属性</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>preloadMode</td>
                         <td>设置地图的预加载模式，开启预加载的地图会在适当时刻提前加载周边和上一级的地图数据，优化使用体验。</td>
-                        <td>Boolean</td>
+                        <td>boolean</td>
                         <td>静态属性</td>
                         <td>true</td>
                     </tr>
@@ -325,138 +346,138 @@
                     <tr>
                         <td>initialized</td>
                         <td>组件初始化完成后触发的事件。</td>
-                        <td>Event</td>
+                        <td>{source}</td>
                     </tr>
                     <tr>
                         <td>complete</td>
                         <td>地图图块加载完成后触发的事件。</td>
-                        <td>-</td>
+                        <td>{source}</td>
                     </tr>
                     <tr>
                         <td>click</td>
                         <td>鼠标左键单击事件。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>dblclick</td>
                         <td>鼠标左键双击事件。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>mapmove</td>
                         <td>地图平移时触发事件。</td>
-                        <td>-</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>hotspotclick</td>
                         <td>鼠标点击热点时触发。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>hotspotover</td>
                         <td>鼠标滑过热点时触发。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>hotspotout</td>
                         <td>鼠标移出热点时触发。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>movestart</td>
                         <td>地图平移开始时触发。</td>
-                        <td>-</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>moveend</td>
                         <td>地图移动结束后触发，包括平移，以及中心点变化的缩放。如地图有拖拽缓动效果，则在缓动结束后触发。</td>
-                        <td>-</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>zoomchange</td>
                         <td>地图缩放级别更改后触发。</td>
-                        <td>-</td>
+                        <td>{source}</td>
                     </tr>
                     <tr>
                         <td>zoomstart</td>
                         <td>缩放开始时触发。</td>
-                        <td>-</td>
+                        <td>{source}</td>
                     </tr>
                     <tr>
                         <td>zoomend</td>
                         <td>缩放停止时触发。</td>
-                        <td>-</td>
+                        <td>{source}</td>
                     </tr>
                     
                     <tr>
                         <td>mousemove</td>
                         <td>鼠标在地图上移动时触发。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>mousewheel</td>
                         <td>鼠标滚轮开始缩放地图时触发。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>mouseover</td>
                         <td>鼠标移入地图容器内时触发。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>mouseout</td>
                         <td>鼠标移出地图容器时触发。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>mouseup</td>
                         <td>鼠标在地图上单击抬起时触发。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>mousedown</td>
                         <td>鼠标在地图上单击按下时触发。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>rightclick</td>
                         <td>鼠标右键单击事件。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>dragstart</td>
                         <td>开始拖拽地图时触发。</td>
-                        <td>-</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>dragging</td>
                         <td>拖拽地图过程中触发。</td>
-                        <td>-</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>dragend</td>
                         <td>停止拖拽地图时触发。如地图有拖拽缓动效果，则在拽停止，缓动开始前触发。</td>
-                        <td>-</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>resize</td>
                         <td>地图容器大小改变事件。</td>
-                        <td>-</td>
+                        <td>{source}</td>
                     </tr>
                     <tr>
                         <td>touchstart</td>
                         <td>触摸开始时触发事件，仅适用移动设备。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>touchmove</td>
                         <td>触摸移动进行中时触发事件，仅适用移动设备。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>touchend</td>
                         <td>触摸结束时触发事件，仅适用移动设备。</td>
-                        <td>MapsEvent</td>
+                        <td>{lnglat, pixel, source}</td>
                     </tr>
                 </tbody>
             </table>

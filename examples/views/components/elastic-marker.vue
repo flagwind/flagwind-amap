@@ -6,25 +6,30 @@
         <h2>代码示例</h2>
         <u-example title="基本使用" :vertical="true" :hideCode="true">
             <template slot="case">
-                <amap viewMode="3D"
+                <amap class="elastic-marker-example"
+                    viewMode="3D"
                     defaultCursor="pointer"
-                    :turboMode="false"
                     :showIndoorMap="false"
                     :showBuildingBlock="false"
                     :zooms="[14, 20]"
-                    :showLabel="false" 
+                    :showLabel="false"
                     :zoom="16"
                     :pitch="55"
                     :rotation="-45"
-                    :center="[116.408967, 39.880101]"
-                    :forceVector="true">
+                    :center="[116.408967, 39.880101]">
                     
-                    <amap-polygon :path="polygonPath" :bubble="true" fillColor="green" :fillOpacity="0.3" :strokeWeight="1">
-
+                    <!--多边形背景 BEGIN-->
+                    <amap-polygon
+                        :path="polygonPath"
+                        :bubble="true"
+                        fillColor="green"
+                        :fillOpacity="0.3"
+                        :strokeWeight="1">
                     </amap-polygon>
+                    <!--多边形背景 END-->
 
                     <!--设施 BEGIN-->
-                    <amap-elastic-marker v-for="facilitiy in facilities" 
+                    <amap-elastic-marker v-for="facilitiy in facilities"
                         :key="facilitiy.id"
                         :position="facilitiy.position"
                         :zooms="[14, 20]"
@@ -46,7 +51,7 @@
             </template>
             <template slot="desc">
             </template>
-            <u-code slot="code" lang="html"></u-code>
+            <u-code slot="code" lang="html">{{code.generic}}</u-code>
         </u-example>
 
         <div class="api">
@@ -63,6 +68,120 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td>styles</td>
+                        <td>
+                            不同样式的形式。如：<br />
+                            [{<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;icon:<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;{<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;img: "./a,png",<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size: [16,16],&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 图标的原始大小<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ancher: [8,16],&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 锚点，图标原始大小下锚点所处的位置，相对左上角<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imageOffset: [360,340],&nbsp;&nbsp;&nbsp;&nbsp;// 可缺省，当使用精灵图时可用，标示图标在整个图片中左上角的位置<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imageSize: [512,512],&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 可缺省，当使用精灵图时可用，整张图片的大小<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fitZoom: 14,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 最合适的级别，在此级别下显示为原始大小<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scaleFactor: 2,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 地图放大一级的缩放比例系数<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxScale: 2,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 最大放大比例<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minScale: 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 最小放大比例<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;},<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;label:<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;{<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content: "标记1",&nbsp;// 文本内容<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;position: "BM",&nbsp;&nbsp;&nbsp;// 文本位置相对于图标的基准点<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// BL、BM、BR、ML、MR、TL、TM、TR分别代表左下角、底部中央、右下角、左侧中央、右侧中央、左上角、顶部中央、右上角。<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 缺省时代表相对图标的锚点位置。<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset: [-35,0],&nbsp;&nbsp;// 相对position的偏移量<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minZoom: 15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// label的最小显示级别<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                            }]
+                        </td>
+                        <td>Array&lt;object&gt;</td>
+                        <td>静态属性</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>zoomStyleMapping</td>
+                        <td>
+                            地图级别与styles中样式的对应关系。如：<br />
+                            {<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;14: 0,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;15: 0,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;16: 1,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;17: 1,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;18: 1,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;19: 1,<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;20: 1<br />
+                            }<br />
+                            表示14到15级使用styles中的第1个样式，16-20级使用第2个样式。
+                        </td>
+                        <td>object</td>
+                        <td>静态属性</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>position</td>
+                        <td>点标记在地图上显示的位置，默认为地图中心点。</td>
+                        <td>[number, number]</td>
+                        <td>动态属性</td>
+                        <td>地图中心点</td>
+                    </tr>
+                    <tr>
+                        <td>topWhenClick</td>
+                        <td>鼠标点击时Marker是否置顶。</td>
+                        <td>boolean</td>
+                        <td>静态属性</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>bubble</td>
+                        <td>是否将覆盖物的鼠标或touch等事件冒泡到地图上。</td>
+                        <td>boolean</td>
+                        <td>静态属性</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>draggable</td>
+                        <td>设置点标记是否可拖拽移动。</td>
+                        <td>boolean</td>
+                        <td>动态属性</td>
+                        <td>false</td>
+                    </tr>
+                     <tr>
+                        <td>cursor</td>
+                        <td>指定鼠标悬停时的鼠标样式，自定义cursor，IE仅支持cur/ani/ico格式，Opera不支持自定义cursor。</td>
+                        <td>string</td>
+                        <td>动态属性</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>visible</td>
+                        <td>点标记是否可见。</td>
+                        <td>boolean</td>
+                        <td>动态属性</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>zIndex</td>
+                        <td>点标记的叠加顺序。地图上存在多个点标记叠加时，通过该属性使级别较高的点标记在上层显示。</td>
+                        <td>number</td>
+                        <td>动态属性</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>clickable</td>
+                        <td>点标记是否可点击。</td>
+                        <td>boolean</td>
+                        <td>动态属性</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>extData</td>
+                        <td>用户自定义数据，支持JavaScript API任意数据类型，如Marker的ID等。</td>
+                        <td>any</td>
+                        <td>动态属性</td>
+                        <td>-</td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -76,6 +195,81 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td>initialized</td>
+                        <td>组件初始化完成后触发。</td>
+                        <td>{source}</td>
+                    </tr>
+                    <tr>
+                        <td>click</td>
+                        <td>鼠标左键单击事件。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>dblclick</td>
+                        <td>鼠标左键双击事件。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>rightclick</td>
+                        <td>鼠标右键单击事件。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>mousemove</td>
+                        <td>鼠标在组件上移动时触发。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>mouseover</td>
+                        <td>鼠标移入组件内时触发。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>mouseout</td>
+                        <td>鼠标移出组件时触发。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>mouseup</td>
+                        <td>鼠标在组件上单击抬起时触发。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>mousedown</td>
+                        <td>鼠标在组件上单击按下时触发。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>dragstart</td>
+                        <td>开始拖拽组件时触发。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>dragging</td>
+                        <td>拖拽组件过程中触发。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>dragend</td>
+                        <td>停止拖拽组件时触发。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>touchstart</td>
+                        <td>触摸开始时触发事件，仅适用移动设备。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>touchmove</td>
+                        <td>触摸移动进行中时触发事件，仅适用移动设备。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
+                    <tr>
+                        <td>touchend</td>
+                        <td>触摸停止时触发，仅适用移动设备。</td>
+                        <td>{lnglat, pixel, source}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -83,32 +277,30 @@
 </template>
 
 <style lang="less">
-
-.amap
+.elastic-marker-example
 {
     height: 600px;
-}
 
-.amap-marker-label
-{
-    display: inline-block;
-    width: 60px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    border-radius: 15px;
-    border: solid 2px rgba(100, 255, 200, 0.8);
-    font-size: 16px;
-    text-align: center;
-    font-family: "MSYAHEI";
-    color: green;
-    background-color: rgba(255, 255, 255, 0.4);
+    .amap-marker-label
+    {
+        display: inline-block;
+        width: 60px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        border-radius: 15px;
+        border: solid 2px rgba(100, 255, 200, 0.8);
+        font-size: 16px;
+        text-align: center;
+        font-family: "MSYAHEI";
+        color: green;
+        background-color: rgba(255, 255, 255, 0.4);
+    }
 }
-
 </style>
 
 <script lang="ts">
 import { component, View } from "flagwind-web";
-import * as code from "examples/codes/amap";
+import * as code from "examples/codes/elastic-marker";
 
 /**
  * 灵活点标记组件示例。
@@ -120,11 +312,14 @@ export default class ElasticMarkerView extends View
 {
     /**
      * 演示需要的代码。
-     * @protected
      * @member {object}
      */
     protected code: object = code;
 
+    /**
+     * 多边形背景点位。
+     * @member {Array[number, number]}
+     */
     protected polygonPath: Array<[number, number]> =
     [
         [116.419763, 39.882967],
@@ -251,7 +446,6 @@ export default class ElasticMarkerView extends View
     
     /**
      * 设施列表。
-     * @protected
      * @member {Array<object>}
      */
     protected facilities: Array<object> =
@@ -302,7 +496,6 @@ export default class ElasticMarkerView extends View
 
     /**
      * 设施的缩放映射关系。
-     * @protected
      * @member {Array<object>}
      */
     protected facilitiyMapping: object =
@@ -318,7 +511,6 @@ export default class ElasticMarkerView extends View
 
     /**
      * 景点列表。
-     * @protected
      * @member {Array<object>}
      */
     protected touristSpots: Array<object> =
@@ -392,7 +584,6 @@ export default class ElasticMarkerView extends View
 
     /**
      * 景点的缩放映射关系。
-     * @protected
      * @member {object}
      */
     protected touristSpotMapping: object =

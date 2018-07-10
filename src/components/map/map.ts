@@ -159,6 +159,14 @@ export default class Map extends Component
     public pitch: number;
 
     /**
+     * 获取或设置地图的最大倾角。
+     * @config {number}
+     * @description 静态属性，仅支持初始化配置。
+     */
+    @config({type: Number})
+    public maxPitch: number;
+
+    /**
      * 获取或设置地图是否可旋转。
      * 3D视图默认为true，2D视图默认false。
      * @config {boolean}
@@ -166,6 +174,14 @@ export default class Map extends Component
      */
     @config({type: Boolean})
     public rotateEnable: boolean;
+
+    /**
+     * 获取或设置地图的旋转角度。
+     * @config {number}
+     * @description 动态属性，支持响应式。
+     */
+    @config({type: Number})
+    public rotation: number;
 
     /**
      * 获取或设置天空颜色，仅针对3D视图有效。
@@ -357,11 +373,14 @@ export default class Map extends Component
     @config({type: Boolean})
     public preloadMode: boolean;
 
+    /**
+     * 获取或设置地图是否显示地标标签。
+     * @config {boolean}
+     * @default true
+     * @description 静态属性，仅支持初始化配置。
+     */
     @config({type: Boolean})
-    public turboMode: boolean;
-
-    @config({type: Boolean})
-    public forceVector: boolean;
+    public showLabel: boolean;
     
     /**
      * 获取配置属性处理程序列表。

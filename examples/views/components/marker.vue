@@ -7,7 +7,7 @@
         <h2>代码示例</h2>
         <u-example title="综合示例" :vertical="true" :hideCode="true">
             <template slot="case">
-                <amap :zoom="16" :center="[113.974222, 22.537001]">
+                <amap class="marker-example" :zoom="16" :center="[113.974222, 22.537001]">
                     <!--基本用法-->
                     <amap-marker :position="position1"></amap-marker>
 
@@ -25,6 +25,7 @@
                 </amap>
             </template>
             <template slot="desc">
+                <i-button @click="visible = !visible">测试一下</i-button>
                 <p>使用<code>position</code>属性设置点标记在地图上的显示位置。</p>
                 <p>通过设置<code>draggable</code>为 true，可以让点标记拖拽移动。</p>
                 <p>通过设置属性<code>icon</code>可以自定义点标记图标。</p>
@@ -217,7 +218,7 @@
                     </tr>
                     <tr>
                         <td>extData</td>
-                        <td>用户自定义数据，支持JavaScript API任意数据类型，如Marker的 id 等。</td>
+                        <td>用户自定义数据，支持JavaScript API任意数据类型，如Marker的ID等。</td>
                         <td>any</td>
                         <td>动态属性</td>
                         <td>-</td>
@@ -264,17 +265,17 @@
                         <td>void</td>
                     </tr>
                     <tr>
-                        <td>pauseMove</td>
+                        <td>pauseMove()</td>
                         <td>暂停点标记的动画效果。</td>
                         <td>void</td>
                     </tr>
                     <tr>
-                        <td>resumeMove</td>
+                        <td>resumeMove()</td>
                         <td>重新开始点标记的动画效果。</td>
                         <td>void</td>
                     </tr>
                     <tr>
-                        <td>stopMove</td>
+                        <td>stopMove()</td>
                         <td>点标记停止动画。</td>
                         <td>void</td>
                     </tr>
@@ -293,7 +294,7 @@
                 <tbody>
                     <tr>
                         <td>initialized</td>
-                        <td>组件初始化完成后触发的事件。</td>
+                        <td>组件初始化完成后触发。</td>
                         <td>{source}</td>
                     </tr>
                     <tr>
@@ -332,42 +333,42 @@
                     </tr>
                     <tr>
                         <td>mousemove</td>
-                        <td>鼠标在地图上移动时触发。</td>
+                        <td>鼠标在组件上移动时触发。</td>
                         <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>mouseover</td>
-                        <td>鼠标移入地图容器内时触发。</td>
+                        <td>鼠标移入组件内时触发。</td>
                         <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>mouseout</td>
-                        <td>鼠标移出地图容器时触发。</td>
+                        <td>鼠标移出组件时触发。</td>
                         <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>mouseup</td>
-                        <td>鼠标在地图上单击抬起时触发。</td>
+                        <td>鼠标在组件上单击抬起时触发。</td>
                         <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>mousedown</td>
-                        <td>鼠标在地图上单击按下时触发。</td>
+                        <td>鼠标在组件上单击按下时触发。</td>
                         <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>dragstart</td>
-                        <td>开始拖拽地图时触发。</td>
+                        <td>开始拖拽组件时触发。</td>
                         <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>dragging</td>
-                        <td>拖拽地图过程中触发。</td>
+                        <td>拖拽组件过程中触发。</td>
                         <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
                         <td>dragend</td>
-                        <td>停止拖拽地图时触发。如地图有拖拽缓动效果，则在拽停止，缓动开始前触发。</td>
+                        <td>停止拖拽组件时触发。</td>
                         <td>{lnglat, pixel, source}</td>
                     </tr>
                     <tr>
@@ -392,23 +393,23 @@
 </template>
 
 <style lang="less">
-.amap
+.marker-example
 {
     height: 600px;
-}
 
-.marker-route
-{
-    position: absolute;
-    width: 40px;
-    height: 44px;
-    background: url(https://webapi.amap.com/theme/v1.3/images/newpc/poi-1.png) no-repeat;
-    cursor: pointer;
-}
+    .marker-route
+    {
+        position: absolute;
+        width: 40px;
+        height: 44px;
+        background: url(https://webapi.amap.com/theme/v1.3/images/newpc/poi-1.png) no-repeat;
+        cursor: pointer;
+    }
 
-.marker-marker-bus-from
-{
-    background-position: -334px -180px;
+    .marker-marker-bus-from
+    {
+        background-position: -334px -180px;
+    }
 }
 </style>
 

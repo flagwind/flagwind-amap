@@ -21,7 +21,7 @@ import Marker from "../marker";
 export default class ElasticMarker extends Marker
 {
     /**
-     * 多个不同样式的数组，每个样式形式。
+     * 获取或设置不同样式的形式。
      * @example
      * 如：
      * {
@@ -46,12 +46,13 @@ export default class ElasticMarker extends Marker
      *     }
      * }
      * @config {Array<object>}
+     * @description 静态属性，仅支持初始化配置。
      */
-    @config({type: Array})
+    @config({type: Array, required: true})
     public styles: Array<object>;
     
     /**
-     * 表示地图级别与styles中样式对应关系的映射。
+     * 获取或设置地图级别与styles中样式对应关系的映射。
      * @example
      * 如：
      * {
@@ -65,16 +66,17 @@ export default class ElasticMarker extends Marker
      * }
      * 表示14到15级使用styles中的第0个样式，16-20级使用第二个样式。
      * @config {object}
+     * @description 静态属性，仅支持初始化配置。
      */
-    @config({type: Object})
+    @config({type: Object, required: true})
     public zoomStyleMapping: object;
-
+    
     /**
      * 根据指定配置项初始化组件。
-     * @protected
+     * @async
      * @override
      * @param  {object} options
-     * @returns void
+     * @returns Promise<AMap.ElasticMarker>
      */
     protected async initialize(options: object): Promise<AMap.ElasticMarker>
     {
@@ -84,7 +86,7 @@ export default class ElasticMarker extends Marker
             AMap.plugin("ElasticMarker", (ElasticMarker = AMap.ElasticMarker) =>
             {
                 const marker = new ElasticMarker(options);
-
+                
                 resolve(marker);
             });
         });

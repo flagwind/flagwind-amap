@@ -326,6 +326,13 @@ declare namespace AMap
          * @default true
          */
         preloadMode?: boolean;
+        
+        /**
+         * 设置地图是否显示地标标签。
+         * @member {boolean}
+         * @default true
+         */
+        showLabel?: boolean;
     }
     
     /**

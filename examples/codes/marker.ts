@@ -19,23 +19,23 @@ const generic = `
 </template>
 
 <style lang="less">
-.amap
+.marker-example
 {
     height: 600px;
-}
 
-.marker-route
-{
-    position: absolute;
-    width: 40px;
-    height: 44px;
-    background: url(https://webapi.amap.com/theme/v1.3/images/newpc/poi-1.png) no-repeat;
-    cursor: pointer;
-}
+    .marker-route
+    {
+        position: absolute;
+        width: 40px;
+        height: 44px;
+        background: url(https://webapi.amap.com/theme/v1.3/images/newpc/poi-1.png) no-repeat;
+        cursor: pointer;
+    }
 
-.marker-marker-bus-from
-{
-    background-position: -334px -180px;
+    .marker-marker-bus-from
+    {
+        background-position: -334px -180px;
+    }
 }
 </style>
 

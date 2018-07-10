@@ -13,6 +13,17 @@ import Overlay from "../overlay";
 import Convert from "common/convert";
 
 /**
+ * 组件原生事件。
+ * @const
+ */
+const EVENTS =
+[
+    "moving",               // 点标记在执行moveTo，moveAlong动画时触发事件
+    "moveend",              // 点标记执行moveTo动画结束时触发事件。如组件有拖拽缓动效果，则在缓动结束后触发
+    "movealong"             // 点标记执行moveAlong动画一次后触发事件
+];
+
+/**
  * 点标记组件。
  * @class
  * @version 1.0.0
@@ -203,6 +214,16 @@ export default class Marker extends Overlay
     public stopMove(): void
     {
         this.component.stopMove();
+    }
+
+    /**
+     * 获取组件支持的事件列表。
+     * @override
+     * @returns Array<string>
+     */
+    protected getComponentEvents(): Array<string>
+    {
+        return [...EVENTS, ...super.getComponentEvents()];
     }
     
     /**

@@ -186,8 +186,7 @@ export default class Workbench extends WorkbenchBase
     {
         AMap.init
         ({
-            key: config.mapKey,
-            plugins: config.mapPlugins
+            key: config.mapKey
         });
     }
 }

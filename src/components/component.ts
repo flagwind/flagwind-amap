@@ -6,6 +6,8 @@
  * Copyright (C) 2010-present Flagwind Inc. All rights reserved. 
  */
 
+import flagwind from "flagwind-core";
+import Type = flagwind.Type;
 import { Component as ComponentBase } from "flagwind-web";
 import upperCamelCase from "uppercamelcase";
 import Convert from "common/convert";
@@ -30,8 +32,18 @@ export default abstract class Component extends ComponentBase
 {
     private _map: AMap.Map;                                 // 高德地图实例
     private _component: any;                                // 高德原始组件实例，如：Marker、Polyline、Polygon、Rectangle 等
-    private listeners: Array<AMap.EventListener> = [];      // 高德事件监听器列表
-    private unwatchs: Array<Function> = [];                 // Vue 属性监听器取消函数列表
+
+    /**
+     * 高德事件监听器列表。
+     * @member {Array<AMap.EventListener>}
+     */
+    protected listeners: Array<AMap.EventListener> = [];
+
+    /**
+     * Vue 属性监听器取消函数列表。
+     * @member {Array<Function>}
+     */
+    protected unwatchs: Array<Function> = [];
 
     /**
      * 当地图准备完毕时触发的事件。
@@ -226,6 +238,16 @@ export default abstract class Component extends ComponentBase
             }
         }
 
+        // 防止高德篡改组件原始数据
+        if(Type.isArray(sourceValue))
+        {
+            return [...sourceValue];
+        }
+        else if(Type.isObject(sourceValue))
+        {
+            return {...sourceValue};
+        }
+
         return sourceValue;
     }
     
@@ -294,10 +316,10 @@ export default abstract class Component extends ComponentBase
                 e.source = this;
                 
                 // 通过 Vue 的事件模型转发高德原生事件
-                this.$emit(e.type, e);
+                this.$emit(eventName, e);
 
             }, this);
-
+            
             this.listeners.push(listener);
         }
     }
@@ -400,7 +422,7 @@ export default abstract class Component extends ComponentBase
             return [methodName, component[methodName]];
         }
 
-        return null;
+        return [null, null];
     }
     
     /**
