@@ -1,34 +1,16 @@
 <template>
     <l-article>
-        <h1>Marker 点标记</h1>
+        <h1>TextMarker 文本标记</h1>
         <h2>概述</h2>
-        <p>Marker 是一个用来往地图上添加点标记的组件。</p>
-        <p>使用它将任何你希望用户看到的兴趣点标注在地图上，你可以为标注指定任意图标或者内容，以及文字标签。</p>
+        <p>纯文本标记。</p>
         <h2>代码示例</h2>
-        <u-example title="综合示例" :vertical="true" :hideCode="true">
+        <u-example title="基本使用" :vertical="true" :hideCode="true">
             <template slot="case">
-                <amap class="marker-example" :zoom="16" :center="[113.974222, 22.537001]">
-                    <!--基本用法-->
-                    <amap-marker :position="position1"></amap-marker>
-
-                    <!--自定义图标并且可拖动-->
-                    <amap-marker :position="position2" :icon="position2Icon" :draggable="true" :raiseOnDrag="true"></amap-marker>
-                    
-                    <!--自定义内容并且带出场动画-->
-                    <amap-marker title="益田假日广场" :position="position3" animation="AMAP_ANIMATION_DROP">
-                        <i-icon type="flag" :size="38" color="#ff0000"></i-icon>
-                    </amap-marker>
-                    
-                    <!--自定义标签和内容并且携带扩展数据-->
-                    <amap-marker :position="position4" :label="position4Label" :content="position4Content" :extData="position4Data" @click="onMarkerClick">
-                    </amap-marker>
+                <amap class="text-marker-example" :zoom="15" :center="[113.979596, 22.532278]">
+                    <amap-text-marker cursor="pointer" text="文本标记" :draggable="true" :styles="markerStyles"></amap-text-marker>
                 </amap>
             </template>
             <template slot="desc">
-                <p>使用<code>position</code>属性设置点标记在地图上的显示位置。</p>
-                <p>通过设置<code>draggable</code>为 true，可以让点标记拖拽移动。</p>
-                <p>通过设置属性<code>icon</code>可以自定义点标记图标。</p>
-                <p>使用插槽可以进行自定义渲染内容，同时设置<code>title</code>属性可以让鼠标滑过点标记时提示对应的文字。</p>
             </template>
             <u-code slot="code" lang="html">{{code.generic}}</u-code>
         </u-example>
@@ -39,7 +21,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>属性名</th>
+                        <th>名称</th>
                         <th>说明</th>
                         <th>数据类型</th>
                         <th>属性类型</th>
@@ -47,6 +29,34 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td>text</td>
+                        <td>标记显示的文本内容。</td>
+                        <td>string</td>
+                        <td>动态属性</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>textAlign</td>
+                        <td>横向位置，"left", "right", "center" 可选。</td>
+                        <td>string</td>
+                        <td>静态属性</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>verticalAlign</td>
+                        <td>纵向位置，"top"，"middle"，"bottom" 可选。</td>
+                        <td>string</td>
+                        <td>静态属性</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>styles</td>
+                        <td>文本样式。如同 CSS 样式表，如：{"background-color": "red"}</td>
+                        <td>object</td>
+                        <td>动态属性</td>
+                        <td>-</td>
+                    </tr>
                     <tr>
                         <td>position</td>
                         <td>点标记在地图上显示的位置，默认为地图中心点。</td>
@@ -60,36 +70,6 @@
                         <td>[number, number]</td>
                         <td>动态属性</td>
                         <td>[-10, -34]</td>
-                    </tr>
-                    <tr>
-                        <td>icon</td>
-                        <td>
-                            点标记中显示的图标，可以是一个图标地址，或者Icon对象。<br />
-                            如果是Icon对象，请传入如下格式：<br />
-                            {<br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;size?: [number, number],&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;图标尺寸，默认值[36, 36]<br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;image?: string,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;图标的取图地址<br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;imageSize?: [number, number],&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;根据所设置的大小拉伸或压缩图片，等同于CSS中的background-size属性<br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;imageOffset?: [number, number]&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;当image中指定了一个大图时，可通过size和imageOffset配合，显示图标的指定范围<br />
-                            }<br />
-                        </td>
-                        <td>string | object
-                        </td>
-                        <td>动态属性</td>
-                        <td>蓝色图钉</td>
-                    </tr>
-                    <tr>
-                        <td>content</td>
-                        <td>
-                            点标记显示内容，可以是HTML字符串或者DOM对象。content有效时，icon属性将被覆盖。<br />
-                            建议采用 Vue 插槽设置自定义内容，例如：<br />
-                            &lt;amap-marker :position="position"&gt;<br />
-                                &nbsp;&nbsp;&nbsp;&nbsp;&lt;i-icon type="flag" :size="36" color="#ff0000"&gt;&lt;/i-icon&gt;<br />
-                            &lt;/amap-marker&gt;<br />
-                        </td>
-                        <td>string | HTMLElement</td>
-                        <td>动态属性</td>
-                        <td>-</td>
                     </tr>
                     <tr>
                         <td>topWhenClick</td>
@@ -177,20 +157,6 @@
                         <td>shape</td>
                         <td>设置 Marker 的可点击区域，在定义的区域内可触发 Marker 的鼠标点击事件。</td>
                         <td><a href="https://lbs.amap.com/api/javascript-api/reference/overlay#MarkerShapeOptions" target="_blank">MarkerShapeOptions</a></td>
-                        <td>动态属性</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>label</td>
-                        <td>
-                            为点标记添加文本标注。<br />
-                            请传入如下格式：<br />
-                            {<br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;content: string, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 文本标注的内容<br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;offset?: [number, number] // 偏移量，默认为：左上角[0, 0]<br />
-                            }
-                        </td>
-                        <td>object</td>
                         <td>动态属性</td>
                         <td>-</td>
                     </tr>
@@ -392,37 +358,23 @@
 </template>
 
 <style lang="less">
-.marker-example
+.text-marker-example
 {
     height: 600px;
-
-    .marker-route
-    {
-        position: absolute;
-        width: 40px;
-        height: 44px;
-        background: url(https://webapi.amap.com/theme/v1.3/images/newpc/poi-1.png) no-repeat;
-        cursor: pointer;
-    }
-
-    .marker-marker-bus-from
-    {
-        background-position: -334px -180px;
-    }
 }
 </style>
 
 <script lang="ts">
 import { component, View } from "flagwind-web";
-import * as code from "examples/codes/marker";
+import * as code from "examples/codes/text-marker";
 
 /**
- * 点标记组件示例。
+ * 文本标记组件示例。
  * @class
  * @version 1.0.0
  */
 @component
-export default class MarkerView extends View
+export default class TextMarkerView extends View
 {
     /**
      * 演示需要的代码。
@@ -431,93 +383,15 @@ export default class MarkerView extends View
     protected code: object = code;
 
     /**
-     * 世界之窗坐标。
-     * @member {Array<number>}
-     */
-    protected position1: Array<number> = [113.972976, 22.534607];
-
-    /**
-     * 欢乐谷坐标。
-     * @member {Array<number>}
-     */
-    protected position2: Array<number> = [113.980606, 22.539449];
-
-    /**
-     * 欢乐谷点图标。
+     * 文本标记样式。
      * @member {object}
      */
-    protected get position2Icon(): object
+    protected markerStyles: object =
     {
-        const icon =
-        {
-            size: [32, 32],
-            image: "http://webapi.amap.com/ui/1.0/assets/position-picker.png",
-            imageSize: [32, 32]
-        };
-
-        return icon;
-    }
-
-    /**
-     * 益田假日广场坐标。
-     * @member {Array<number>}
-     */
-    protected position3: Array<number> = [113.972446, 22.537833];
-
-    /**
-     * 南山中英文学校坐标。
-     * @member {Array<number>}
-     */
-    protected position4: Array<number> = [113.966792, 22.537375];
-
-    /**
-     * 南山中英文学校点内容。
-     * @member {Array<number>}
-     */
-    protected position4Content: string = '<div class="marker-route marker-marker-bus-from"></div>';
-
-    /**
-     * 南山中英文学校点标签。
-     * @member {object}
-     */
-    protected position4Label: object =
-    {
-        offset: [-13, 45],
-        content: "21点48分"
+        "background-color": "#ff6e97",
+        "border": "solid 1px #f1aaa6",
+        "color": "#fff",
+        "padding": "10px 20px"
     };
-
-    /**
-     * 南山中英文学校点数据。
-     * @member {object}
-     */
-    protected position4Data: object =
-    {
-        id: "P00001",
-        name: "南山中英文学校",
-        time: "2018-06-01 21:48:16",
-        trails:
-        [
-            [113.966884, 22.537687],
-            [113.966895, 22.537935],
-            [113.9669, 22.538218],
-            [113.966911, 22.538777],
-            [113.966916, 22.539184]
-        ]
-    };
-
-    /**
-     * 当点击点标记时调用。
-     * @returns void
-     */
-    protected onMarkerClick(e: any): void
-    {
-        // 获取Marker组件实例
-        const marker = e.source;
-
-        // 获取扩展数据
-        const extData = marker.extData;
-        
-        marker.moveAlong(extData.trails, 60);
-    }
 }
 </script>

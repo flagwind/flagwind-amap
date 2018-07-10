@@ -14,6 +14,7 @@ import MapLoader from "./common/loader";
 // 组件
 import AMap from "./components/map";
 import Marker from "./components/marker";
+import TextMarker from "./components/text-marker";
 import ElasticMarker from "./components/elastic-marker";
 import Polygon from "./components/polygon";
 
@@ -21,6 +22,7 @@ const components =
 {
     "amap": AMap,
     "amap-marker": Marker,
+    "amap-text-marker": TextMarker,
     "amap-elastic-marker": ElasticMarker,
     "amap-polygon": Polygon
 };

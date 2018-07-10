@@ -40,6 +40,11 @@ const menus =
                         icon: "icon-marker"
                     },
                     {
+                        title: "文本标记",
+                        path: "/components/text-marker",
+                        icon: "icon-text"
+                    },
+                    {
                         title: "灵活点标记",
                         path: "/components/elastic-marker",
                         icon: "icon-elastic-marker"
