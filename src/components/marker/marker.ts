@@ -41,8 +41,8 @@ export default class Marker extends Overlay
      * @config {[number, number]}
      * @description 动态属性，支持响应式。
      */
-    @config({type: [Array]})
-    public position: [number, number];
+    @config({type: [Array, Object]})
+    public position: [number, number] | AMap.LngLat;
     
     /**
      * 获取或设置点标记显示位置偏移量，默认值为 [-10, -34]。

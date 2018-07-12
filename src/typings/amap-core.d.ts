@@ -408,9 +408,9 @@ declare namespace AMap
         
         /**
          * 获取地图中心点经纬度坐标值。
-         * @returns LngLat | [number, number]
+         * @returns LngLat
          */
-        getCenter(): LngLat | [number, number];
+        getCenter(): LngLat;
         
         /**
          * 返回地图对象的容器。
@@ -687,18 +687,18 @@ declare namespace AMap
         /**
          * 平面地图像素坐标转换为地图经纬度坐标。
          * @param  {Pixel} pixel
-         * @param  {number} level
+         * @param  {number} level?
          * @returns LngLat
          */
-        pixelToLngLat(pixel: Pixel, level: number): LngLat | [number, number];
+        pixelToLngLat(pixel: Pixel, level?: number): LngLat;
         
         /**
          * 地图经纬度坐标转换为平面地图像素坐标。
          * @param  {LngLat | [number, number]} lngLat
-         * @param  {number} level
+         * @param  {number} level?
          * @returns Pixel
          */
-        lnglatToPixel(lngLat: LngLat | [number, number], level: number): Pixel;
+        lnglatToPixel(lngLat: LngLat | [number, number], level?: number): Pixel;
         
         /**
          * 地图容器像素坐标转为地图经纬度坐标。

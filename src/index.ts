@@ -15,7 +15,9 @@ import MapLoader from "./common/loader";
 import AMap from "./components/map";
 import Marker from "./components/marker";
 import TextMarker from "./components/text-marker";
+import CircleMarker from "./components/circle-marker";
 import ElasticMarker from "./components/elastic-marker";
+import SimpleMarker from "./components/simple-marker";
 import Polygon from "./components/polygon";
 
 const components =
@@ -23,7 +25,9 @@ const components =
     "amap": AMap,
     "amap-marker": Marker,
     "amap-text-marker": TextMarker,
+    "amap-circle-marker": CircleMarker,
     "amap-elastic-marker": ElasticMarker,
+    "amap-simple-marker": SimpleMarker,
     "amap-polygon": Polygon
 };
 

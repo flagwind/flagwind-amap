@@ -33,8 +33,16 @@ const routes =
         component: (resolve: any) => (<any>require)(["views/components/text-marker.vue"], resolve)
     },
     {
+        path: "/components/circle-marker",
+        component: (resolve: any) => (<any>require)(["views/components/circle-marker.vue"], resolve)
+    },
+    {
         path: "/components/elastic-marker",
         component: (resolve: any) => (<any>require)(["views/components/elastic-marker.vue"], resolve)
+    },
+    {
+        path: "/components/simple-marker",
+        component: (resolve: any) => (<any>require)(["views/components/simple-marker.vue"], resolve)
     },
     {
         path: "/components/polygon",

@@ -294,7 +294,7 @@ export default abstract class Component extends ComponentBase
         this.registerWatchers();
 
         // 触发组件初始化完毕事件
-        this.$emit(Component.INITIALIZED, { type: Component.INITIALIZED, map: this.map, component: this.component });
+        this.$emit(Component.INITIALIZED, { type: Component.INITIALIZED, source: this });
     }
     
     /**

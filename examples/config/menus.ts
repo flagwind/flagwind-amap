@@ -42,12 +42,22 @@ const menus =
                     {
                         title: "文本标记",
                         path: "/components/text-marker",
-                        icon: "icon-text"
+                        icon: "icon-text-marker"
+                    },
+                    {
+                        title: "圆点标记",
+                        path: "/components/circle-marker",
+                        icon: "icon-circle-marker"
                     },
                     {
                         title: "灵活点标记",
                         path: "/components/elastic-marker",
                         icon: "icon-elastic-marker"
+                    },
+                    {
+                        title: "简单标注",
+                        path: "/components/simple-marker",
+                        icon: "icon-simple-marker"
                     },
                     {
                         title: "多边形",

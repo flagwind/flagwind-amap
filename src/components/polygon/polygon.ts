@@ -65,7 +65,7 @@ export default class Polygon extends EditableOverlay
     public strokeStyle: string;
 
     /**
-     * 获取或设置圆形填充颜色,使用16进制颜色代码赋值。
+     * 获取或设置图形填充颜色,使用16进制颜色代码赋值。
      * @config {string}
      * @default #006600
      * @description 动态属性，支持响应式。
@@ -74,7 +74,7 @@ export default class Polygon extends EditableOverlay
     public fillColor: string;
 
     /**
-     * 获取或设置圆形填充透明度，取值范围0 - 1，0表示完全透明，1表示不透明。
+     * 获取或设置图形填充透明度，取值范围0 - 1，0表示完全透明，1表示不透明。
      * @config {number}
      * @default 0.9
      * @description 动态属性，支持响应式。

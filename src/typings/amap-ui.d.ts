@@ -72,9 +72,9 @@ declare namespace AMapUI
         /**
          * 背景图标样式, 可以有如下取值：
          * 1. String，内置的样式名，取值可通过SimpleMarker.getBuiltInIconStyles(iconTheme|String)获取，效果见这里；
-         * 2. String，html代码，需要以<开头，以>结尾， 比如<div...>，icon的dom节点将使用这段html构造；
+         * 2. String，html代码，需要以<开头，以>结尾， 比如<div...>，icon的DOM节点将使用这段html构造；
          * 3. String，图片的url地址。通常还需要配合设置offset选项（定位点的偏移量，以确定该图片的定位点）；
-         * 4. HTMLElement, 某个dom节点的引用，比如：
+         * 4. HTMLElement, 某个DOM节点的引用，比如：
          * document.createElement("div")、document.getElementById("...")等；
          * 5. Object，img节点的属性值，比如 src,style,width,height等，比如：
          * {
@@ -91,7 +91,7 @@ declare namespace AMapUI
         /**
          * 图标前景文字，可以有如下取值：
          * 1. String， 普通文本，比如"A"（可以配合containerClassNames调整文字样式，详见下文）
-         * 2. Object, 内建的文字容器dom节点(DIV)的属性值，比如 innerHTML,style等， 比如：
+         * 2. Object, 内建的文字容器DOM节点(DIV)的属性值，比如 innerHTML,style等， 比如：
          * {
          *     innerHTML: "<div>B</div>",
          *     style:
