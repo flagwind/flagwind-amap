@@ -23,6 +23,7 @@ import EditableOverlay from "../editable-overlay";
 export default class Circle extends EditableOverlay
 {
     private _currentValue: any;                         // 组件的当前值
+    private _draggingListener: AMap.EventListener;      // dragging 事件监听器
     private _moveListener: AMap.EventListener;          // move 事件监听器
     private _adjustListener: AMap.EventListener;        // adjust 事件监听器
     
@@ -98,7 +99,7 @@ export default class Circle extends EditableOverlay
     public fillOpacity: number;
 
     /**
-     * 获取或设置设置多边形否可拖拽移动，默认为false。
+     * 获取或设置设置圆形否可拖拽移动，默认为false。
      * @config {boolean}
      * @default false
      * @description 动态属性，支持响应式。
@@ -107,7 +108,7 @@ export default class Circle extends EditableOverlay
     public draggable: boolean;
 
     /**
-     * 获取或设置设置多边形否可编辑，默认为false。
+     * 获取或设置设置圆形否可编辑，默认为false。
      * @config {boolean}
      * @default false
      * @description 动态属性，支持响应式。
@@ -117,11 +118,11 @@ export default class Circle extends EditableOverlay
 
     /**
      * 获取圆外切矩形范围。
-     * @returns AMap.Bounds
+     * @returns Array<[number, number]>
      */
-    public getBounds(): AMap.Bounds
+    public getBounds(): Array<[number, number]>
     {
-        return this.component.getBounds();
+        return Convert.boundsTo(this.component.getBounds());
     }
     
     /**
@@ -172,12 +173,18 @@ export default class Circle extends EditableOverlay
             AMap.event.removeListener(this._adjustListener);
         }
 
+        if(this._draggingListener)
+        {
+            AMap.event.removeListener(this._draggingListener);
+        }
+
         super.destroyed();
     }
 
     /**
      * 根据配置项初始化组件。
      * @override
+     * @async
      * @param  {any} options
      * @returns Promise<AMap.Circle>
      */
@@ -186,14 +193,17 @@ export default class Circle extends EditableOverlay
         return new Promise<AMap.Circle>((resolve, reject) =>
         {
             const circle = new AMap.Circle(options);
+
+            // 监听圆形的拖拽(结束)事件，以便更新当前值
+            this._draggingListener = AMap.event.addListener(circle, "dragging", this.onCircleChange, this);
             
             AMap.plugin(["AMap.CircleEditor"], () =>
             {
                 this.editor = new AMap.CircleEditor(this.map, circle);
                 
-                // 监听编辑器的 move、adjust 事件，以便支持 v-model 指令
-                this._moveListener = AMap.event.addListener(this.editor, "move", this.onMove, this);
-                this._adjustListener = AMap.event.addListener(this.editor, "adjust", this.onAdjust, this);
+                // 监听编辑器的 move、adjust 事件，以便更新当前值
+                this._moveListener = AMap.event.addListener(this.editor, "move", this.onCircleChange, this);
+                this._adjustListener = AMap.event.addListener(this.editor, "adjust", this.onCircleChange, this);
                 
                 resolve(circle);
             });
@@ -230,31 +240,15 @@ export default class Circle extends EditableOverlay
 
         return {...super.getOptionHandlers(), ...handlers};
     }
-
-    /**
-     * 当处于编辑状态且拖拽圆心调整圆形位置时触发此事件。
-     * @param  {any} e
-     * @returns void
-     */
-    private onMove(e: any): void
-    {
-        const center = Convert.lngLatTo(e.lnglat);
-        const radius = this.component.getRadius();
-
-        this._currentValue = {center, radius};
-        
-        this.$emit("input", this._currentValue);
-    }
     
     /**
-     * 当处于编辑状态且鼠标调整圆形半径时触发。
-     * @param  {any} e
+     * 当圆形发生改变时调用。
      * @returns void
      */
-    private onAdjust(e: any): void
+    private onCircleChange(): void
     {
         const center = Convert.lngLatTo(this.component.getCenter());
-        const radius = e.radius;
+        const radius = this.component.getRadius();
 
         this._currentValue = {center, radius};
         

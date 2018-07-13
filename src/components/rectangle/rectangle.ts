@@ -12,29 +12,27 @@ import Convert from "common/convert";
 import EditableOverlay from "../editable-overlay";
 
 /**
- * 多边形组件。
+ * 矩形组件。
  * @class
  * @version 1.0.0
  */
 @component
 ({
-    name: "amap-polygon"
+    name: "amap-rectangle"
 })
-export default class Polygon extends EditableOverlay
+export default class Rectangle extends EditableOverlay
 {
-    private _currentValue: Array<any>;                      // 组件的当前值
-    private _draggingListener: AMap.EventListener;          // dragging 事件监听器
-    private _addnodeistener: AMap.EventListener;            // addnode 事件监听器
-    private _adjustListener: AMap.EventListener;            // adjust 事件监听器
-    private _removenodeListener: AMap.EventListener;        // removenode 事件监听器
+    private _currentValue: any;                         // 组件的当前值
+    private _draggingListener: AMap.EventListener;      // dragging 事件监听器
+    private _adjustListener: AMap.EventListener;        // adjust 事件监听器
     
     /**
-     * 获取或设置多边形轮廓线的节点坐标数组。
-     * @config {Array<[number, number]> | Array<Array<[number, number]>>}
+     * 获取或设置值。
+     * @config {object}
      * @description 动态属性，支持响应式。
      */
     @config({type: Array})
-    public value: Array<[number, number]> | Array<Array<[number, number]>>;
+    public value: any;
     
     /**
      * 获取或设置线条颜色，使用16进制颜色代码赋值。
@@ -69,7 +67,7 @@ export default class Polygon extends EditableOverlay
      */
     @config({type: String})
     public strokeStyle: string;
-    
+
     /**
      * 获取或设置勾勒形状轮廓的虚线和间隙的样式，此属性在strokeStyle 为dashed 时有效，此属性在ie9+浏览器有效 取值： 
      * 实线：[0,0,0] 
@@ -100,7 +98,7 @@ export default class Polygon extends EditableOverlay
     public fillOpacity: number;
 
     /**
-     * 获取或设置设置多边形否可拖拽移动，默认为false。
+     * 获取或设置设置矩形否可拖拽移动，默认为false。
      * @config {boolean}
      * @default false
      * @description 动态属性，支持响应式。
@@ -109,25 +107,16 @@ export default class Polygon extends EditableOverlay
     public draggable: boolean;
 
     /**
-     * 获取或设置设置多边形否可编辑，默认为false。
+     * 获取或设置设置矩形否可编辑，默认为false。
      * @config {boolean}
      * @default false
      * @description 动态属性，支持响应式。
      */
     @config({type: Boolean})
     public editable: boolean;
-    
+
     /**
-     * 获取多边形轮廓线节点数组。
-     * @returns Array<[number, number] | Array<[number, number]>>
-     */
-    public getPath(): Array<[number, number] | Array<[number, number]>>
-    {
-        return Convert.lngLatToArray(this.component.getPath());
-    }
-    
-    /**
-     * 获取当前多边形的矩形范围对象。
+     * 获取矩形范围。
      * @returns Array<[number, number]>
      */
     public getBounds(): Array<[number, number]>
@@ -136,16 +125,7 @@ export default class Polygon extends EditableOverlay
     }
     
     /**
-     * 获取多边形的面积（单位：平方米）。
-     * @returns number
-     */
-    public getArea(): number
-    {
-        return this.component.getArea();
-    }
-    
-    /**
-     * 判断指定点坐标是否在多边形范围内。
+     * 判断指定点坐标是否在矩形内。
      * @param  {AMap.LngLat|[number, number]} point
      * @returns boolean
      */
@@ -182,19 +162,9 @@ export default class Polygon extends EditableOverlay
      */
     protected destroyed(): void
     {
-        if(this._addnodeistener)
-        {
-            AMap.event.removeListener(this._addnodeistener);
-        }
-
         if(this._adjustListener)
         {
             AMap.event.removeListener(this._adjustListener);
-        }
-        
-        if(this._removenodeListener)
-        {
-            AMap.event.removeListener(this._removenodeListener);
         }
 
         if(this._draggingListener)
@@ -208,28 +178,27 @@ export default class Polygon extends EditableOverlay
     /**
      * 根据配置项初始化组件。
      * @override
+     * @async
      * @param  {any} options
-     * @returns Promise<AMap.Polygon>
+     * @returns Promise<AMap.Rectangle>
      */
-    protected async initialize(options: any): Promise<AMap.Polygon>
+    protected async initialize(options: any): Promise<AMap.Rectangle>
     {
-        return new Promise<AMap.Polygon>((resolve, reject) =>
+        return new Promise<AMap.Rectangle>((resolve, reject) =>
         {
-            const polygon = new AMap.Polygon(options);
+            const rectangle = new AMap.Rectangle(options);
 
-            // 监听多边形的拖拽(结束)事件，以便更新当前值
-            this._draggingListener = AMap.event.addListener(polygon, "dragging", this.onPathChange, this);
+            // 监听矩形的拖拽(结束)事件，以便更新当前值
+            this._draggingListener = AMap.event.addListener(rectangle, "dragging", this.onBoundsChange, this);
             
-            AMap.plugin(["AMap.PolyEditor"], () =>
+            AMap.plugin(["AMap.RectangleEditor"], () =>
             {
-                this.editor = new AMap.PolyEditor(this.map, polygon);
+                this.editor = new AMap.RectangleEditor(this.map, rectangle);
                 
-                // 监听编辑器的 addnode、adjust、removenode 事件，以便支持 v-model 指令
-                this._addnodeistener = AMap.event.addListener(this.editor, "addnode", this.onPathChange, this);
-                this._adjustListener = AMap.event.addListener(this.editor, "adjust", this.onPathChange, this);
-                this._removenodeListener = AMap.event.addListener(this.editor, "removenode", this.onPathChange, this);
+                // 监听编辑器的 adjust 事件，以便更新当前值
+                this._adjustListener = AMap.event.addListener(this.editor, "adjust", this.onBoundsChange, this);
                 
-                resolve(polygon);
+                resolve(rectangle);
             });
         });
     }
@@ -253,9 +222,11 @@ export default class Polygon extends EditableOverlay
                 {
                     return;
                 }
+
+                const bounds = Convert.toBounds(value);
                 
-                // 特意做一个拷贝处理，防止高德篡改源数组
-                component.setPath(value.concat());
+                // 设置矩形的范围
+                component.setBounds(bounds);
             }
         };
 
@@ -263,14 +234,14 @@ export default class Polygon extends EditableOverlay
     }
     
     /**
-     * 当路径发生改变时调用。
+     * 当矩形范围发生变动时调用。
      * @param  {any} e
      * @returns void
      */
-    private onPathChange(e: any): void
+    private onBoundsChange(): void
     {
-        this._currentValue = this.getPath();
-        
+        this._currentValue = this.getBounds();
+                
         this.$emit("input", this._currentValue);
     }
 }

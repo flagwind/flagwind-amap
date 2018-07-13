@@ -1629,8 +1629,8 @@ declare namespace AMap
          * @param  {Bounds} bounds
          * @returns void
          */
-        setBoudns(bounds: Bounds): void;
-
+        setBounds(bounds: Bounds): void;
+        
         /**
          * 修改矩形属性（样式风格，包括组成椭圆轮廓线的节点、轮廓线样式等。属性详情参看RectangleOptions列表）
          * @param  {RectangleOptions} opts

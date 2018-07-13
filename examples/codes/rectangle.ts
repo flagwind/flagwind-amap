@@ -1,8 +1,8 @@
 const generic = `
 <template>
     <article>
-        <amap class="circle-example" :zoom="15" :center="[113.979596, 22.532278]">
-            <amap-circle
+        <amap class="rectangle-example" :zoom="15" :center="[113.979596, 22.532278]">
+            <amap-rectangle
                 v-model="value"
                 strokeColor="#f33"
                 :strokeOpacity="1"
@@ -13,7 +13,7 @@ const generic = `
                 :draggable="draggable"
                 :visible="visible"
                 :editable="editable">
-            </amap-circle>
+            </amap-rectangle>
         </amap>
         <br />
         <i-form :label-width="80">
@@ -40,7 +40,7 @@ const generic = `
 </template>
 
 <style lang="less">
-.circle-example
+.rectangle-example
 {
     height: 600px;
 }
@@ -50,12 +50,12 @@ const generic = `
 import { component, View } from "flagwind-web";
 
 /**
- * 圆形组件示例。
+ * 矩形组件示例。
  * @class
  * @version 1.0.0
  */
 @component
-export default class CircleView extends View
+export default class RectangleView extends View
 {
     /**
      * 是否可见。
@@ -82,17 +82,14 @@ export default class CircleView extends View
     protected strokeStyle: string = "solid";
 
     /**
-     * 圆形的值。
-     * @member {object}
+     * 矩形的值。
+     * @member {Array<[number, number]>}
      */
-    protected value: object =
-    {
-        // 圆中心
-        center: [113.979596, 22.532278],
-
-        // 半径，单位：米
-        radius: 500
-    };
+    protected value: Array<[number, number]> =
+    [
+        [113.970701, 22.52767],     // 西南角
+        [113.989241, 22.536574]     // 东北角
+    ];
 }
 </script>
 `;

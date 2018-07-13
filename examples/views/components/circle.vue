@@ -20,7 +20,8 @@
                         :editable="editable">
                     </amap-circle>
                 </amap>
-                <br />
+            </template>
+            <template slot="desc">
                 <i-form :label-width="80">
                     <i-form-item label="轮廓线样式">
                         <i-radio-group v-model="strokeStyle">
@@ -37,12 +38,10 @@
                     <i-form-item label="是否可编辑">
                         <i-switch v-model="editable"></i-switch>
                     </i-form-item>
-                    <i-form-item v-show="editable" label="组件当前值">
+                    <i-form-item label="组件当前值">
                         <i-input type="textarea" :value="JSON.stringify(value)" :rows="4" />
                     </i-form-item>
                 </i-form>
-            </template>
-            <template slot="desc">
             </template>
             <u-code slot="code" lang="html">{{code.generic}}</u-code>
         </u-example>
@@ -193,7 +192,7 @@
                     <tr>
                         <td>getBounds()</td>
                         <td>获取圆外切矩形范围。</td>
-                        <td>AMap.Bounds</td>
+                        <td>Array&lt;[number, number]&gt;</td>
                     </tr>
                     <tr>
                         <td>contains(point: [number, number])</td>
@@ -354,13 +353,13 @@ export default class CircleView extends View
      * 是否可拖拽。
      * @member {boolean}
      */
-    protected draggable: boolean = false;
+    protected draggable: boolean = true;
 
     /**
      * 是否可编辑。
      * @member {boolean}
      */
-    protected editable: boolean = false;
+    protected editable: boolean = true;
 
     /**
      * 轮廓线样式。

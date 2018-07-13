@@ -66,13 +66,13 @@ export default class PolygonView extends View
      * 是否可拖拽。
      * @member {boolean}
      */
-    protected draggable: boolean = false;
+    protected draggable: boolean = true;
 
     /**
      * 是否可编辑。
      * @member {boolean}
      */
-    protected editable: boolean = false;
+    protected editable: boolean = true;
 
     /**
      * 轮廓线样式。

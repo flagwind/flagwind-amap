@@ -51,6 +51,10 @@ const routes =
     {
         path: "/components/circle",
         component: (resolve: any) => (<any>require)(["views/components/circle.vue"], resolve)
+    },
+    {
+        path: "/components/rectangle",
+        component: (resolve: any) => (<any>require)(["views/components/rectangle.vue"], resolve)
     }
 ];
 

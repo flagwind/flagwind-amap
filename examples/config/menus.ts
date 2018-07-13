@@ -68,6 +68,11 @@ const menus =
                         title: "圆形",
                         path: "/components/circle",
                         icon: "icon-circle"
+                    },
+                    {
+                        title: "矩形",
+                        path: "/components/rectangle",
+                        icon: "icon-rectangle"
                     }
                 ]
             }

@@ -20,6 +20,7 @@ import ElasticMarker from "./components/elastic-marker";
 import SimpleMarker from "./components/simple-marker";
 import Polygon from "./components/polygon";
 import Circle from "./components/circle";
+import Rectangle from "./components/rectangle";
 
 const components =
 {
@@ -30,7 +31,8 @@ const components =
     "amap-elastic-marker": ElasticMarker,
     "amap-simple-marker": SimpleMarker,
     "amap-polygon": Polygon,
-    "amap-circle": Circle
+    "amap-circle": Circle,
+    "amap-rectangle": Rectangle
 };
 
 const amap =
