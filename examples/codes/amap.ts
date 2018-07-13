@@ -1,6 +1,6 @@
 const generic = `
 <template>
-    <div class="amap-view">
+    <article>
         <amap :lang="lang" :mapStyle="style" :zoom="zoom" :city="city"></amap>
         <br />
         <i-form :label-width="80">
@@ -41,7 +41,7 @@ const generic = `
                 <i-input-number v-model="zoom" :max="18" :min="3"></i-input-number>
             </i-form-item>
         </i-form>
-    </div>
+    </article>
 </template>
 
 <script lang="ts">

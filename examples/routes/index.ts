@@ -47,6 +47,10 @@ const routes =
     {
         path: "/components/polygon",
         component: (resolve: any) => (<any>require)(["views/components/polygon.vue"], resolve)
+    },
+    {
+        path: "/components/circle",
+        component: (resolve: any) => (<any>require)(["views/components/circle.vue"], resolve)
     }
 ];
 

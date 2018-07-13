@@ -1,27 +1,29 @@
 const generic = `
 <template>
-    <amap ref="themeExample" class="simple-marker-example" :zoom="4" :center="[108, 34]" @initialized="onMapInitialized">
-        <amap-simple-marker v-for="point in points"
-            :key="point.id"
-            :iconTheme="point.iconTheme"
-            :iconStyle="point.iconStyle"
-            :iconLabel="point.iconLabel"
-            :showPositionPoint="showPositionPoint"
-            :position="point.position"
-            :label="point.label">
-        </amap-simple-marker>
-    </amap>
-    <br />
-    <i-form :label-width="100">
-        <i-form-item label="切换主题">
-            <i-radio-group v-model="theme">
-                <i-radio v-for="(item, key) in themes" :label="key" :key="key"></i-radio>
-            </i-radio-group>
-        </i-form-item>
-        <i-form-item label="是否显示定位点">
-            <i-switch v-model="showPositionPoint"></i-switch>
-        </i-form-item>
-    </i-form>
+    <article>
+        <amap ref="themeExample" class="simple-marker-example" :zoom="4" :center="[108, 34]" @initialized="onMapInitialized">
+            <amap-simple-marker v-for="point in points"
+                :key="point.id"
+                :iconTheme="point.iconTheme"
+                :iconStyle="point.iconStyle"
+                :iconLabel="point.iconLabel"
+                :showPositionPoint="showPositionPoint"
+                :position="point.position"
+                :label="point.label">
+            </amap-simple-marker>
+        </amap>
+        <br />
+        <i-form :label-width="100">
+            <i-form-item label="切换主题">
+                <i-radio-group v-model="theme">
+                    <i-radio v-for="(item, key) in themes" :label="key" :key="key"></i-radio>
+                </i-radio-group>
+            </i-form-item>
+            <i-form-item label="是否显示定位点">
+                <i-switch v-model="showPositionPoint"></i-switch>
+            </i-form-item>
+        </i-form>
+    </article>
 </template>
 
 <style lang="less">

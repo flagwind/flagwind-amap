@@ -63,6 +63,11 @@ const menus =
                         title: "多边形",
                         path: "/components/polygon",
                         icon: "icon-polygon"
+                    },
+                    {
+                        title: "圆形",
+                        path: "/components/circle",
+                        icon: "icon-circle"
                     }
                 ]
             }

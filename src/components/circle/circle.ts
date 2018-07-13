@@ -12,29 +12,28 @@ import Convert from "common/convert";
 import EditableOverlay from "../editable-overlay";
 
 /**
- * 多边形组件。
+ * 圆形组件。
  * @class
  * @version 1.0.0
  */
 @component
 ({
-    name: "amap-polygon"
+    name: "amap-circle"
 })
-export default class Polygon extends EditableOverlay
+export default class Circle extends EditableOverlay
 {
-    private _currentValue: Array<any>;                      // 组件的当前值
-    private _addnodeistener: AMap.EventListener;            // addnode 事件监听器
-    private _adjustListener: AMap.EventListener;            // adjust 事件监听器
-    private _removenodeListener: AMap.EventListener;        // removenode 事件监听器
+    private _currentValue: any;                         // 组件的当前值
+    private _moveListener: AMap.EventListener;          // move 事件监听器
+    private _adjustListener: AMap.EventListener;        // adjust 事件监听器
     
     /**
-     * 获取或设置多边形轮廓线的节点坐标数组。
-     * @config {Array<[number, number]> | Array<Array<[number, number]>>}
+     * 获取或设置值。
+     * @config {object}
      * @description 动态属性，支持响应式。
      */
-    @config({type: Array})
-    public value: Array<[number, number]> | Array<Array<[number, number]>>;
-    
+    @config({type: Object})
+    public value: any;
+
     /**
      * 获取或设置线条颜色，使用16进制颜色代码赋值。
      * @config {string}
@@ -68,7 +67,7 @@ export default class Polygon extends EditableOverlay
      */
     @config({type: String})
     public strokeStyle: string;
-    
+
     /**
      * 获取或设置勾勒形状轮廓的虚线和间隙的样式，此属性在strokeStyle 为dashed 时有效，此属性在ie9+浏览器有效 取值： 
      * 实线：[0,0,0] 
@@ -115,18 +114,9 @@ export default class Polygon extends EditableOverlay
      */
     @config({type: Boolean})
     public editable: boolean;
-    
+
     /**
-     * 获取多边形轮廓线节点数组。
-     * @returns Array<[number, number] | Array<[number, number]>>
-     */
-    public getPath(): Array<[number, number] | Array<[number, number]>>
-    {
-        return Convert.lngLatToArray(this.component.getPath());
-    }
-    
-    /**
-     * 获取当前多边形的矩形范围对象。
+     * 获取圆外切矩形范围。
      * @returns AMap.Bounds
      */
     public getBounds(): AMap.Bounds
@@ -135,16 +125,7 @@ export default class Polygon extends EditableOverlay
     }
     
     /**
-     * 获取多边形的面积（单位：平方米）。
-     * @returns number
-     */
-    public getArea(): number
-    {
-        return this.component.getArea();
-    }
-    
-    /**
-     * 判断指定点坐标是否在多边形范围内。
+     * 判断指定点坐标是否在圆内。
      * @param  {AMap.LngLat|[number, number]} point
      * @returns boolean
      */
@@ -181,19 +162,14 @@ export default class Polygon extends EditableOverlay
      */
     protected destroyed(): void
     {
-        if(this._addnodeistener)
+        if(this._moveListener)
         {
-            AMap.event.removeListener(this._addnodeistener);
+            AMap.event.removeListener(this._moveListener);
         }
 
         if(this._adjustListener)
         {
             AMap.event.removeListener(this._adjustListener);
-        }
-        
-        if(this._removenodeListener)
-        {
-            AMap.event.removeListener(this._removenodeListener);
         }
 
         super.destroyed();
@@ -203,24 +179,23 @@ export default class Polygon extends EditableOverlay
      * 根据配置项初始化组件。
      * @override
      * @param  {any} options
-     * @returns Promise<AMap.Polygon>
+     * @returns Promise<AMap.Circle>
      */
-    protected async initialize(options: any): Promise<AMap.Polygon>
+    protected async initialize(options: any): Promise<AMap.Circle>
     {
-        return new Promise<AMap.Polygon>((resolve, reject) =>
+        return new Promise<AMap.Circle>((resolve, reject) =>
         {
-            const polygon = new AMap.Polygon(options);
+            const circle = new AMap.Circle(options);
             
-            AMap.plugin(["AMap.PolyEditor"], () =>
+            AMap.plugin(["AMap.CircleEditor"], () =>
             {
-                this.editor = new AMap.PolyEditor(this.map, polygon);
+                this.editor = new AMap.CircleEditor(this.map, circle);
                 
-                // 监听编辑器的 addnode、adjust、removenode 事件，以便支持 v-model 指令
-                this._addnodeistener = AMap.event.addListener(this.editor, "addnode", this.onPathChange, this);
-                this._adjustListener = AMap.event.addListener(this.editor, "adjust", this.onPathChange, this);
-                this._removenodeListener = AMap.event.addListener(this.editor, "removenode", this.onPathChange, this);
+                // 监听编辑器的 move、adjust 事件，以便支持 v-model 指令
+                this._moveListener = AMap.event.addListener(this.editor, "move", this.onMove, this);
+                this._adjustListener = AMap.event.addListener(this.editor, "adjust", this.onAdjust, this);
                 
-                resolve(polygon);
+                resolve(circle);
             });
         });
     }
@@ -240,27 +215,48 @@ export default class Polygon extends EditableOverlay
         {
             value(value: any)
             {
-                if(!value || value === self._currentValue)
+                if(!value || !value.center || !value.radius || value === self._currentValue)
                 {
                     return;
                 }
                 
-                // 特意做一个拷贝处理，防止高德篡改源数组
-                component.setPath(value.concat());
+                // 设置中心点
+                component.setCenter(value.center);
+
+                // 设置半径
+                component.setRadius(value.radius);
             }
         };
 
         return {...super.getOptionHandlers(), ...handlers};
     }
-    
+
     /**
-     * 当路径发生改变时调用。
+     * 当处于编辑状态且拖拽圆心调整圆形位置时触发此事件。
      * @param  {any} e
      * @returns void
      */
-    private onPathChange(e: any): void
+    private onMove(e: any): void
     {
-        this._currentValue = this.getPath();
+        const center = Convert.lngLatTo(e.lnglat);
+        const radius = this.component.getRadius();
+
+        this._currentValue = {center, radius};
+        
+        this.$emit("input", this._currentValue);
+    }
+    
+    /**
+     * 当处于编辑状态且鼠标调整圆形半径时触发。
+     * @param  {any} e
+     * @returns void
+     */
+    private onAdjust(e: any): void
+    {
+        const center = Convert.lngLatTo(this.component.getCenter());
+        const radius = e.radius;
+
+        this._currentValue = {center, radius};
         
         this.$emit("input", this._currentValue);
     }

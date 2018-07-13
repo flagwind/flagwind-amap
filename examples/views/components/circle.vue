@@ -1,25 +1,27 @@
 <template>
     <l-article>
-        <h1>Polygon 多边形</h1>
+        <h1>Circle 圆形</h1>
         <h2>概述</h2>
-        <p>多边形。</p>
+        <p>圆形。</p>
         <h2>代码示例</h2>
         <u-example title="综合示例" :vertical="true" :hideCode="true">
             <template slot="case">
-                <amap class="polygon-example" :zoom="15" :center="[113.979596, 22.532278]">
-                    <amap-polygon v-model="path"
-                                :visible="visible"
-                                :draggable="draggable"
-                                :editable="editable"
-                                :strokeStyle="strokeStyle"
-                                strokeColor="#011935"
-                                :strokeOpacity="1"
-                                fillColor="#37c6c0"
-                                :fillOpacity="0.35">
-                    </amap-polygon>
+                <amap class="circle-example" :zoom="15" :center="[113.979596, 22.532278]">
+                    <amap-circle
+                        v-model="value"
+                        strokeColor="#f33"
+                        :strokeOpacity="1"
+                        :strokeWeight="3"
+                        :strokeStyle="strokeStyle"
+                        fillColor="#ee2200"
+                        :fillOpacity="0.35"
+                        :draggable="draggable"
+                        :visible="visible"
+                        :editable="editable">
+                    </amap-circle>
                 </amap>
                 <br />
-                <i-form :label-width="80">  
+                <i-form :label-width="80">
                     <i-form-item label="轮廓线样式">
                         <i-radio-group v-model="strokeStyle">
                             <i-radio label="solid">实线</i-radio>
@@ -35,8 +37,8 @@
                     <i-form-item label="是否可编辑">
                         <i-switch v-model="editable"></i-switch>
                     </i-form-item>
-                    <i-form-item v-show="editable" label="轮廓线节点">
-                        <i-input type="textarea" :value="JSON.stringify(path)" :rows="4" />
+                    <i-form-item v-show="editable" label="组件当前值">
+                        <i-input type="textarea" :value="JSON.stringify(value)" :rows="4" />
                     </i-form-item>
                 </i-form>
             </template>
@@ -61,14 +63,20 @@
                 <tbody>
                     <tr>
                         <td>value</td>
-                        <td>组件当前值，形轮廓线的节点坐标数组，支持 v-model 双向绑定数据，</td>
-                        <td>Array&lt;[number, number]&gt;<br /> | Array&lt;Array&lt;[number, number]&gt;&gt;</td>
+                        <td>
+                            组件当前值，支持 v-model 双向绑定数据，格式如下：<br />
+                            {<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;center: [number, number], // 圆心位置<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;radius: number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 圆半径，单位：米<br />
+                            }
+                        </td>
+                        <td>{center, radius}</td>
                         <td>动态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
                         <td>zIndex</td>
-                        <td>多边形覆盖物的叠加顺序。地图上存在多个多边形覆盖物叠加时，通过该属性使级别较高的多边形覆盖物在上层显示。</td>
+                        <td>圆形覆盖物的叠加顺序。地图上存在多个圆形覆盖物叠加时，通过该属性使级别较高的圆形覆盖物在上层显示。</td>
                         <td>number</td>
                         <td>动态属性</td>
                         <td>10</td>
@@ -129,28 +137,28 @@
                     </tr>
                     <tr>
                         <td>fillColor</td>
-                        <td>多边形填充颜色，使用16进制颜色代码赋值。</td>
+                        <td>圆形填充颜色，使用16进制颜色代码赋值。</td>
                         <td>string</td>
                         <td>动态属性</td>
                         <td>#006600</td>
                     </tr>
                     <tr>
                         <td>fillOpacity</td>
-                        <td>多边形填充透明度，取值范围0-1，0表示完全透明，1表示不透明。默认为0.9。</td>
+                        <td>圆形填充透明度，取值范围0-1，0表示完全透明，1表示不透明。默认为0.9。</td>
                         <td>number</td>
                         <td>动态属性</td>
                         <td>0.9</td>
                     </tr>
                     <tr>
                         <td>draggable</td>
-                        <td>设置多边形是否可拖拽移动。</td>
+                        <td>设置圆形是否可拖拽移动。</td>
                         <td>boolean</td>
                         <td>动态属性</td>
                         <td>false</td>
                     </tr>
                     <tr>
                         <td>editable</td>
-                        <td>设置多边形是否可编辑。</td>
+                        <td>设置圆形是否可编辑。</td>
                         <td>boolean</td>
                         <td>动态属性</td>
                         <td>false</td>
@@ -164,7 +172,7 @@
                     </tr>
                     <tr>
                         <td>visible</td>
-                        <td>多边形是否可见。</td>
+                        <td>圆形是否可见。</td>
                         <td>boolean</td>
                         <td>动态属性</td>
                         <td>true</td>
@@ -183,23 +191,13 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>getPath()</td>
-                        <td>获取多边形轮廓线节点数组。</td>
-                        <td>Array&lt;[number, number]&gt;</td>
-                    </tr>
-                    <tr>
                         <td>getBounds()</td>
-                        <td>获取当前多边形的矩形范围对象。</td>
+                        <td>获取圆外切矩形范围。</td>
                         <td>AMap.Bounds</td>
                     </tr>
                     <tr>
-                        <td>getArea()</td>
-                        <td>获取多边形的面积（单位：平方米）。</td>
-                        <td>number</td>
-                    </tr>
-                    <tr>
                         <td>contains(point: [number, number])</td>
-                        <td>判断指定点坐标是否在多边形范围内。</td>
+                        <td>判断指定点坐标是否在圆内。</td>
                         <td>boolean</td>
                     </tr>
                 </tbody>
@@ -301,19 +299,14 @@
                         <td>{source}</td>
                     </tr>
                     <tr>
-                        <td>addnode</td>
-                        <td>编辑状态下，通过鼠标在折线上增加一个节点或在多边形上增加一个顶点时触发此事件。</td>
-                        <td>{source}</td>
+                        <td>move</td>
+                        <td>编辑状态下，拖拽圆心调整圆形位置时触发此事件。</td>
+                        <td>{source, lnglat}</td>
                     </tr>
                     <tr>
                         <td>adjust</td>
-                        <td>编辑状态下，鼠标调整折线上某个节点或多边形上某个顶点的位置时触发此事件。</td>
-                        <td>{source}</td>
-                    </tr>
-                    <tr>
-                        <td>removenode</td>
-                        <td>编辑状态下，通过鼠标在折线上删除一个节点或在多边形上删除一个顶点时触发此事件。</td>
-                        <td>{source}</td>
+                        <td>编辑状态下，鼠标调整圆形半径时，触发此事件。</td>
+                        <td>{source, radius}</td>
                     </tr>
                     <tr>
                         <td>end</td>
@@ -327,7 +320,7 @@
 </template>
 
 <style lang="less">
-.polygon-example
+.circle-example
 {
     height: 600px;
 }
@@ -335,15 +328,15 @@
 
 <script lang="ts">
 import { component, View } from "flagwind-web";
-import * as code from "examples/codes/polygon";
+import * as code from "examples/codes/circle";
 
 /**
- * 多边形组件示例。
+ * 圆形组件示例。
  * @class
  * @version 1.0.0
  */
 @component
-export default class PolygonView extends View
+export default class CircleView extends View
 {
     /**
      * 演示需要的代码。
@@ -376,17 +369,16 @@ export default class PolygonView extends View
     protected strokeStyle: string = "solid";
 
     /**
-     * 多边形路径。
-     * @member {Array[number, number]}
+     * 圆形的值。
+     * @member {object}
      */
-    protected path: Array<[number, number]> =
-    [
-        [113.972976, 22.534607],
-        [113.97495, 22.528344],
-        [113.979242, 22.531277],
-        [113.988426, 22.530326],
-        [113.982589, 22.536985],
-        [113.978812, 22.534369]
-    ];
+    protected value: object =
+    {
+        // 圆中心
+        center: [113.979596, 22.532278],
+
+        // 半径，单位：米
+        radius: 500
+    };
 }
 </script>

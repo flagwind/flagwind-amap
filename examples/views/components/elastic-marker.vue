@@ -20,7 +20,7 @@
                     
                     <!--多边形背景 BEGIN-->
                     <amap-polygon
-                        :path="polygonPath"
+                        v-model="polygonPath"
                         :bubble="true"
                         fillColor="green"
                         :fillOpacity="0.3"

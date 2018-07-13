@@ -1,37 +1,39 @@
 const generic = `
 <template>
-    <amap class="polygon-example" :zoom="15" :center="[113.979596, 22.532278]">
-        <amap-polygon :path="path"
-                    :visible="visible"
-                    :draggable="draggable"
-                    :editable="editable"
-                    :strokeStyle="strokeStyle"
-                    strokeColor="#011935"
-                    fillColor="#37c6c0"
-                    @adjust="onEdit">
-        </amap-polygon>
-    </amap>
-    <br />
-    <i-form :label-width="80">
-        <i-form-item label="轮廓线样式">
-            <i-radio-group v-model="strokeStyle">
-                <i-radio label="solid">实线</i-radio>
-                <i-radio label="dashed">虚线</i-radio>
-            </i-radio-group>
-        </i-form-item>
-        <i-form-item label="是否可见">
-            <i-switch v-model="visible"></i-switch>
-        </i-form-item>
-        <i-form-item label="是否可拖拽">
-            <i-switch v-model="draggable"></i-switch>
-        </i-form-item>
-        <i-form-item label="是否可编辑">
-            <i-switch v-model="editable"></i-switch>
-        </i-form-item>
-        <i-form-item v-show="editable" label="轮廓线节点">
-            <i-input type="textarea" :value="JSON.stringify(currentPath)" :rows="4" />
-        </i-form-item>
-    </i-form>
+    <article>
+        <amap class="polygon-example" :zoom="15" :center="[113.979596, 22.532278]">
+            <amap-polygon :path="path"
+                        :visible="visible"
+                        :draggable="draggable"
+                        :editable="editable"
+                        :strokeStyle="strokeStyle"
+                        strokeColor="#011935"
+                        fillColor="#37c6c0"
+                        @adjust="onEdit">
+            </amap-polygon>
+        </amap>
+        <br />
+        <i-form :label-width="80">
+            <i-form-item label="轮廓线样式">
+                <i-radio-group v-model="strokeStyle">
+                    <i-radio label="solid">实线</i-radio>
+                    <i-radio label="dashed">虚线</i-radio>
+                </i-radio-group>
+            </i-form-item>
+            <i-form-item label="是否可见">
+                <i-switch v-model="visible"></i-switch>
+            </i-form-item>
+            <i-form-item label="是否可拖拽">
+                <i-switch v-model="draggable"></i-switch>
+            </i-form-item>
+            <i-form-item label="是否可编辑">
+                <i-switch v-model="editable"></i-switch>
+            </i-form-item>
+            <i-form-item v-show="editable" label="轮廓线节点">
+                <i-input type="textarea" :value="JSON.stringify(currentPath)" :rows="4" />
+            </i-form-item>
+        </i-form>
+    </article>
 </template>
 
 <style lang="less">

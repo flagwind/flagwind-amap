@@ -40,7 +40,7 @@ export default class Convert
      * @param  {AMap.Pixel} source
      * @returns [number, number]
      */
-    public static toPixelArray(source: AMap.Pixel | [number, number]): [number, number]
+    public static pixelTo(source: AMap.Pixel | [number, number]): [number, number]
     {
         if(source instanceof AMap.Pixel)
         {
@@ -78,7 +78,7 @@ export default class Convert
      * @param  {AMap.Size} source
      * @returns [number, number]
      */
-    public static toSizeArray(source: AMap.Size | [number, number]): [number, number]
+    public static sizeTo(source: AMap.Size | [number, number]): [number, number]
     {
         if(source instanceof AMap.Size)
         {
@@ -112,11 +112,42 @@ export default class Convert
     }
     
     /**
+     * 将元组数组转换为经纬度坐标数组。
+     * @param  {Array<any>} source
+     * @returns Array
+     */
+    public static toLngLatArray(source: Array<any>): Array<AMap.LngLat | Array<AMap.LngLat>>
+    {
+        const result: Array<AMap.LngLat | Array<AMap.LngLat>> = [];
+
+        for(let item of source)
+        {
+            // 数组项为元组时，调用转换方法转换为LngLat对象再加入返回列表中
+            if(Type.isNumber(item[0]))
+            {
+                result.push(this.toLngLat(item as [number, number]));
+            }
+            // 数组项为LngLat对象时，直接加入返回列表中
+            else if(item instanceof AMap.LngLat)
+            {
+                result.push(item);
+            }
+            // 数组项为为子数组时（多维数组的情况下），则需要递归处理
+            else
+            {
+                result.push(...this.toLngLatArray(item));
+            }
+        }
+
+        return result;
+    }
+    
+    /**
      * 将经纬度坐标转换为数组。
      * @param  {AMap.LngLat} source
      * @returns [number, number]
      */
-    public static toLngLatArray(source: AMap.LngLat | [number, number]): [number, number]
+    public static lngLatTo(source: AMap.LngLat | [number, number]): [number, number]
     {
         if(source instanceof AMap.LngLat)
         {
@@ -128,6 +159,37 @@ export default class Convert
         }
         
         return null;
+    }
+    
+    /**
+     * 将经纬度坐标源数组转换为元组数组。
+     * @param  {Array<any>} source
+     * @returns Array
+     */
+    public static lngLatToArray(source: Array<any>): Array<[number, number] | Array<[number, number]>>
+    {
+        const result: Array<[number, number] | Array<[number, number]>> = [];
+
+        for(let item of source)
+        {
+            // 数组项为LngLat对象时，调用转换方法转换为元组再加入返回列表中
+            if(item instanceof AMap.LngLat)
+            {
+                result.push(this.lngLatTo(item));
+            }
+            // 数组项为元组时，直接加入返回列表中
+            else if(Type.isNumber(item[0]))
+            {
+                result.push(item);
+            }
+            // 数组项为为子数组时（多维数组的情况下），则需要递归处理
+            else
+            {
+                result.push(...this.lngLatToArray(item));
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -154,11 +216,11 @@ export default class Convert
      * @param  {AMap.Bounds | [[number, number], [number, number]]} source
      * @returns [[number, number], [number, number]]
      */
-    public static toBoundsArray(source: AMap.Bounds | [[number, number], [number, number]]): [[number, number], [number, number]]
+    public static boundsTo(source: AMap.Bounds | [[number, number], [number, number]]): [[number, number], [number, number]]
     {
         if(source instanceof AMap.Bounds)
         {
-            return [this.toLngLatArray(source.getSouthWest()), this.toLngLatArray(source.getNorthEast())];
+            return [this.lngLatTo(source.getSouthWest()), this.lngLatTo(source.getNorthEast())];
         }
         else if(Array.isArray(source))
         {

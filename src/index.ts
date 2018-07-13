@@ -19,6 +19,7 @@ import CircleMarker from "./components/circle-marker";
 import ElasticMarker from "./components/elastic-marker";
 import SimpleMarker from "./components/simple-marker";
 import Polygon from "./components/polygon";
+import Circle from "./components/circle";
 
 const components =
 {
@@ -28,7 +29,8 @@ const components =
     "amap-circle-marker": CircleMarker,
     "amap-elastic-marker": ElasticMarker,
     "amap-simple-marker": SimpleMarker,
-    "amap-polygon": Polygon
+    "amap-polygon": Polygon,
+    "amap-circle": Circle
 };
 
 const amap =
