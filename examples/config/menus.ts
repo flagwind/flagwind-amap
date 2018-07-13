@@ -73,6 +73,11 @@ const menus =
                         title: "矩形",
                         path: "/components/rectangle",
                         icon: "icon-rectangle"
+                    },
+                    {
+                        title: "折线",
+                        path: "/components/polyline",
+                        icon: "icon-polyline"
                     }
                 ]
             }

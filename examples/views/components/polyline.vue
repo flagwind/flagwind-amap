@@ -1,32 +1,28 @@
 <template>
     <l-article>
-        <h1>Polygon 多边形</h1>
+        <h1>Polyline 折线</h1>
         <h2>概述</h2>
-        <p>多边形。</p>
+        <p>折线。</p>
         <h2>代码示例</h2>
         <u-example title="综合示例" :vertical="true" :hideCode="true">
             <template slot="case">
-                <amap class="polygon-example" :zoom="15" :center="[113.979596, 22.532278]">
-                    <amap-polygon v-model="path"
+                <amap class="polyline-example" :zoom="14" :center="[113.979596, 22.532278]">
+                    <amap-polyline v-model="path"
                                 :visible="visible"
                                 :draggable="draggable"
                                 :editable="editable"
-                                :strokeStyle="strokeStyle"
+                                :strokeWeight="6"
                                 strokeColor="#011935"
                                 :strokeOpacity="1"
-                                fillColor="#37c6c0"
-                                :fillOpacity="0.35">
-                    </amap-polygon>
+                                :isOutline="true"
+                                outlineColor="#fff"
+                                :showDir="true"
+                                lineJoin="round">
+                    </amap-polyline>
                 </amap>
             </template>
             <template slot="desc">
                 <i-form :label-width="80">  
-                    <i-form-item label="轮廓线样式">
-                        <i-radio-group v-model="strokeStyle">
-                            <i-radio label="solid">实线</i-radio>
-                            <i-radio label="dashed">虚线</i-radio>
-                        </i-radio-group>
-                    </i-form-item>
                     <i-form-item label="是否可见">
                         <i-switch v-model="visible"></i-switch>
                     </i-form-item>
@@ -36,7 +32,7 @@
                     <i-form-item label="是否可编辑">
                         <i-switch v-model="editable"></i-switch>
                     </i-form-item>
-                    <i-form-item v-show="editable" label="轮廓线节点">
+                    <i-form-item v-show="editable" label="当前组件值">
                         <i-input type="textarea" :value="JSON.stringify(path)" :rows="4" />
                     </i-form-item>
                 </i-form>
@@ -60,14 +56,65 @@
                 <tbody>
                     <tr>
                         <td>value</td>
-                        <td>组件当前值，轮廓线的节点坐标数组，支持 v-model 双向绑定数据，</td>
-                        <td>Array&lt;[number, number]&gt;<br /> | Array&lt;Array&lt;[number, number]&gt;&gt;</td>
+                        <td>组件当前值，组成该折线的节点数组，支持 v-model 双向绑定数据。</td>
+                        <td>Array&lt;[number, number]&gt;</td>
                         <td>动态属性</td>
                         <td>-</td>
                     </tr>
                     <tr>
+                        <td>geodesic</td>
+                        <td>是否绘制成大地线。</td>
+                        <td>boolean</td>
+                        <td>动态属性</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>isOutline</td>
+                        <td>线条是否带描边。</td>
+                        <td>boolean</td>
+                        <td>动态属性</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>borderWeight</td>
+                        <td>描边的宽度。</td>
+                        <td>number</td>
+                        <td>动态属性</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>outlineColor</td>
+                        <td>线条描边颜色，此项仅在isOutline为true时有效。</td>
+                        <td>string</td>
+                        <td>动态属性</td>
+                        <td>#000000</td>
+                    </tr>
+                    <tr>
+                        <td>lineJoin</td>
+                        <td>折线拐点的绘制样式，默认值为"miter"尖角，其他可选值："round"圆角、"bevel"斜角。</td>
+                        <td>string</td>
+                        <td>动态属性</td>
+                        <td>miter</td>
+                    </tr>
+                    <tr>
+                        <td>lineCap</td>
+                        <td>折线两端线帽的绘制样式，默认值为"butt"无头，其他可选值："round"圆头、"square"方头。</td>
+                        <td>string</td>
+                        <td>动态属性</td>
+                        <td>butt</td>
+                    </tr>
+                    <tr>
+                        <td>showDir</td>
+                        <td>是否延路径显示白色方向箭头。<br />Canvas绘制时有效，建议折线宽度大于6时使用；在3D视图下不支持显示方向箭头。</td>
+                        <td>boolean</td>
+                        <td>动态属性</td>
+                        <td>false</td>
+                    </tr>
+
+
+                    <tr>
                         <td>zIndex</td>
-                        <td>多边形覆盖物的叠加顺序。地图上存在多个多边形覆盖物叠加时，通过该属性使级别较高的多边形覆盖物在上层显示。</td>
+                        <td>折线覆盖物的叠加顺序。地图上存在多个折线覆盖物叠加时，通过该属性使级别较高的折线覆盖物在上层显示。</td>
                         <td>number</td>
                         <td>动态属性</td>
                         <td>10</td>
@@ -127,29 +174,15 @@
                         <td>-</td>
                     </tr>
                     <tr>
-                        <td>fillColor</td>
-                        <td>多边形填充颜色，使用16进制颜色代码赋值。</td>
-                        <td>string</td>
-                        <td>动态属性</td>
-                        <td>#006600</td>
-                    </tr>
-                    <tr>
-                        <td>fillOpacity</td>
-                        <td>多边形填充透明度，取值范围0-1，0表示完全透明，1表示不透明。默认为0.9。</td>
-                        <td>number</td>
-                        <td>动态属性</td>
-                        <td>0.9</td>
-                    </tr>
-                    <tr>
                         <td>draggable</td>
-                        <td>设置多边形是否可拖拽移动。</td>
+                        <td>设置折线是否可拖拽移动。</td>
                         <td>boolean</td>
                         <td>动态属性</td>
                         <td>false</td>
                     </tr>
                     <tr>
                         <td>editable</td>
-                        <td>设置多边形是否可编辑。</td>
+                        <td>设置折线是否可编辑。</td>
                         <td>boolean</td>
                         <td>动态属性</td>
                         <td>false</td>
@@ -163,7 +196,7 @@
                     </tr>
                     <tr>
                         <td>visible</td>
-                        <td>多边形是否可见。</td>
+                        <td>折线是否可见。</td>
                         <td>boolean</td>
                         <td>动态属性</td>
                         <td>true</td>
@@ -183,22 +216,22 @@
                 <tbody>
                     <tr>
                         <td>getPath()</td>
-                        <td>获取多边形轮廓线节点数组。</td>
+                        <td>获取折线轮廓线节点数组。</td>
                         <td>Array&lt;[number, number]&gt;<br /> | Array&lt;Array&lt;[number, number]&gt;&gt;</td>
                     </tr>
                     <tr>
                         <td>getBounds()</td>
-                        <td>获取当前多边形的矩形范围对象。</td>
+                        <td>获取当前折线的矩形范围对象。</td>
                         <td>Array&lt;[number, number]&gt;</td>
                     </tr>
                     <tr>
                         <td>getArea()</td>
-                        <td>获取多边形的面积（单位：平方米）。</td>
+                        <td>获取折线的面积（单位：平方米）。</td>
                         <td>number</td>
                     </tr>
                     <tr>
                         <td>contains(point: [number, number])</td>
-                        <td>判断指定点坐标是否在多边形范围内。</td>
+                        <td>判断指定点坐标是否在折线范围内。</td>
                         <td>boolean</td>
                     </tr>
                 </tbody>
@@ -301,17 +334,17 @@
                     </tr>
                     <tr>
                         <td>addnode</td>
-                        <td>编辑状态下，通过鼠标在折线上增加一个节点或在多边形上增加一个顶点时触发此事件。</td>
+                        <td>编辑状态下，通过鼠标在折线上增加一个节点或在折线上增加一个顶点时触发此事件。</td>
                         <td>{source}</td>
                     </tr>
                     <tr>
                         <td>adjust</td>
-                        <td>编辑状态下，鼠标调整折线上某个节点或多边形上某个顶点的位置时触发此事件。</td>
+                        <td>编辑状态下，鼠标调整折线上某个节点或折线上某个顶点的位置时触发此事件。</td>
                         <td>{source}</td>
                     </tr>
                     <tr>
                         <td>removenode</td>
-                        <td>编辑状态下，通过鼠标在折线上删除一个节点或在多边形上删除一个顶点时触发此事件。</td>
+                        <td>编辑状态下，通过鼠标在折线上删除一个节点或在折线上删除一个顶点时触发此事件。</td>
                         <td>{source}</td>
                     </tr>
                     <tr>
@@ -326,7 +359,7 @@
 </template>
 
 <style lang="less">
-.polygon-example
+.polyline-example
 {
     height: 600px;
 }
@@ -337,7 +370,7 @@ import { component, View } from "flagwind-web";
 import * as code from "examples/codes/polygon";
 
 /**
- * 多边形组件示例。
+ * 折线组件示例。
  * @class
  * @version 1.0.0
  */
@@ -375,17 +408,18 @@ export default class PolygonView extends View
     protected strokeStyle: string = "solid";
 
     /**
-     * 多边形路径。
+     * 折线路径。
      * @member {Array[number, number]}
      */
     protected path: Array<[number, number]> =
     [
-        [113.972976, 22.534607],
-        [113.97495, 22.528344],
-        [113.979242, 22.531277],
-        [113.988426, 22.530326],
-        [113.982589, 22.536985],
-        [113.978812, 22.534369]
+        [113.947055, 22.532665],
+        [113.965938, 22.529454],
+        [113.963535, 22.537738],
+        [113.97126, 22.538174],
+        [113.979414, 22.531436],
+        [113.983361, 22.545229],
+        [113.978104, 22.550342]
     ];
 }
 </script>

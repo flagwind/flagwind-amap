@@ -21,6 +21,7 @@ import SimpleMarker from "./components/simple-marker";
 import Polygon from "./components/polygon";
 import Circle from "./components/circle";
 import Rectangle from "./components/rectangle";
+import Polyline from "./components/polyline";
 
 const components =
 {
@@ -32,7 +33,8 @@ const components =
     "amap-simple-marker": SimpleMarker,
     "amap-polygon": Polygon,
     "amap-circle": Circle,
-    "amap-rectangle": Rectangle
+    "amap-rectangle": Rectangle,
+    "amap-polyline": Polyline
 };
 
 const amap =

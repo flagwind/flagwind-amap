@@ -12,15 +12,15 @@ import Convert from "common/convert";
 import EditableOverlay from "../editable-overlay";
 
 /**
- * 多边形组件。
+ * 折线组件。
  * @class
  * @version 1.0.0
  */
 @component
 ({
-    name: "amap-polygon"
+    name: "amap-polyline"
 })
-export default class Polygon extends EditableOverlay
+export default class Polyline extends EditableOverlay
 {
     private _currentValue: Array<any>;                      // 组件的当前值
     private _draggingListener: AMap.EventListener;          // dragging 事件监听器
@@ -29,13 +29,77 @@ export default class Polygon extends EditableOverlay
     private _removenodeListener: AMap.EventListener;        // removenode 事件监听器
     
     /**
-     * 获取或设置多边形轮廓线的节点坐标数组。
-     * @config {Array<[number, number]> | Array<Array<[number, number]>>}
+     * 获取或设置折线的节点坐标数组。
+     * @config {Array<[number, number]>}
      * @description 动态属性，支持响应式。
      */
     @config({type: Array})
-    public value: Array<[number, number]> | Array<Array<[number, number]>>;
+    public value: Array<[number, number]>;
+
+    /**
+     * 获取或设置是否绘制成大地线。
+     * @config {boolean}
+     * @default false
+     * @description 动态属性，支持响应式。
+     */
+    @config({type: Boolean})
+    public geodesic: boolean;
+
+    /**
+     * 获取或设置线条是否带描边。
+     * @member {boolean}
+     * @default false
+     * @description 动态属性，支持响应式。
+     */
+    @config({type: Boolean})
+    public isOutline: boolean;
+
+    /**
+     * 获取或设置描边的宽度。
+     * @config {number}
+     * @default 1
+     * @description 动态属性，支持响应式。
+     */
+    @config({type: Number})
+    public borderWeight: number;
+
+    /**
+     * 获取或设置线条描边颜色，此项仅在isOutline为true时有效。
+     * @config {string}
+     * @default #000000
+     * @description 动态属性，支持响应式。
+     */
+    @config({type: String})
+    public outlineColor?: string;
+
+    /**
+     * 获取或设置折线拐点的绘制样式，默认值为"miter"尖角，其他可选值："round"圆角、"bevel"斜角。
+     * @config {string}
+     * @default miter
+     * @description 动态属性，支持响应式。
+     */
+    @config({type: String})
+    public lineJoin: string;
+
+    /**
+     * 获取或设置折线两端线帽的绘制样式，默认值为"butt"无头，其他可选值："round"圆头、"square"方头。
+     * @config {string}
+     * @default butt
+     * @description 动态属性，支持响应式。
+     */
+    @config({type: String})
+    public lineCap: string;
     
+    /**
+     * 获取或设置是否延路径显示白色方向箭头。
+     * Canvas绘制时有效，建议折线宽度大于6时使用；在3D视图下不支持显示方向箭头（自V1.4.0版本参数效果变更）
+     * @member {boolean}
+     * @default false
+     * @description 动态属性，支持响应式。
+     */
+    @config({type: Boolean})
+    public showDir: boolean;
+
     /**
      * 获取或设置线条颜色，使用16进制颜色代码赋值。
      * @config {string}
@@ -82,25 +146,7 @@ export default class Polygon extends EditableOverlay
     public strokeDasharray: Array<number>;
 
     /**
-     * 获取或设置图形填充颜色,使用16进制颜色代码赋值。
-     * @config {string}
-     * @default #006600
-     * @description 动态属性，支持响应式。
-     */
-    @config({type: String})
-    public fillColor: string;
-
-    /**
-     * 获取或设置图形填充透明度，取值范围0 - 1，0表示完全透明，1表示不透明。
-     * @config {number}
-     * @default 0.9
-     * @description 动态属性，支持响应式。
-     */
-    @config({type: Number})
-    public fillOpacity: number;
-
-    /**
-     * 获取或设置设置多边形否可拖拽移动，默认为false。
+     * 获取或设置设置折线否可拖拽移动，默认为false。
      * @config {boolean}
      * @default false
      * @description 动态属性，支持响应式。
@@ -109,7 +155,7 @@ export default class Polygon extends EditableOverlay
     public draggable: boolean;
 
     /**
-     * 获取或设置设置多边形否可编辑，默认为false。
+     * 获取或设置设置折线否可编辑，默认为false。
      * @config {boolean}
      * @default false
      * @description 动态属性，支持响应式。
@@ -118,7 +164,7 @@ export default class Polygon extends EditableOverlay
     public editable: boolean;
     
     /**
-     * 获取多边形轮廓线节点数组。
+     * 获取折线路径的节点数组。
      * @returns Array<[number, number] | Array<[number, number]>>
      */
     public getPath(): Array<[number, number] | Array<[number, number]>>
@@ -127,7 +173,7 @@ export default class Polygon extends EditableOverlay
     }
     
     /**
-     * 获取当前多边形的矩形范围对象。
+     * 获取当前折线的矩形范围对象。
      * @returns Array<[number, number]>
      */
     public getBounds(): Array<[number, number]>
@@ -136,22 +182,12 @@ export default class Polygon extends EditableOverlay
     }
     
     /**
-     * 获取多边形的面积（单位：平方米）。
+     * 获取折线的总长度。（单位：米）
      * @returns number
      */
-    public getArea(): number
+    public getLength(): number
     {
-        return this.component.getArea();
-    }
-    
-    /**
-     * 判断指定点坐标是否在多边形范围内。
-     * @param  {AMap.LngLat|[number, number]} point
-     * @returns boolean
-     */
-    public contains(point: AMap.LngLat | [number, number]): boolean
-    {
-        return this.component.contains(point);
+        return this.component.getLength();
     }
     
     /**
@@ -209,27 +245,27 @@ export default class Polygon extends EditableOverlay
      * 根据配置项初始化组件。
      * @override
      * @param  {any} options
-     * @returns Promise<AMap.Polygon>
+     * @returns Promise<AMap.Polyline>
      */
-    protected async initialize(options: any): Promise<AMap.Polygon>
+    protected async initialize(options: any): Promise<AMap.Polyline>
     {
-        return new Promise<AMap.Polygon>((resolve, reject) =>
+        return new Promise<AMap.Polyline>((resolve, reject) =>
         {
-            const polygon = new AMap.Polygon(options);
+            const polyline = new AMap.Polyline(options);
 
-            // 监听多边形的拖拽(结束)事件，以便更新当前值
-            this._draggingListener = AMap.event.addListener(polygon, "dragging", this.onPathChange, this);
+            // 监听折线的拖拽(结束)事件，以便更新当前值
+            this._draggingListener = AMap.event.addListener(polyline, "dragging", this.onPathChange, this);
             
             AMap.plugin(["AMap.PolyEditor"], () =>
             {
-                this.editor = new AMap.PolyEditor(this.map, polygon);
+                this.editor = new AMap.PolyEditor(this.map, polyline);
                 
                 // 监听编辑器的 addnode、adjust、removenode 事件，以便更新当前值
                 this._addnodeistener = AMap.event.addListener(this.editor, "addnode", this.onPathChange, this);
                 this._adjustListener = AMap.event.addListener(this.editor, "adjust", this.onPathChange, this);
                 this._removenodeListener = AMap.event.addListener(this.editor, "removenode", this.onPathChange, this);
                 
-                resolve(polygon);
+                resolve(polyline);
             });
         });
     }
