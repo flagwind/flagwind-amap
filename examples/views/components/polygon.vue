@@ -182,11 +182,6 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>getPath()</td>
-                        <td>获取多边形轮廓线节点数组。</td>
-                        <td>Array&lt;[number, number]&gt;<br /> | Array&lt;Array&lt;[number, number]&gt;&gt;</td>
-                    </tr>
-                    <tr>
                         <td>getBounds()</td>
                         <td>获取当前多边形的矩形范围对象。</td>
                         <td>Array&lt;[number, number]&gt;</td>

@@ -22,7 +22,7 @@
                 </amap>
             </template>
             <template slot="desc">
-                <i-form :label-width="80">  
+                <i-form :label-width="80">
                     <i-form-item label="是否可见">
                         <i-switch v-model="visible"></i-switch>
                     </i-form-item>
@@ -215,24 +215,14 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>getPath()</td>
-                        <td>获取折线轮廓线节点数组。</td>
-                        <td>Array&lt;[number, number]&gt;<br /> | Array&lt;Array&lt;[number, number]&gt;&gt;</td>
-                    </tr>
-                    <tr>
                         <td>getBounds()</td>
                         <td>获取当前折线的矩形范围对象。</td>
                         <td>Array&lt;[number, number]&gt;</td>
                     </tr>
                     <tr>
-                        <td>getArea()</td>
-                        <td>获取折线的面积（单位：平方米）。</td>
+                        <td>getLength()</td>
+                        <td>获取折线的总长度。（单位：米）</td>
                         <td>number</td>
-                    </tr>
-                    <tr>
-                        <td>contains(point: [number, number])</td>
-                        <td>判断指定点坐标是否在折线范围内。</td>
-                        <td>boolean</td>
                     </tr>
                 </tbody>
             </table>
@@ -367,7 +357,7 @@
 
 <script lang="ts">
 import { component, View } from "flagwind-web";
-import * as code from "examples/codes/polygon";
+import * as code from "examples/codes/polyline";
 
 /**
  * 折线组件示例。
@@ -375,7 +365,7 @@ import * as code from "examples/codes/polygon";
  * @version 1.0.0
  */
 @component
-export default class PolygonView extends View
+export default class PolylineView extends View
 {
     /**
      * 演示需要的代码。
