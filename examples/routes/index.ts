@@ -53,6 +53,10 @@ const routes =
         component: (resolve: any) => (<any>require)(["views/components/circle.vue"], resolve)
     },
     {
+        path: "/components/ellipse",
+        component: (resolve: any) => (<any>require)(["views/components/ellipse.vue"], resolve)
+    },
+    {
         path: "/components/rectangle",
         component: (resolve: any) => (<any>require)(["views/components/rectangle.vue"], resolve)
     },

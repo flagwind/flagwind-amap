@@ -20,6 +20,7 @@ import ElasticMarker from "./components/elastic-marker";
 import SimpleMarker from "./components/simple-marker";
 import Polygon from "./components/polygon";
 import Circle from "./components/circle";
+import Ellipse from "./components/ellipse";
 import Rectangle from "./components/rectangle";
 import Polyline from "./components/polyline";
 import BezierCurve from "./components/bezier-curve";
@@ -34,6 +35,7 @@ const components =
     "amap-simple-marker": SimpleMarker,
     "amap-polygon": Polygon,
     "amap-circle": Circle,
+    "amap-ellipse": Ellipse,
     "amap-rectangle": Rectangle,
     "amap-polyline": Polyline,
     "amap-bezier-curve": BezierCurve

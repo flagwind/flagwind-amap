@@ -31,7 +31,7 @@ const menus =
                 ]
             },
             {
-                title: "覆盖物",
+                title: "标注",
                 children:
                 [
                     {
@@ -58,7 +58,13 @@ const menus =
                         title: "简单标注",
                         path: "/components/simple-marker",
                         icon: "icon-simple-marker"
-                    },
+                    }
+                ]
+            },
+            {
+                title: "图形",
+                children:
+                [
                     {
                         title: "多边形",
                         path: "/components/polygon",
@@ -68,6 +74,11 @@ const menus =
                         title: "圆形",
                         path: "/components/circle",
                         icon: "icon-circle"
+                    },
+                    {
+                        title: "椭圆",
+                        path: "/components/ellipse",
+                        icon: "icon-ellipse"
                     },
                     {
                         title: "矩形",
