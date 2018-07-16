@@ -22,6 +22,7 @@ import Polygon from "./components/polygon";
 import Circle from "./components/circle";
 import Rectangle from "./components/rectangle";
 import Polyline from "./components/polyline";
+import BezierCurve from "./components/bezier-curve";
 
 const components =
 {
@@ -34,7 +35,8 @@ const components =
     "amap-polygon": Polygon,
     "amap-circle": Circle,
     "amap-rectangle": Rectangle,
-    "amap-polyline": Polyline
+    "amap-polyline": Polyline,
+    "amap-bezier-curve": BezierCurve
 };
 
 const amap =

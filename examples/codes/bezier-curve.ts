@@ -1,18 +1,13 @@
 const generic = `
 <template>
     <article>
-        <amap class="polyline-example" :zoom="14" :center="[113.979596, 22.532278]">
-            <amap-polyline v-model="path"
+        <amap class="bezier-curve-example" :zoom="14" :center="[116.40, 39.90]">
+            <amap-bezier-curve v-model="path"
                         :visible="visible"
                         :editable="editable"
-                        :strokeWeight="6"
-                        strokeColor="#011935"
-                        :strokeOpacity="1"
-                        :isOutline="true"
-                        outlineColor="#fff"
-                        :showDir="true"
-                        lineJoin="round">
-            </amap-polyline>
+                        :strokeWeight="3"
+                        strokeColor="#FF33FF">
+            </amap-bezier-curve>
         </amap>
         <br />
         <i-form :label-width="80">
@@ -22,7 +17,7 @@ const generic = `
             <i-form-item label="是否可编辑">
                 <i-switch v-model="editable"></i-switch>
             </i-form-item>
-            <i-form-item v-show="editable" label="当前组件值">
+            <i-form-item label="当前组件值">
                 <i-input type="textarea" :value="JSON.stringify(path)" :rows="4" />
             </i-form-item>
         </i-form>
@@ -30,7 +25,7 @@ const generic = `
 </template>
 
 <style lang="less">
-.polyline-example
+.bezier-curve-example-example
 {
     height: 600px;
 }
@@ -40,12 +35,12 @@ const generic = `
 import { component, View } from "flagwind-web";
 
 /**
- * 折线组件示例。
+ * 贝瑟尔曲线组件示例。
  * @class
  * @version 1.0.0
  */
 @component
-export default class PolylineView extends View
+export default class BezierCurveView extends View
 {
     /**
      * 是否可见。
@@ -60,24 +55,33 @@ export default class PolylineView extends View
     protected editable: boolean = true;
 
     /**
-     * 轮廓线样式。
-     * @member {string}
+     * 贝瑟尔曲线路径。
+     * @member {Array<Array<[number, number]>>}
      */
-    protected strokeStyle: string = "solid";
-
-    /**
-     * 折线路径。
-     * @member {Array[number, number]}
-     */
-    protected path: Array<[number, number]> =
+    protected path: Array<Array<[number, number]>> =
     [
-        [113.947055, 22.532665],
-        [113.965938, 22.529454],
-        [113.963535, 22.537738],
-        [113.97126, 22.538174],
-        [113.979414, 22.531436],
-        [113.983361, 22.545229],
-        [113.978104, 22.550342]
+        [
+            [116.39, 39.91],
+            [116.37, 39.91]
+        ],
+        [
+            [116.380298, 39.907771],
+            [116.38, 39.90]
+        ],
+        [
+            [116.385298, 39.907771],
+            [116.40, 39.90]
+        ],
+        [
+            [116.392872, 39.887391],
+            [116.40772, 39.909252],
+            [116.41, 39.89]
+        ],
+        [
+            [116.423857, 39.889498],
+            [116.422312, 39.899639],
+            [116.425273, 39.902273]
+        ]
     ];
 }
 </script>

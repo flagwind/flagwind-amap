@@ -59,6 +59,10 @@ const routes =
     {
         path: "/components/polyline",
         component: (resolve: any) => (<any>require)(["views/components/polyline.vue"], resolve)
+    },
+    {
+        path: "/components/bezier-curve",
+        component: (resolve: any) => (<any>require)(["views/components/bezier-curve.vue"], resolve)
     }
 ];
 

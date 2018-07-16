@@ -1,23 +1,18 @@
 <template>
     <l-article>
-        <h1>Polyline 折线</h1>
+        <h1>BezierCurve 贝瑟尔曲线</h1>
         <h2>概述</h2>
-        <p>折线。</p>
+        <p>贝瑟尔曲线。</p>
         <h2>代码示例</h2>
         <u-example title="综合示例" :vertical="true" :hideCode="true">
             <template slot="case">
-                <amap class="polyline-example" :zoom="14" :center="[113.979596, 22.532278]">
-                    <amap-polyline v-model="path"
+                <amap class="bezier-curve-example" :zoom="14" :center="[116.40, 39.90]">
+                    <amap-bezier-curve v-model="path"
                                 :visible="visible"
                                 :editable="editable"
-                                :strokeWeight="6"
-                                strokeColor="#011935"
-                                :strokeOpacity="1"
-                                :isOutline="true"
-                                outlineColor="#fff"
-                                :showDir="true"
-                                lineJoin="round">
-                    </amap-polyline>
+                                :strokeWeight="3"
+                                strokeColor="#FF33FF">
+                    </amap-bezier-curve>
                 </amap>
             </template>
             <template slot="desc">
@@ -52,17 +47,10 @@
                 <tbody>
                     <tr>
                         <td>value</td>
-                        <td>组件当前值，组成该折线的节点数组，支持 v-model 双向绑定数据。</td>
-                        <td>Array&lt;[number, number]&gt;</td>
+                        <td>组件当前值，组成该贝瑟尔曲线的节点数组，支持 v-model 双向绑定数据。</td>
+                        <td>Array&lt;Array&lt;[number, number]&gt;&gt;</td>
                         <td>动态属性</td>
                         <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>geodesic</td>
-                        <td>是否绘制成大地线。</td>
-                        <td>boolean</td>
-                        <td>动态属性</td>
-                        <td>false</td>
                     </tr>
                     <tr>
                         <td>isOutline</td>
@@ -86,29 +74,15 @@
                         <td>#000000</td>
                     </tr>
                     <tr>
-                        <td>lineJoin</td>
-                        <td>折线拐点的绘制样式，默认值为"miter"尖角，其他可选值："round"圆角、"bevel"斜角。</td>
-                        <td>string</td>
-                        <td>动态属性</td>
-                        <td>miter</td>
-                    </tr>
-                    <tr>
-                        <td>lineCap</td>
-                        <td>折线两端线帽的绘制样式，默认值为"butt"无头，其他可选值："round"圆头、"square"方头。</td>
-                        <td>string</td>
-                        <td>动态属性</td>
-                        <td>butt</td>
-                    </tr>
-                    <tr>
                         <td>showDir</td>
-                        <td>是否延路径显示白色方向箭头。<br />Canvas绘制时有效，建议折线宽度大于6时使用；在3D视图下不支持显示方向箭头。</td>
+                        <td>是否延路径显示白色方向箭头。<br />Canvas绘制时有效，建议贝瑟尔曲线宽度大于6时使用；在3D视图下不支持显示方向箭头。</td>
                         <td>boolean</td>
                         <td>动态属性</td>
                         <td>false</td>
                     </tr>
                     <tr>
                         <td>zIndex</td>
-                        <td>折线覆盖物的叠加顺序。地图上存在多个折线覆盖物叠加时，通过该属性使级别较高的折线覆盖物在上层显示。</td>
+                        <td>贝瑟尔曲线覆盖物的叠加顺序。地图上存在多个贝瑟尔曲线覆盖物叠加时，通过该属性使级别较高的贝瑟尔曲线覆盖物在上层显示。</td>
                         <td>number</td>
                         <td>动态属性</td>
                         <td>10</td>
@@ -169,7 +143,7 @@
                     </tr>
                     <tr>
                         <td>editable</td>
-                        <td>设置折线是否可编辑。</td>
+                        <td>设置贝瑟尔曲线是否可编辑。</td>
                         <td>boolean</td>
                         <td>动态属性</td>
                         <td>false</td>
@@ -183,7 +157,7 @@
                     </tr>
                     <tr>
                         <td>visible</td>
-                        <td>折线是否可见。</td>
+                        <td>贝瑟尔曲线是否可见。</td>
                         <td>boolean</td>
                         <td>动态属性</td>
                         <td>true</td>
@@ -203,12 +177,12 @@
                 <tbody>
                     <tr>
                         <td>getBounds()</td>
-                        <td>获取当前折线的矩形范围对象。</td>
+                        <td>获取当前贝瑟尔曲线的矩形范围对象。</td>
                         <td>Array&lt;[number, number]&gt;</td>
                     </tr>
                     <tr>
                         <td>getLength()</td>
-                        <td>获取折线的总长度。（单位：米）</td>
+                        <td>获取贝瑟尔曲线的总长度。（单位：米）</td>
                         <td>number</td>
                     </tr>
                 </tbody>
@@ -296,17 +270,17 @@
                     </tr>
                     <tr>
                         <td>addnode</td>
-                        <td>编辑状态下，通过鼠标在折线上增加一个节点或在折线上增加一个顶点时触发此事件。</td>
+                        <td>编辑状态下，通过鼠标在贝瑟尔曲线上增加一个节点或在贝瑟尔曲线上增加一个顶点时触发此事件。</td>
                         <td>{source}</td>
                     </tr>
                     <tr>
                         <td>adjust</td>
-                        <td>编辑状态下，鼠标调整折线上某个节点或折线上某个顶点的位置时触发此事件。</td>
+                        <td>编辑状态下，鼠标调整贝瑟尔曲线上某个节点或贝瑟尔曲线上某个顶点的位置时触发此事件。</td>
                         <td>{source}</td>
                     </tr>
                     <tr>
                         <td>removenode</td>
-                        <td>编辑状态下，通过鼠标在折线上删除一个节点或在折线上删除一个顶点时触发此事件。</td>
+                        <td>编辑状态下，通过鼠标在贝瑟尔曲线上删除一个节点或在贝瑟尔曲线上删除一个顶点时触发此事件。</td>
                         <td>{source}</td>
                     </tr>
                     <tr>
@@ -321,7 +295,7 @@
 </template>
 
 <style lang="less">
-.polyline-example
+.bezier-curve-example
 {
     height: 600px;
 }
@@ -329,22 +303,22 @@
 
 <script lang="ts">
 import { component, View } from "flagwind-web";
-import * as code from "examples/codes/polyline";
+import * as code from "examples/codes/bezier-curve";
 
 /**
- * 折线组件示例。
+ * 贝瑟尔曲线组件示例。
  * @class
  * @version 1.0.0
  */
 @component
-export default class PolylineView extends View
+export default class BezierCurveView extends View
 {
     /**
      * 演示需要的代码。
      * @member {object}
      */
     protected code: object = code;
-
+    
     /**
      * 是否可见。
      * @member {boolean}
@@ -358,24 +332,33 @@ export default class PolylineView extends View
     protected editable: boolean = true;
 
     /**
-     * 轮廓线样式。
-     * @member {string}
+     * 贝瑟尔曲线路径。
+     * @member {Array<Array<[number, number]>>}
      */
-    protected strokeStyle: string = "solid";
-
-    /**
-     * 折线路径。
-     * @member {Array[number, number]}
-     */
-    protected path: Array<[number, number]> =
+    protected path: Array<Array<[number, number]>> =
     [
-        [113.947055, 22.532665],
-        [113.965938, 22.529454],
-        [113.963535, 22.537738],
-        [113.97126, 22.538174],
-        [113.979414, 22.531436],
-        [113.983361, 22.545229],
-        [113.978104, 22.550342]
+        [
+            [116.39, 39.91],
+            [116.37, 39.91]
+        ],
+        [
+            [116.380298, 39.907771],
+            [116.38, 39.90]
+        ],
+        [
+            [116.385298, 39.907771],
+            [116.40, 39.90]
+        ],
+        [
+            [116.392872, 39.887391],
+            [116.40772, 39.909252],
+            [116.41, 39.89]
+        ],
+        [
+            [116.423857, 39.889498],
+            [116.422312, 39.899639],
+            [116.425273, 39.902273]
+        ]
     ];
 }
 </script>

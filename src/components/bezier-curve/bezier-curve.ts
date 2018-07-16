@@ -12,15 +12,15 @@ import Convert from "common/convert";
 import EditableOverlay from "../editable-overlay";
 
 /**
- * 折线组件。
+ * 贝瑟尔曲线组件。
  * @class
  * @version 1.0.0
  */
 @component
 ({
-    name: "amap-polyline"
+    name: "amap-bezier-curve"
 })
-export default class Polyline extends EditableOverlay
+export default class BezierCurve extends EditableOverlay
 {
     private _currentValue: Array<any>;                      // 组件的当前值
     // private _draggingListener: AMap.EventListener;          // dragging 事件监听器
@@ -29,21 +29,12 @@ export default class Polyline extends EditableOverlay
     private _removenodeListener: AMap.EventListener;        // removenode 事件监听器
     
     /**
-     * 获取或设置折线的节点坐标数组。
-     * @config {Array<[number, number]>}
+     * 获取或设置贝瑟尔曲线的路径。
+     * @config {Array<Array<[number, number]>>}
      * @description 动态属性，支持响应式。
      */
     @config({type: Array})
-    public value: Array<[number, number]>;
-
-    /**
-     * 获取或设置是否绘制成大地线。
-     * @config {boolean}
-     * @default false
-     * @description 动态属性，支持响应式。
-     */
-    @config({type: Boolean})
-    public geodesic: boolean;
+    public value: Array<Array<[number, number]>>;
 
     /**
      * 获取或设置线条是否带描边。
@@ -71,34 +62,6 @@ export default class Polyline extends EditableOverlay
      */
     @config({type: String})
     public outlineColor?: string;
-
-    /**
-     * 获取或设置折线拐点的绘制样式，默认值为"miter"尖角，其他可选值："round"圆角、"bevel"斜角。
-     * @config {string}
-     * @default miter
-     * @description 动态属性，支持响应式。
-     */
-    @config({type: String})
-    public lineJoin: string;
-
-    /**
-     * 获取或设置折线两端线帽的绘制样式，默认值为"butt"无头，其他可选值："round"圆头、"square"方头。
-     * @config {string}
-     * @default butt
-     * @description 动态属性，支持响应式。
-     */
-    @config({type: String})
-    public lineCap: string;
-    
-    /**
-     * 获取或设置是否延路径显示白色方向箭头。
-     * Canvas绘制时有效，建议折线宽度大于6时使用；在3D视图下不支持显示方向箭头（自V1.4.0版本参数效果变更）
-     * @member {boolean}
-     * @default false
-     * @description 动态属性，支持响应式。
-     */
-    @config({type: Boolean})
-    public showDir: boolean;
 
     /**
      * 获取或设置线条颜色，使用16进制颜色代码赋值。
@@ -144,9 +107,19 @@ export default class Polyline extends EditableOverlay
      */
     @config({type: Array})
     public strokeDasharray: Array<number>;
+    
+    /**
+     * 获取或设置是否延路径显示白色方向箭头。
+     * Canvas绘制时有效，建议折线宽度大于6时使用；在3D视图下不支持显示方向箭头（自V1.4.0版本参数效果变更）
+     * @member {boolean}
+     * @default false
+     * @description 动态属性，支持响应式。
+     */
+    @config({type: Boolean})
+    public showDir: boolean;
 
     /**
-     * 获取或设置设置折线否可拖拽移动，默认为false。
+     * 获取或设置设置贝瑟尔曲线否可拖拽移动，默认为false。
      * @config {boolean}
      * @default false
      * @description 动态属性，支持响应式。
@@ -155,25 +128,63 @@ export default class Polyline extends EditableOverlay
     // public draggable: boolean;
 
     /**
-     * 获取或设置设置折线否可编辑，默认为false。
+     * 获取或设置设置贝瑟尔曲线否可编辑，默认为false。
      * @config {boolean}
      * @default false
      * @description 动态属性，支持响应式。
      */
     @config({type: Boolean})
     public editable: boolean;
+
+    /**
+     * 获取或设置编辑状态下自定义编辑控制点的样式，返回字段同 MarkerOptions。
+     * @config {Function}
+     * @default 静态属性，仅支持初始化配置。
+     */
+    @config({type: Function})
+    public getMarkerOptions: () => AMap.MarkerOptions;
+
+    /**
+     * 获取或设置编辑状态下自定义控制线的样式，返回字段同 PolylineOptions。
+     * @config {Function}
+     * @default 静态属性，仅支持初始化配置。
+     */
+    @config({type: Function})
+    public getCtrlLineOptions: () => AMap.PolylineOptions;
     
     /**
-     * 获取折线路径的节点数组。
-     * @returns Array<[number, number] | Array<[number, number]>>
+     * 获取贝瑟尔曲线路径的节点数组。
+     * @returns Array<Array<[number, number]>>
      */
-    public getPath(): Array<[number, number] | Array<[number, number]>>
+    public getPath(): Array<Array<[number, number]>>
     {
-        return Convert.lngLatToArray(this.component.getPath());
+        const paths = this.component.getPath();
+        const result = [];
+
+        for(let routePoint of paths)
+        {
+            let buffer = [];
+
+            // 控制点在前
+            if(routePoint.controlPoints && routePoint.controlPoints.length)
+            {
+                for(let controlPoint of routePoint.controlPoints)
+                {
+                    buffer.push(Convert.lngLatTo(controlPoint));
+                }
+            }
+
+            // 途径点在后
+            buffer.push(Convert.lngLatTo(routePoint));
+
+            result.push(buffer);
+        }
+
+        return result;
     }
     
     /**
-     * 获取当前折线的矩形范围对象。
+     * 获取当前贝瑟尔曲线的矩形范围对象。
      * @returns Array<[number, number]>
      */
     public getBounds(): Array<[number, number]>
@@ -182,7 +193,7 @@ export default class Polyline extends EditableOverlay
     }
     
     /**
-     * 获取折线的总长度。（单位：米）
+     * 获取贝瑟尔曲线的总长度。（单位：米）
      * @returns number
      */
     public getLength(): number
@@ -245,27 +256,42 @@ export default class Polyline extends EditableOverlay
      * 根据配置项初始化组件。
      * @override
      * @param  {any} options
-     * @returns Promise<AMap.Polyline>
+     * @returns Promise<AMap.BezierCurve>
      */
-    protected async initialize(options: any): Promise<AMap.Polyline>
+    protected async initialize(options: any): Promise<AMap.BezierCurve>
     {
-        return new Promise<AMap.Polyline>((resolve, reject) =>
+        return new Promise<AMap.BezierCurve>((resolve, reject) =>
         {
-            const polyline = new AMap.Polyline(options);
+            options.path = options.value;
 
-            // 监听折线的拖拽(结束)事件，以便更新当前值
-            // this._draggingListener = AMap.event.addListener(polyline, "dragging", this.onPathChange, this);
+            const bezierCurve = new AMap.BezierCurve(options);
+
+            // 监听贝瑟尔曲线的拖拽(结束)事件，以便更新当前值
+            // this._draggingListener = AMap.event.addListener(bezierCurve, "dragging", this.onPathChange, this);
             
-            AMap.plugin(["AMap.PolyEditor"], () =>
+            AMap.plugin(["AMap.BezierCurveEditor"], () =>
             {
-                this.editor = new AMap.PolyEditor(this.map, polyline);
+                let bezierCurveEditorOptions = null;
                 
-                // 监听编辑器的 addnode、adjust、removenode 事件，以便更新当前值
+                // 解析编辑器配置
+                if(this.getMarkerOptions || this.getCtrlLineOptions)
+                {
+                    bezierCurveEditorOptions =
+                    {
+                        getMarkerOptions: this.getMarkerOptions,
+
+                        getCtrlLineOptions: this.getCtrlLineOptions
+                    };
+                }
+                
+                this.editor = new AMap.BezierCurveEditor(this.map, bezierCurve, bezierCurveEditorOptions);
+                
+                // // 监听编辑器的 addnode、adjust、removenode 事件，以便更新当前值
                 this._addnodeistener = AMap.event.addListener(this.editor, "addnode", this.onPathChange, this);
                 this._adjustListener = AMap.event.addListener(this.editor, "adjust", this.onPathChange, this);
                 this._removenodeListener = AMap.event.addListener(this.editor, "removenode", this.onPathChange, this);
                 
-                resolve(polyline);
+                resolve(bezierCurve);
             });
         });
     }

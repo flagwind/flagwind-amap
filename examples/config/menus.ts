@@ -78,6 +78,11 @@ const menus =
                         title: "折线",
                         path: "/components/polyline",
                         icon: "icon-polyline"
+                    },
+                    {
+                        title: "贝瑟尔曲线",
+                        path: "/components/bezier-curve",
+                        icon: "icon-bezier-curve"
                     }
                 ]
             }
