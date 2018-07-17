@@ -96,6 +96,17 @@ const menus =
                         icon: "icon-bezier-curve"
                     }
                 ]
+            },
+            {
+                title: "控件",
+                children:
+                [
+                    {
+                        title: "右键菜单",
+                        path: "/components/context-menu",
+                        icon: "icon-context-menu"
+                    }
+                ]
             }
         ]
     }

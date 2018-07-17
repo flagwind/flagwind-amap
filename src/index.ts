@@ -24,6 +24,7 @@ import Ellipse from "./components/ellipse";
 import Rectangle from "./components/rectangle";
 import Polyline from "./components/polyline";
 import BezierCurve from "./components/bezier-curve";
+import { ContextMenu, ContextMenuItem } from "./components/context-menu";
 
 const components =
 {
@@ -38,7 +39,9 @@ const components =
     "amap-ellipse": Ellipse,
     "amap-rectangle": Rectangle,
     "amap-polyline": Polyline,
-    "amap-bezier-curve": BezierCurve
+    "amap-bezier-curve": BezierCurve,
+    "amap-context-menu": ContextMenu,
+    "amap-context-menu-item": ContextMenuItem
 };
 
 const amap =

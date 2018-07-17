@@ -67,6 +67,10 @@ const routes =
     {
         path: "/components/bezier-curve",
         component: (resolve: any) => (<any>require)(["views/components/bezier-curve.vue"], resolve)
+    },
+    {
+        path: "/components/context-menu",
+        component: (resolve: any) => (<any>require)(["views/components/context-menu.vue"], resolve)
     }
 ];
 
