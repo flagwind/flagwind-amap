@@ -10,14 +10,23 @@ const generic = `
             <amap-context-menu-item name="zoom-to-country">缩放至全国</amap-context-menu-item>
         </amap-context-menu>
         <!--默认右键菜单 END-->
-        
+
         <!--自定义菜单 BEGIN-->
         <amap-context-menu ref="customMenu">
-            <i-card style="width:320px;">
-                <h2 slot="title">自定义菜单</h2>
-                <p>Content of card</p>
-                <p>Content of card</p>
-                <p>Content of card</p>
+            <i-card>
+                <i-circle
+                    :size="250"
+                    :trail-width="4"
+                    :stroke-width="5"
+                    :percent="75"
+                    stroke-linecap="square"
+                    stroke-color="#43a3fb">
+                    <div class="circle">
+                        <h1>42,001,776</h1>
+                        <p>消费人群规模</p>
+                        <span>总占人数 <i>75%</i></span>
+                    </div>
+                </i-circle>
             </i-card>
         </amap-context-menu>
         <!--自定义菜单 END-->
@@ -27,7 +36,50 @@ const generic = `
 <style lang="less">
 .context-menu-example
 {
-    height: 600px;
+    height: 800px;
+
+    .circle
+    {
+        h1
+        {
+            color: #3f414d;
+            font-size: 28px;
+            font-weight: normal;
+        }
+
+        p
+        {
+            color: #657180;
+            font-size: 14px;
+            margin: 10px 0 15px;
+        }
+
+        span
+        {
+            display: block;
+            padding-top: 15px;
+            color: #657180;
+            font-size: 14px;
+
+            &:before
+            {
+                content: '';
+                display: block;
+                width: 50px;
+                height: 1px;
+                margin: 0 auto;
+                background: #e0e3e6;
+                position: relative;
+                top: -15px;
+            };
+        }
+
+        span i
+        {
+            font-style: normal;
+            color: #3f414d;
+        }
+    }
 }
 </style>
 

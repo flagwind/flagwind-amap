@@ -134,7 +134,7 @@ export default class ContextMenu extends Component
 
         if(this._bufferVue && this._withCustom !== false)
         {
-            options.content = this._bufferVue.$refs.content.innerHTML;
+            options.content = this._bufferVue.$refs.content;
         }
 
         return new AMap.ContextMenu(options);
