@@ -7,11 +7,11 @@
  */
 
 import Vue, { CreateElement, VNode } from "vue";
-import { component, config } from "flagwind-web";
+import { component } from "flagwind-web";
 import Component from "../component";
 
 /**
- * 右键菜单。
+ * 右键菜单组件。
  * @class
  * @version 1.0.0
  */
@@ -22,12 +22,22 @@ import Component from "../component";
 export default class ContextMenu extends Component
 {
     private _bufferVue: any;                           // 临时组件（用于获取插槽内容使用）
+    private _withCustom: boolean;                      // 内容是否为自定义方式渲染
 
-    public open(position: AMap.LngLat): void
+    /**
+     * 在地图的指定位置打开右键菜单。
+     * @param  {[number, number] | AMap.LngLat} position
+     * @returns void
+     */
+    public open(position: [number, number] | AMap.LngLat): void
     {
         this.component.open(this.map, position);
     }
-
+    
+    /**
+     * 关闭右键菜单。
+     * @returns void
+     */
     public close(): void
     {
         this.component.close();
@@ -40,28 +50,34 @@ export default class ContextMenu extends Component
      */
     protected created(): void
     {
-        // const slots = this.$slots.default || [];
+        const slots = this.$slots.default || [];
 
-        // if(slots.length)
-        // {
-        //     this._bufferVue = new Vue
-        //     ({
-        //         props:
-        //         {
-        //             nodes:
-        //             {
-        //                 type: [Array, Object]
-        //             }
-        //         },
+        if(slots.length)
+        {
+            this._bufferVue = new Vue
+            ({
+                props:
+                {
+                    container:
+                    {
+                        type: Object,
+                        default: () => this
+                    },
+
+                    nodes:
+                    {
+                        type: [Array, Object]
+                    }
+                },
                 
-        //         render(createElement: CreateElement): VNode
-        //         {
-        //             const nodes = Array.isArray(this.nodes) ? this.nodes : [this.nodes];
+                render(createElement: CreateElement): VNode
+                {
+                    const nodes = Array.isArray(this.nodes) ? this.nodes : [this.nodes];
 
-        //             return createElement("div", { ref: "content", staticClass: "amap-context-menu-inner" }, nodes);
-        //         }
-        //     }).$mount();
-        // }
+                    return createElement("div", { ref: "content", staticClass: "amap-context-menu-inner" }, nodes);
+                }
+            }).$mount();
+        }
     }
 
     /**
@@ -71,26 +87,26 @@ export default class ContextMenu extends Component
      */
     protected render(createElement: CreateElement): VNode
     {
-        // const slots = this.$slots.default || [];
-
-        // if(slots.length)
-        // {
-        //     this._bufferVue.nodes = slots;
-        // }
-
         const slots = this.$slots.default || [];
 
-        const withSlots = !!slots.length;
-
-        if (withSlots)
+        if(slots.length)
         {
-            return createElement("div", slots);
-        }
+            let i = 0;
 
-        // if(slots.length)
-        // {
-        //     this._bufferVue.nodes = slots;
-        // }
+            for(let slot of slots)
+            {
+                if(slot.componentOptions && slot.componentOptions.tag === "amap-context-menu-item")
+                {
+                    slot.componentOptions.propsData["order"] = i;
+
+                    this._withCustom = false;
+
+                    i++;
+                }
+            }
+
+            this._bufferVue.nodes = slots;
+        }
 
         return null;
     }
@@ -114,17 +130,14 @@ export default class ContextMenu extends Component
      */
     protected initialize(options: any): any
     {
-        if(this._bufferVue)
+        options = {};
+
+        if(this._bufferVue && this._withCustom !== false)
         {
-            options.content = this._bufferVue.$refs.content;
-            options.isCustom = true;
+            options.content = this._bufferVue.$refs.content.innerHTML;
         }
 
-        const menu = new AMap.ContextMenu();
-
-        console.log(menu);
-
-        return menu;
+        return new AMap.ContextMenu(options);
     }
     
     /**
@@ -140,5 +153,15 @@ export default class ContextMenu extends Component
         }
 
         super.destroyed();
+    }
+    
+    /**
+     * 获取组件支持的事件列表。
+     * @override
+     * @returns Array<string>
+     */
+    protected getComponentEvents(): Array<string>
+    {
+        return ["open", "close"];
     }
 }

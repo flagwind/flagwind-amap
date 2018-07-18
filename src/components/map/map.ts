@@ -52,8 +52,8 @@ const EVENTS =
 @component
 ({
     name: "amap",
-    template: require("./map.html"
-)})
+    template: require("./map.html")
+})
 export default class Map extends Component
 {
     private _loadPromise: Promise<void>;                              // 地图库加载 Promise

@@ -6,14 +6,8 @@
  */
 
 import IMapConfig from "./map-config";
-import IMapLngLat from "./map-LngLat";
-import IMapPlugin from "./map-plugin";
-import IMapPixel from "./map-pixel";
 
 export
 {
-    IMapConfig,
-    IMapLngLat,
-    IMapPlugin,
-    IMapPixel
+    IMapConfig
 };
