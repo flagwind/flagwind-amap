@@ -10,7 +10,7 @@ import flagwind from "flagwind-core";
 import Type = flagwind.Type;
 import { component, config } from "flagwind-web";
 import Overlay from "../overlay";
-import Convert from "common/convert";
+import Convert from "../../common/convert";
 
 /**
  * 组件原生事件。

@@ -20,6 +20,7 @@ const COMMON_CONVERTER =
 {
     position: Convert.toLngLat,
     offset: Convert.toPixel,
+    size: Convert.toSize,
     bounds: Convert.toBounds
 };
 

@@ -24,7 +24,7 @@ export default class Polygon extends EditableOverlay
 {
     private _currentValue: Array<any>;                      // 组件的当前值
     private _draggingListener: AMap.EventListener;          // dragging 事件监听器
-    private _addnodeistener: AMap.EventListener;            // addnode 事件监听器
+    private _addnodeListener: AMap.EventListener;           // addnode 事件监听器
     private _adjustListener: AMap.EventListener;            // adjust 事件监听器
     private _removenodeListener: AMap.EventListener;        // removenode 事件监听器
     
@@ -182,9 +182,9 @@ export default class Polygon extends EditableOverlay
      */
     protected destroyed(): void
     {
-        if(this._addnodeistener)
+        if(this._addnodeListener)
         {
-            AMap.event.removeListener(this._addnodeistener);
+            AMap.event.removeListener(this._addnodeListener);
         }
 
         if(this._adjustListener)
@@ -225,7 +225,7 @@ export default class Polygon extends EditableOverlay
                 this.editor = new AMap.PolyEditor(this.map, polygon);
                 
                 // 监听编辑器的 addnode、adjust、removenode 事件，以便更新当前值
-                this._addnodeistener = AMap.event.addListener(this.editor, "addnode", this.onPathChange, this);
+                this._addnodeListener = AMap.event.addListener(this.editor, "addnode", this.onPathChange, this);
                 this._adjustListener = AMap.event.addListener(this.editor, "adjust", this.onPathChange, this);
                 this._removenodeListener = AMap.event.addListener(this.editor, "removenode", this.onPathChange, this);
                 

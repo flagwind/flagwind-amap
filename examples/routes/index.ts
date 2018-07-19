@@ -71,6 +71,10 @@ const routes =
     {
         path: "/components/context-menu",
         component: (resolve: any) => (<any>require)(["views/components/context-menu.vue"], resolve)
+    },
+    {
+        path: "/components/info-window",
+        component: (resolve: any) => (<any>require)(["views/components/info-window.vue"], resolve)
     }
 ];
 

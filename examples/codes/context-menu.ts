@@ -13,21 +13,20 @@ const generic = `
 
         <!--自定义菜单 BEGIN-->
         <amap-context-menu ref="customMenu">
-            <i-card>
-                <i-circle
-                    :size="250"
-                    :trail-width="4"
-                    :stroke-width="5"
-                    :percent="75"
-                    stroke-linecap="square"
-                    stroke-color="#43a3fb">
-                    <div class="circle">
-                        <h1>42,001,776</h1>
-                        <p>消费人群规模</p>
-                        <span>总占人数 <i>75%</i></span>
-                    </div>
-                </i-circle>
-            </i-card>
+            <i-collapse style="width:400px;" value="1">
+                <i-panel name="1">
+                    史蒂夫·乔布斯
+                    <p slot="content">史蒂夫·乔布斯（Steve Jobs），1955年2月24日生于美国加利福尼亚州旧金山，美国发明家、企业家、美国苹果公司联合创办人。</p>
+                </i-panel>
+                <i-panel name="2">
+                    斯蒂夫·盖瑞·沃兹尼亚克
+                    <p slot="content">斯蒂夫·盖瑞·沃兹尼亚克（Stephen Gary Wozniak），美国电脑工程师，曾与史蒂夫·乔布斯合伙创立苹果电脑（今之苹果公司）。斯蒂夫·盖瑞·沃兹尼亚克曾就读于美国科罗拉多大学，后转学入美国著名高等学府加州大学伯克利分校（UC Berkeley）并获得电机工程及计算机（EECS）本科学位（1987年）。</p>
+                </i-panel>
+                <i-panel name="3">
+                    乔纳森·伊夫
+                    <p slot="content">乔纳森·伊夫是一位工业设计师，现任Apple公司设计师兼资深副总裁，英国爵士。他曾参与设计了iPod，iMac，iPhone，iPad等众多苹果产品。除了乔布斯，他是对苹果那些著名的产品最有影响力的人。</p>
+                </i-panel>
+            </i-collapse>
         </amap-context-menu>
         <!--自定义菜单 END-->
     </amap>
@@ -37,49 +36,6 @@ const generic = `
 .context-menu-example
 {
     height: 800px;
-
-    .circle
-    {
-        h1
-        {
-            color: #3f414d;
-            font-size: 28px;
-            font-weight: normal;
-        }
-
-        p
-        {
-            color: #657180;
-            font-size: 14px;
-            margin: 10px 0 15px;
-        }
-
-        span
-        {
-            display: block;
-            padding-top: 15px;
-            color: #657180;
-            font-size: 14px;
-
-            &:before
-            {
-                content: '';
-                display: block;
-                width: 50px;
-                height: 1px;
-                margin: 0 auto;
-                background: #e0e3e6;
-                position: relative;
-                top: -15px;
-            };
-        }
-
-        span i
-        {
-            font-style: normal;
-            color: #3f414d;
-        }
-    }
 }
 </style>
 

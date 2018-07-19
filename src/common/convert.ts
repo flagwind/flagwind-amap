@@ -23,7 +23,7 @@ export default class Convert
      */
     public static toPixel(source: [number, number] | AMap.Pixel): AMap.Pixel
     {
-        if(Array.isArray(source))
+        if(Array.isArray(source) && source.length)
         {
             return new AMap.Pixel(source[0], source[1]);
         }
@@ -61,7 +61,7 @@ export default class Convert
      */
     public static toSize(source: [number, number] | AMap.Size): AMap.Size
     {
-        if(Array.isArray(source))
+        if(Array.isArray(source) && source.length)
         {
             return new AMap.Size(source[0], source[1]);
         }
@@ -99,7 +99,7 @@ export default class Convert
      */
     public static toLngLat(source: [number, number] | AMap.LngLat): AMap.LngLat
     {
-        if(Array.isArray(source))
+        if(Array.isArray(source) && source.length)
         {
             return new AMap.LngLat(source[0], source[1]);
         }
@@ -199,7 +199,7 @@ export default class Convert
      */
     public static toBounds(source: [[number, number], [number, number]] | AMap.Bounds): AMap.Bounds
     {
-        if(Array.isArray(source))
+        if(Array.isArray(source) && source.length)
         {
             return new AMap.Bounds(source[0], source[1]);
         }

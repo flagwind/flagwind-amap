@@ -105,6 +105,11 @@ const menus =
                         title: "右键菜单",
                         path: "/components/context-menu",
                         icon: "icon-context-menu"
+                    },
+                    {
+                        title: "信息窗体",
+                        path: "/components/info-window",
+                        icon: "icon-info-window"
                     }
                 ]
             }
