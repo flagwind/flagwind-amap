@@ -75,6 +75,10 @@ const routes =
     {
         path: "/components/info-window",
         component: (resolve: any) => (<any>require)(["views/components/info-window.vue"], resolve)
+    },
+    {
+        path: "/components/control-bar",
+        component: (resolve: any) => (<any>require)(["views/components/control-bar.vue"], resolve)
     }
 ];
 

@@ -26,6 +26,7 @@ import Polyline from "./components/polyline";
 import BezierCurve from "./components/bezier-curve";
 import { ContextMenu, ContextMenuItem } from "./components/context-menu";
 import InfoWindow from "./components/info-window";
+import ControlBar from "./components/control-bar";
 
 const components =
 {
@@ -43,7 +44,8 @@ const components =
     "amap-bezier-curve": BezierCurve,
     "amap-context-menu": ContextMenu,
     "amap-context-menu-item": ContextMenuItem,
-    "amap-info-window": InfoWindow
+    "amap-info-window": InfoWindow,
+    "amap-control-bar": ControlBar
 };
 
 const amap =

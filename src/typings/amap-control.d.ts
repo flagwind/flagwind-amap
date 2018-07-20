@@ -27,7 +27,7 @@ declare namespace AMap
     {
         /**
          * 控制显示位置，如{top: "10px", right: "10px"}。
-         * @member {boolean}
+         * @member {object}
          */
         position?: object;
         

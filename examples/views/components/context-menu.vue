@@ -38,7 +38,8 @@
                 </amap>
             </template>
             <template slot="desc">
-                <p>通过为菜单组件注册<code>ref</code>引用信息，然后调用组件的<code>open</code>方法即可展现右键菜单。</p>
+                <p>通过控制<code>value</code>属性来显示/隐藏右键菜单。</p>
+                <p>设置<code>position</code>属性控制右键菜单的显示位置。</p>
                 <p>除了默认展现形式，右键菜单同时支持自定义内容。</p>
             </template>
             <u-code slot="code" lang="html">{{code.generic}}</u-code>
@@ -155,7 +156,7 @@ export default class ContextMenuView extends View
      * @member {boolean}
      */
     protected customMenuVisible: boolean = false;
-    
+
     /**
      * 自定义菜单的显示位置。
      * @member {boolean}

@@ -110,6 +110,11 @@ const menus =
                         title: "信息窗体",
                         path: "/components/info-window",
                         icon: "icon-info-window"
+                    },
+                    {
+                        title: "控制条",
+                        path: "/components/control-bar",
+                        icon: "icon-control-bar"
                     }
                 ]
             }
