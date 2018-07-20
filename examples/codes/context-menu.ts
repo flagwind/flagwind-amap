@@ -1,10 +1,10 @@
 const generic = `
 <template>
-    <amap class="context-menu-example" :zoom="15" :center="center" @rightclick="onMapRightClick">
-        <amap-marker :position="center" @rightclick="onMarkerRightClick"></amap-marker>
+    <amap class="context-menu-example" mapStyle="amap://styles/whitesmoke" :zoom="15" :center="center" @rightclick="onMapRightClick">
+        <amap-marker :position="center" :label="label" @rightclick="onMarkerRightClick"></amap-marker>
 
         <!--默认右键菜单 BEGIN-->
-        <amap-context-menu ref="defaultMenu" @select="onDefaultMenuSelect">
+        <amap-context-menu v-model="defaultMenuVisible" :position="defaultMenuPosition" @select="onDefaultMenuSelect">
             <amap-context-menu-item name="increase-level">放大一级</amap-context-menu-item>
             <amap-context-menu-item name="reduce-level">缩小一级</amap-context-menu-item>
             <amap-context-menu-item name="zoom-to-country">缩放至全国</amap-context-menu-item>
@@ -12,7 +12,7 @@ const generic = `
         <!--默认右键菜单 END-->
 
         <!--自定义菜单 BEGIN-->
-        <amap-context-menu ref="customMenu">
+        <amap-context-menu v-model="customMenuVisible" :position="customMenuPosition">
             <i-collapse style="width:400px;" value="1">
                 <i-panel name="1">
                     史蒂夫·乔布斯
@@ -51,10 +51,50 @@ import { component, View } from "flagwind-web";
 export default class ContextMenuView extends View
 {
     /**
+     * 演示需要的代码。
+     * @member {object}
+     */
+    protected code: object = code;
+
+    /**
      * 地图中心点。
      * @member {[number, number]}
      */
     protected center: [number, number] = [113.972976, 22.534607];
+
+    /**
+     * 默认菜单是否显示。
+     * @member {boolean}
+     */
+    protected defaultMenuVisible: boolean = false;
+
+    /**
+     * 默认菜单的显示位置。
+     * @member {boolean}
+     */
+    protected defaultMenuPosition: Array<number> = [];
+
+    /**
+     * 自定义菜单是否显示。
+     * @member {boolean}
+     */
+    protected customMenuVisible: boolean = false;
+    
+    /**
+     * 自定义菜单的显示位置。
+     * @member {boolean}
+     */
+    protected customMenuPosition: Array<number> = [];
+
+    /**
+     * 标注标签。
+     * @member {object}
+     */
+    protected label: object =
+    {
+        content: "点击右键试试",
+        offset: [-25, 45]
+    };
 
     /**
      * 当在地图单击鼠标右键时调用。
@@ -63,10 +103,8 @@ export default class ContextMenuView extends View
      */
     protected onMapRightClick(e: any): void
     {
-        const point = e.lnglat;
-        const contextMenu: any = this.$refs.defaultMenu;
-
-        contextMenu.open(point);
+        this.defaultMenuPosition = e.lnglat;
+        this.defaultMenuVisible = true;
     }
 
     /**
@@ -76,10 +114,8 @@ export default class ContextMenuView extends View
      */
     protected onMarkerRightClick(e: any): void
     {
-        const point = e.lnglat;
-        const contextMenu: any = this.$refs.customMenu;
-
-        contextMenu.open(point);
+        this.customMenuPosition = e.lnglat;
+        this.customMenuVisible = true;
     }
 
     /**

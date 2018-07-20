@@ -6,11 +6,11 @@
         <h2>代码示例</h2>
         <u-example title="基本使用" :vertical="true" :hideCode="true">
             <template slot="case">
-                <amap class="context-menu-example" :zoom="15" :center="center" @rightclick="onMapRightClick">
+                <amap class="context-menu-example" mapStyle="amap://styles/whitesmoke" :zoom="15" :center="center" @rightclick="onMapRightClick">
                     <amap-marker :position="center" :label="label" @rightclick="onMarkerRightClick"></amap-marker>
                     
                     <!--默认右键菜单 BEGIN-->
-                    <amap-context-menu ref="defaultMenu" @select="onDefaultMenuSelect">
+                    <amap-context-menu v-model="defaultMenuVisible" :position="defaultMenuPosition" @select="onDefaultMenuSelect">
                         <amap-context-menu-item name="increase-level">放大一级</amap-context-menu-item>
                         <amap-context-menu-item name="reduce-level">缩小一级</amap-context-menu-item>
                         <amap-context-menu-item name="zoom-to-country">缩放至全国</amap-context-menu-item>
@@ -18,7 +18,7 @@
                     <!--默认右键菜单 END-->
                     
                     <!--自定义菜单 BEGIN-->
-                    <amap-context-menu ref="customMenu">
+                    <amap-context-menu v-model="customMenuVisible" :position="customMenuPosition">
                         <i-collapse style="width:400px;" value="1">
                             <i-panel name="1">
                                 史蒂夫·乔布斯
@@ -47,25 +47,31 @@
         <div class="api">
             <h2>API</h2>
 
-            <h3>方法</h3>
+            <h3>属性</h3>
             <table>
                 <thead>
                     <tr>
-                        <th>方法名</th>
+                        <th>属性名</th>
                         <th>说明</th>
-                        <th>返回值</th>
+                        <th>数据类型</th>
+                        <th>属性类型</th>
+                        <th>默认值</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>open(point: [number, number])</td>
-                        <td>在地图的指定位置打开右键菜单。</td>
-                        <td>void</td>
+                        <td>value</td>
+                        <td>右键菜单是否显示，支持 v-model 双向绑定数据。</td>
+                        <td>boolean</td>
+                        <td>动态属性</td>
+                        <td>false</td>
                     </tr>
                     <tr>
-                        <td>close()</td>
-                        <td>关闭右键菜单。</td>
-                        <td>void</td>
+                        <td>position</td>
+                        <td>右键菜单的显示位置。</td>
+                        <td>[number, number]</td>
+                        <td>动态属性</td>
+                        <td>-</td>
                     </tr>
                 </tbody>
             </table>
@@ -133,6 +139,30 @@ export default class ContextMenuView extends View
     protected center: [number, number] = [113.972976, 22.534607];
 
     /**
+     * 默认菜单是否显示。
+     * @member {boolean}
+     */
+    protected defaultMenuVisible: boolean = false;
+
+    /**
+     * 默认菜单的显示位置。
+     * @member {boolean}
+     */
+    protected defaultMenuPosition: Array<number> = [];
+
+    /**
+     * 自定义菜单是否显示。
+     * @member {boolean}
+     */
+    protected customMenuVisible: boolean = false;
+    
+    /**
+     * 自定义菜单的显示位置。
+     * @member {boolean}
+     */
+    protected customMenuPosition: Array<number> = [];
+
+    /**
      * 标注标签。
      * @member {object}
      */
@@ -149,10 +179,8 @@ export default class ContextMenuView extends View
      */
     protected onMapRightClick(e: any): void
     {
-        const point = e.lnglat;
-        const contextMenu: any = this.$refs.defaultMenu;
-
-        contextMenu.open(point);
+        this.defaultMenuPosition = e.lnglat;
+        this.defaultMenuVisible = true;
     }
 
     /**
@@ -162,10 +190,8 @@ export default class ContextMenuView extends View
      */
     protected onMarkerRightClick(e: any): void
     {
-        const point = e.lnglat;
-        const contextMenu: any = this.$refs.customMenu;
-
-        contextMenu.open(point);
+        this.customMenuPosition = e.lnglat;
+        this.customMenuVisible = true;
     }
 
     /**

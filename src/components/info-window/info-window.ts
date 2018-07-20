@@ -11,7 +11,7 @@ import { component, config } from "flagwind-web";
 import Component from "../component";
 
 /**
- * 信息展示窗体组件。
+ * 信息窗体组件。
  * @class
  * @version 1.0.0
  */
@@ -44,10 +44,11 @@ export default class InfoWindow extends Component
      */
     @config({type: Boolean})
     public isCustom: boolean;
-
+    
     /**
      * 获取或设置是否自动调整窗体到视野内（当信息窗体超出视野范围时，通过该属性设置是否自动平移地图，使信息窗体完全显示）
      * @config {boolean}
+     * @default true
      * @description 静态属性，仅支持初始化配置。
      */
     @config({type: Boolean})
@@ -146,28 +147,23 @@ export default class InfoWindow extends Component
      */
     protected created(): void
     {
-        const slots = this.$slots.default || [];
-
-        if(slots.length)
-        {
-            this._bufferVue = new Vue
-            ({
-                props:
+        this._bufferVue = new Vue
+        ({
+            props:
+            {
+                nodes:
                 {
-                    nodes:
-                    {
-                        type: [Array, Object]
-                    }
-                },
-                
-                render(createElement: CreateElement): VNode
-                {
-                    const nodes = Array.isArray(this.nodes) ? this.nodes : [this.nodes];
-
-                    return createElement("div", { ref: "content", staticClass: "amap-info-window-inner" }, nodes);
+                    type: [Array, Object]
                 }
-            }).$mount();
-        }
+            },
+            
+            render(createElement: CreateElement): VNode
+            {
+                const nodes = Array.isArray(this.nodes) ? this.nodes : [this.nodes];
+
+                return createElement("div", { ref: "content", staticClass: "amap-info-window-inner" }, nodes);
+            }
+        }).$mount();
     }
 
     /**
@@ -206,15 +202,12 @@ export default class InfoWindow extends Component
      */
     protected initialize(options: any): AMap.InfoWindow
     {
+        options.map = null;
         options.position = null;
-
-        if(this._bufferVue)
-        {
-            options.content = this._bufferVue.$refs.content;
-        }
+        options.content = this._bufferVue.$refs.content;
 
         const window = new AMap.InfoWindow(options);
-
+        
         // 监听窗体的打开/关闭事件，以便更新当前值
         this._openListener = AMap.event.addListener(window, "open", this.onVisibleChange, this);
         this._closeListener = AMap.event.addListener(window, "close", this.onVisibleChange, this);

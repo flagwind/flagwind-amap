@@ -7,7 +7,7 @@
  */
 
 import Vue, { CreateElement, VNode } from "vue";
-import { component } from "flagwind-web";
+import { component, config } from "flagwind-web";
 import Component from "../component";
 
 /**
@@ -21,26 +21,62 @@ import Component from "../component";
 })
 export default class ContextMenu extends Component
 {
+    private _currentValue: boolean;                    // 当前组件的值
     private _bufferVue: any;                           // 临时组件（用于获取插槽内容使用）
     private _withCustom: boolean;                      // 内容是否为自定义方式渲染
+    private _openListener: AMap.EventListener;         // open 事件监听器
+    private _closeListener: AMap.EventListener;        // close 事件监听器
 
     /**
-     * 在地图的指定位置打开右键菜单。
-     * @param  {[number, number] | AMap.LngLat} position
-     * @returns void
+     * 获取或设置右键菜单是否显示。
+     * @config {boolean}
+     * @default false
+     * @description 动态属性，支持响应式。
      */
-    public open(position: [number, number] | AMap.LngLat): void
-    {
-        this.component.open(this.map, position);
-    }
+    @config({type: Boolean})
+    public value: boolean;
+
+    /**
+     * 获取或设置右键菜单的显示位置。
+     * @config {[number, number]}
+     * @description 动态属性，支持响应式。
+     */
+    @config({type: [Array, Object]})
+    public position: [number, number] | AMap.LngLat;
     
     /**
-     * 关闭右键菜单。
-     * @returns void
+     * 获取配置属性处理程序列表。
+     * @description 当属性值发生变动时调用的函数。
+     * @override
+     * @returns object
      */
-    public close(): void
+    protected getOptionHandlers(): object
     {
-        this.component.close();
+        const self = this;
+        const component: AMap.InfoWindow = this.component;
+
+        const handlers =
+        {
+            value(value: boolean)
+            {
+                if(value === self._currentValue)
+                {
+                    return;
+                }
+
+                if(value === true)
+                {
+                    // 如果没有给组件设置位置，则取地图的中心点显示
+                    component.open(self.map, self.position ? self.position : self.map.getCenter());
+                }
+                else
+                {
+                    component.close();
+                }
+            }
+        };
+
+        return {...super.getOptionHandlers(), ...handlers};
     }
 
     /**
@@ -50,34 +86,29 @@ export default class ContextMenu extends Component
      */
     protected created(): void
     {
-        const slots = this.$slots.default || [];
-
-        if(slots.length)
-        {
-            this._bufferVue = new Vue
-            ({
-                props:
+        this._bufferVue = new Vue
+        ({
+            props:
+            {
+                container:
                 {
-                    container:
-                    {
-                        type: Object,
-                        default: () => this
-                    },
-
-                    nodes:
-                    {
-                        type: [Array, Object]
-                    }
+                    type: Object,
+                    default: () => this
                 },
-                
-                render(createElement: CreateElement): VNode
-                {
-                    const nodes = Array.isArray(this.nodes) ? this.nodes : [this.nodes];
 
-                    return createElement("div", { ref: "content", staticClass: "amap-context-menu-inner" }, nodes);
+                nodes:
+                {
+                    type: [Array, Object]
                 }
-            }).$mount();
-        }
+            },
+            
+            render(createElement: CreateElement): VNode
+            {
+                const nodes = Array.isArray(this.nodes) ? this.nodes : [this.nodes];
+
+                return createElement("div", { ref: "content", staticClass: "amap-context-menu-inner" }, nodes);
+            }
+        }).$mount();
     }
 
     /**
@@ -137,7 +168,13 @@ export default class ContextMenu extends Component
             options.content = this._bufferVue.$refs.content;
         }
 
-        return new AMap.ContextMenu(options);
+        const menu = new AMap.ContextMenu(options);
+
+        // 监听菜单的打开/关闭事件，以便更新当前值
+        this._openListener = AMap.event.addListener(menu, "open", this.onVisibleChange.bind(this, true));
+        this._closeListener = AMap.event.addListener(menu, "close", this.onVisibleChange.bind(this, false));
+
+        return menu;
     }
     
     /**
@@ -152,6 +189,16 @@ export default class ContextMenu extends Component
             this._bufferVue.$destroy();
         }
 
+        if(this._openListener)
+        {
+            AMap.event.removeListener(this._openListener);
+        }
+
+        if(this._closeListener)
+        {
+            AMap.event.removeListener(this._closeListener);
+        }
+
         super.destroyed();
     }
     
@@ -163,5 +210,17 @@ export default class ContextMenu extends Component
     protected getComponentEvents(): Array<string>
     {
         return ["open", "close"];
+    }
+
+    /**
+     * 当显示状态发生改变时调用。
+     * @param {boolean} visible
+     * @returns void
+     */
+    private onVisibleChange(visible: boolean): void
+    {
+        this._currentValue = visible;
+        
+        this.$emit("input", this._currentValue);
     }
 }
