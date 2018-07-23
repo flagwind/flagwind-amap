@@ -130,6 +130,11 @@ const menus =
                         title: "地图鹰眼",
                         path: "/components/over-view",
                         icon: "icon-over-view"
+                    },
+                    {
+                        title: "比例尺",
+                        path: "/components/scale",
+                        icon: "icon-scale"
                     }
                 ]
             }

@@ -30,6 +30,7 @@ import ControlBar from "./components/control-bar";
 import ToolBar from "./components/tool-bar";
 import MapType from "./components/map-type";
 import OverView from "./components/over-view";
+import Scale from "./components/scale";
 
 const components =
 {
@@ -51,7 +52,8 @@ const components =
     "amap-control-bar": ControlBar,
     "amap-tool-bar": ToolBar,
     "amap-map-type": MapType,
-    "amap-over-view": OverView
+    "amap-over-view": OverView,
+    "amap-scale": Scale
 };
 
 const amap =

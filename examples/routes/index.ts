@@ -91,6 +91,10 @@ const routes =
     {
         path: "/components/over-view",
         component: (resolve: any) => (<any>require)(["views/components/over-view.vue"], resolve)
+    },
+    {
+        path: "/components/scale",
+        component: (resolve: any) => (<any>require)(["views/components/scale.vue"], resolve)
     }
 ];
 
