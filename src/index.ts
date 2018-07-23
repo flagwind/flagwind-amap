@@ -28,6 +28,7 @@ import { ContextMenu, ContextMenuItem } from "./components/context-menu";
 import InfoWindow from "./components/info-window";
 import ControlBar from "./components/control-bar";
 import ToolBar from "./components/tool-bar";
+import MapType from "./components/map-type";
 
 const components =
 {
@@ -47,7 +48,8 @@ const components =
     "amap-context-menu-item": ContextMenuItem,
     "amap-info-window": InfoWindow,
     "amap-control-bar": ControlBar,
-    "amap-tool-bar": ToolBar
+    "amap-tool-bar": ToolBar,
+    "amap-map-type": MapType
 };
 
 const amap =

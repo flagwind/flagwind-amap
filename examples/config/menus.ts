@@ -120,6 +120,11 @@ const menus =
                         title: "工具条",
                         path: "/components/tool-bar",
                         icon: "icon-tool-bar"
+                    },
+                    {
+                        title: "地图类型",
+                        path: "/components/map-type",
+                        icon: "icon-map-type"
                     }
                 ]
             }

@@ -83,6 +83,10 @@ const routes =
     {
         path: "/components/tool-bar",
         component: (resolve: any) => (<any>require)(["views/components/tool-bar.vue"], resolve)
+    },
+    {
+        path: "/components/map-type",
+        component: (resolve: any) => (<any>require)(["views/components/map-type.vue"], resolve)
     }
 ];
 
