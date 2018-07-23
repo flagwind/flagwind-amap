@@ -125,6 +125,11 @@ const menus =
                         title: "地图类型",
                         path: "/components/map-type",
                         icon: "icon-map-type"
+                    },
+                    {
+                        title: "地图鹰眼",
+                        path: "/components/over-view",
+                        icon: "icon-over-view"
                     }
                 ]
             }

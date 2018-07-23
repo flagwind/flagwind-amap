@@ -87,6 +87,10 @@ const routes =
     {
         path: "/components/map-type",
         component: (resolve: any) => (<any>require)(["views/components/map-type.vue"], resolve)
+    },
+    {
+        path: "/components/over-view",
+        component: (resolve: any) => (<any>require)(["views/components/over-view.vue"], resolve)
     }
 ];
 
