@@ -79,6 +79,10 @@ const routes =
     {
         path: "/components/control-bar",
         component: (resolve: any) => (<any>require)(["views/components/control-bar.vue"], resolve)
+    },
+    {
+        path: "/components/tool-bar",
+        component: (resolve: any) => (<any>require)(["views/components/tool-bar.vue"], resolve)
     }
 ];
 

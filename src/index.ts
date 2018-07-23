@@ -27,6 +27,7 @@ import BezierCurve from "./components/bezier-curve";
 import { ContextMenu, ContextMenuItem } from "./components/context-menu";
 import InfoWindow from "./components/info-window";
 import ControlBar from "./components/control-bar";
+import ToolBar from "./components/tool-bar";
 
 const components =
 {
@@ -45,7 +46,8 @@ const components =
     "amap-context-menu": ContextMenu,
     "amap-context-menu-item": ContextMenuItem,
     "amap-info-window": InfoWindow,
-    "amap-control-bar": ControlBar
+    "amap-control-bar": ControlBar,
+    "amap-tool-bar": ToolBar
 };
 
 const amap =

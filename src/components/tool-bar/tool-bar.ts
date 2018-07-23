@@ -104,7 +104,7 @@ export default class ToolBar extends Component
      * @description 静态属性，仅支持初始化配置。
      */
     @config({type: Object})
-    public locationMarker: AMap.Marker;
+    public locationMarker: object;
 
     /**
      * 是否使用高德定位sdk用来辅助优化定位效果，默认：false。
@@ -120,6 +120,15 @@ export default class ToolBar extends Component
     public useNative: boolean;
 
     /**
+     * 获取或设置工具条是否可见。
+     * @config {boolean}
+     * @default true
+     * @description 动态属性，支持响应式。
+     */
+    @config({type: Boolean})
+    public visible: boolean;
+
+    /**
      * 当渲染组件时调用的钩子方法。
      * @override
      * @returns VNode
@@ -128,7 +137,7 @@ export default class ToolBar extends Component
     {
         return null;
     }
-    
+
     /**
      * 当装载组件时调用的钩子方法。
      * @override
@@ -161,6 +170,76 @@ export default class ToolBar extends Component
                 resolve(toolBar);
             });
         });
+    }
+
+    /**
+     * 获取组件支持的事件列表。
+     * @virtual
+     * @returns Array<string>
+     */
+    protected getComponentEvents(): Array<string>
+    {
+        return ["show", "hide", "location", "zoomchanged"];
+    }
+
+    /**
+     * 获取配置属性转换程序列表。
+     * @description 当配置属性赋值时调用的函数，用于转换数据类型。
+     * @virtual
+     * @returns object
+     */
+    protected getOptionConverters(): object
+    {
+        const converters =
+        {
+            locationMarker(value: object)
+            {
+                if(value)
+                {
+                    return new AMap.Marker(value);
+                }
+
+                return null;
+            }
+        };
+        
+        return {...super.getOptionConverters(), ...converters};
+    }
+
+    /**
+     * 获取配置属性处理程序列表。
+     * @description 当属性值发生变动时调用的函数。
+     * @override
+     * @returns object
+     */
+    protected getOptionHandlers(): object
+    {
+        const component = this.component;
+
+        const handlers =
+        {
+            ruler(value: boolean)
+            {
+                value ? component.showRuler() : component.hideRuler();
+            },
+
+            direction(value: boolean)
+            {
+                value ? component.showDirection() : component.hideDirection();
+            },
+
+            locate(value: boolean)
+            {
+                value ? component.showLocation() : component.hideLocation();
+            },
+
+            visible(value: boolean)
+            {
+                value ? component.show() : component.hide();
+            }
+        };
+
+        return {...super.getOptionHandlers(), ...handlers};
     }
 
     /**

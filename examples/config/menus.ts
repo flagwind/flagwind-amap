@@ -115,6 +115,11 @@ const menus =
                         title: "控制条",
                         path: "/components/control-bar",
                         icon: "icon-control-bar"
+                    },
+                    {
+                        title: "工具条",
+                        path: "/components/tool-bar",
+                        icon: "icon-tool-bar"
                     }
                 ]
             }
