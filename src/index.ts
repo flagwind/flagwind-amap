@@ -31,6 +31,7 @@ import ToolBar from "./components/tool-bar";
 import MapType from "./components/map-type";
 import OverView from "./components/over-view";
 import Scale from "./components/scale";
+import PointSimplifier from "./components/point-simplifier";
 
 const components =
 {
@@ -53,7 +54,8 @@ const components =
     "amap-tool-bar": ToolBar,
     "amap-map-type": MapType,
     "amap-over-view": OverView,
-    "amap-scale": Scale
+    "amap-scale": Scale,
+    "amap-point-simplifier": PointSimplifier
 };
 
 const amap =

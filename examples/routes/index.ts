@@ -95,6 +95,10 @@ const routes =
     {
         path: "/components/scale",
         component: (resolve: any) => (<any>require)(["views/components/scale.vue"], resolve)
+    },
+    {
+        path: "/components/point-simplifier",
+        component: (resolve: any) => (<any>require)(["views/components/point-simplifier.vue"], resolve)
     }
 ];
 

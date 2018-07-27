@@ -36,9 +36,9 @@ export default abstract class Component extends ComponentBase
 
     /**
      * 高德事件监听器列表。
-     * @member {Array<AMap.EventListener>}
+     * @member {Array<[string, Function]>}
      */
-    protected listeners: Array<AMap.EventListener> = [];
+    protected listeners: Array<[string, Function]> = [];
 
     /**
      * Vue 属性监听器取消函数列表。
@@ -311,29 +311,39 @@ export default abstract class Component extends ComponentBase
 
         for(const eventName of eventNames)
         {
-            const listener = AMap.event.addListener(this.component, eventName, (e: any) =>
-            {
-                // 基于原生事件参数对象，注入事件源
-                e.source = this;
-                
-                // 通过 Vue 的事件模型转发高德原生事件
-                this.$emit(eventName, e);
+            const eventHandler = this.handleEvent.bind(this, eventName);
 
-            }, this);
-            
-            this.listeners.push(listener);
+            this.component.on(eventName, eventHandler);
+
+            // 加入监听器列表，以便组件销毁时清除事件
+            this.listeners.push([eventName, eventHandler]);
         }
     }
     
     /**
-     * 移除高德组件事件。
+     * 接收并转发高德原生事件。
+     * @param  {string} name
+     * @param  {any} args
+     * @returns void
+     */
+    private handleEvent(name: string, args: any): void
+    {
+         // 基于原生事件参数对象，注入事件源
+         args.source = this;
+         
+         // 通过 Vue 的事件模型转发原生事件
+         this.$emit(name, args);
+    }
+    
+    /**
+     * 移除高德原生事件。
      * @returns void
      */
     private unregisterEvents(): void
     {
-        for(const listener of this.listeners)
+        for(const [eventName, eventHandler] of this.listeners)
         {
-            AMap.event.removeListener(listener);
+            this.component.off(eventName, eventHandler);
         }
 
         this.listeners = [];
@@ -401,7 +411,7 @@ export default abstract class Component extends ComponentBase
         
         // 2.其次尝试从高德原生组件中查找对应的属性set方法，例如 setLang
         let methodName = `set${upperCamelCase(optionName)}`;
-        
+
         if(component[methodName])
         {
             return [methodName, component[methodName]];

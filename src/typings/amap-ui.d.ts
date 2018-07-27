@@ -2357,6 +2357,15 @@ declare namespace AMapUI.PointSimplifier.Render
     class Canvas
     {
         constructor(opts?: CanvasOptions);
+        
+        /**
+         * 用于创建图片内容的快捷方法。
+         * @param  {string} url
+         * @param  {Function} onLoad?
+         * @param  {Function} onError?
+         * @returns void
+         */
+        static getImageContent(url: string, onLoad?: Function, onError?: Function): void;
     }
 
     namespace Canvas

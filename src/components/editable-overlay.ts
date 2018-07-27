@@ -15,7 +15,8 @@ import Overlay from "./overlay";
  */
 export default abstract class EditableOverlay extends Overlay
 {
-    private _editor: any;                       // 编辑器实例
+    private _editor: any;                                       // 编辑器实例
+    private _editorListeners: Array<AMap.EventListener>;        // 编辑器事件监听器列表
 
     /**
      * 获取编辑器实例。
@@ -43,6 +44,16 @@ export default abstract class EditableOverlay extends Overlay
      */
     protected destroyed(): void
     {
+        if(this._editorListeners)
+        {
+            for(const listener of this._editorListeners)
+            {
+                AMap.event.removeListener(listener);
+            }
+
+            this.listeners = [];
+        }
+        
         // 关闭编辑器
         this.editor && this.editor.close();
 
@@ -80,6 +91,8 @@ export default abstract class EditableOverlay extends Overlay
 
         // 根据传入的事件监听器过滤支持的事件名
         const eventNames = Object.keys(this.$listeners).filter((e: string) => ~events.indexOf(e));
+
+        this._editorListeners = this._editorListeners || [];
         
         for(const eventName of eventNames)
         {
@@ -93,7 +106,7 @@ export default abstract class EditableOverlay extends Overlay
 
             }, this);
 
-            this.listeners.push(listener);
+            this._editorListeners.push(listener);
         }
     }
 }

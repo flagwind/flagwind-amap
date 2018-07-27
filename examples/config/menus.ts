@@ -137,6 +137,17 @@ const menus =
                         icon: "icon-scale"
                     }
                 ]
+            },
+            {
+                title: "场景",
+                children:
+                [
+                    {
+                        title: "海量点展示",
+                        path: "/components/point-simplifier",
+                        icon: "icon-point-simplifier"
+                    }
+                ]
             }
         ]
     }
