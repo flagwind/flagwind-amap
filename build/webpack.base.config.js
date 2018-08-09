@@ -43,8 +43,7 @@ module.exports =
             {
                 test: /\.js$/,
                 loader: "babel-loader",
-                include: [resolve("src"), resolve("test")],
-                exclude: /node_modules/
+                include: [resolve("src"), resolve("node_modules/uppercamelcase"), resolve("node_modules/camelcase"), resolve("test")]
             },
             {
                 test: /\.vue$/,
@@ -70,6 +69,13 @@ module.exports =
                     "css-loader"
                 ]
             },
+            // {
+            //     test: /\.less$/,
+            //     use: ExtractTextPlugin.extract({
+            //         fallback: "style-loader",
+            //         use: ["css-loader", "less-loader"]
+            //     })
+            // },
             {
                 test: /\.less$/,
                 use:

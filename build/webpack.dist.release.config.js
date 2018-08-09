@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const merge = require("webpack-merge");
 const webpackBaseConfig = require("./webpack.base.config");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = merge(webpackBaseConfig,
 {
@@ -45,6 +46,8 @@ module.exports = merge(webpackBaseConfig,
             {
                 warnings: false
             }
-        })
+        }),
+        new ExtractTextPlugin({filename: path.resolve(__dirname, "flagwind-amap.css"), allChunks: true}),
+
     ]
 });

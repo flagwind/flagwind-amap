@@ -6,7 +6,7 @@
  * Copyright (C) 2010-present Flagwind Inc. All rights reserved. 
  */
 
-/// <reference path="./typings/index.d.ts" />
+import "./styles/index.less";
 
 // 地图加载器
 import MapLoader from "./common/loader";
