@@ -358,6 +358,6 @@ declare namespace AMap
          * 获取上次定位的结果(lng、lat)。执行该功能的前须进行位置定位：doLocation，且定位事件已经执行完毕。
          * @returns LngLat
          */
-        getLocation(): LngLat | [number, number];
+        getLocation(): LngLat;
     }
 }

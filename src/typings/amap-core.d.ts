@@ -703,9 +703,9 @@ declare namespace AMap
         /**
          * 地图容器像素坐标转为地图经纬度坐标。
          * @param  {Pixel} pixel
-         * @returns LngLat | [number, number]
+         * @returns LngLat
          */
-        containerToLngLat(pixel: Pixel): LngLat | [number, number];
+        containerToLngLat(pixel: Pixel): LngLat;
         
         /**
          * 地图经纬度坐标转为地图容器像素坐标。

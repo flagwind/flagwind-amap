@@ -95,9 +95,9 @@ declare namespace AMap
         
         /**
          * 获取信息窗体显示基点位置。
-         * @returns LngLat | [number, number]
+         * @returns LngLat
          */
-        getPosition(): LngLat | [number, number];
+        getPosition(): LngLat;
     }
 
     /**

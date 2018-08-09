@@ -407,9 +407,9 @@ declare namespace AMap
         
         /**
          * 获取标记的位置。
-         * @returns LngLat | [number, number]
+         * @returns LngLat
          */
-        getPosition(): LngLat | [number, number];
+        getPosition(): LngLat;
 
         /**
          * 设置标记对象是否可拖拽移动。
@@ -850,9 +850,9 @@ declare namespace AMap
         
         /**
          * 获取圆点中心。
-         * @returns LngLat | [number, number]
+         * @returns LngLat
          */
-        getCenter(): LngLat | [number, number];
+        getCenter(): LngLat;
         
         /**
          * 设置圆点的半径。
@@ -1377,9 +1377,9 @@ declare namespace AMap
         
         /**
          * 获取圆中心点。
-         * @returns LngLat | [number, number]
+         * @returns LngLat
          */
-        getCenter(): LngLat | [number, number];
+        getCenter(): LngLat;
         
         /**
          * 设置圆形的半径。
@@ -1509,9 +1509,9 @@ declare namespace AMap
         
         /**
          * 获取椭圆中心点。
-         * @returns LngLat | [number, number]
+         * @returns LngLat
          */
-        getCenter(): LngLat | [number, number];
+        getCenter(): LngLat;
 
         /**
          * 设置椭圆的半径。

@@ -165,9 +165,9 @@ declare namespace AMap
          * @param  {LngLat | [number, number]} p1
          * @param  {LngLat | [number, number]} p2
          * @param  {LngLat | [number, number]} p3
-         * @returns LngLat | [number, number]
+         * @returns LngLat
          */
-        static closestOnSegment(p1: LngLat | [number, number], p2: LngLat | [number, number], p3: LngLat | [number, number]): LngLat | [number, number];
+        static closestOnSegment(p1: LngLat | [number, number], p2: LngLat | [number, number], p3: LngLat | [number, number]): LngLat;
         
         /**
          * 计算line上距离P最近的点。
@@ -175,7 +175,7 @@ declare namespace AMap
          * @param  {Array<LngLat | [number, number]>} line
          * @returns LngLat | [number, number]
          */
-        static closestOnLine(p: LngLat | [number, number], line: Array<LngLat | [number, number]>): LngLat | [number, number];
+        static closestOnLine(p: LngLat | [number, number], line: Array<LngLat | [number, number]>): LngLat;
         
         /**
          * 计算P2、P3到P1的距离。

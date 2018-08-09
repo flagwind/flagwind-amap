@@ -14,20 +14,20 @@ module.exports = webpackMerge(webpackBaseConfig,
 {
     entry: 
     {
-        main: "./examples/index",
+        main: "./doc/index",
         vendors: ["vue", "vue-router", "flagwind-core"]
     },
     resolve:
     {
         alias:
         {
-            "examples": resolve("examples"),
-            "views": resolve("examples/views")
+            "doc": resolve("doc"),
+            "views": resolve("doc/views")
         }
     },
     output: 
     {
-        path: path.join(__dirname, "../examples/dist"),
+        path: path.join(__dirname, "../doc/dist"),
         publicPath: "",
         filename: "[name].js",
         chunkFilename: "[name].chunk.js"
@@ -40,8 +40,8 @@ module.exports = webpackMerge(webpackBaseConfig,
         new HtmlWebpackPlugin
         ({
             inject: true,
-            filename: path.join(__dirname, "../examples/dist/index.html"),
-            template: path.join(__dirname, "../examples/index.html")
+            filename: path.join(__dirname, "../doc/dist/index.html"),
+            template: path.join(__dirname, "../doc/index.html")
         })
     ]
 });
