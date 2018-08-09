@@ -99,6 +99,10 @@ const routes =
     {
         path: "/components/point-simplifier",
         component: (resolve: any) => (<any>require)(["views/components/point-simplifier.vue"], resolve)
+    },
+    {
+        path: "/components/position-picker",
+        component: (resolve: any) => (<any>require)(["views/components/position-picker.vue"], resolve)
     }
 ];
 

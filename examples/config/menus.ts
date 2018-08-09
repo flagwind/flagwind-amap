@@ -146,6 +146,11 @@ const menus =
                         title: "海量点展示",
                         path: "/components/point-simplifier",
                         icon: "icon-point-simplifier"
+                    },
+                    {
+                        title: "位置选点",
+                        path: "/components/position-picker",
+                        icon: "icon-position-picker"
                     }
                 ]
             }

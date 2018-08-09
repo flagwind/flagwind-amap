@@ -32,6 +32,7 @@ import MapType from "./components/map-type";
 import OverView from "./components/over-view";
 import Scale from "./components/scale";
 import PointSimplifier from "./components/point-simplifier";
+import PositionPicker from "./components/position-picker";
 
 const components =
 {
@@ -55,7 +56,8 @@ const components =
     "amap-map-type": MapType,
     "amap-over-view": OverView,
     "amap-scale": Scale,
-    "amap-point-simplifier": PointSimplifier
+    "amap-point-simplifier": PointSimplifier,
+    "amap-position-picker": PositionPicker
 };
 
 const amap =
