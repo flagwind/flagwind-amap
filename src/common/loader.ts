@@ -8,7 +8,7 @@
 
 import flagwind from "flagwind-core";
 import Type = flagwind.Type;
-import IMapConfig from "models/map-config";
+import IMapConfig from "../models/map-config";
 import DEFAULT_MAP_CONFIG from "config/index";
 
 /**

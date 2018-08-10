@@ -3,7 +3,7 @@
         [
             "env",
             {
-                "modules": false
+                "modules": "umd"
             }
         ],
         "stage-2"
