@@ -65,6 +65,7 @@
         "file-loader": "^1.1.5",
         "flagwind-core": "1.0.7",
         "flagwind-web": "^1.0.2",
+        "fork-ts-checker-webpack-plugin": "^0.4.6",
         "friendly-errors-webpack-plugin": "^1.6.1",
         "fs-extra": "^5.0.0",
         "gulp": "^3.9.1",

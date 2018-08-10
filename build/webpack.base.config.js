@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 function resolve(dir)
 {
@@ -38,11 +39,13 @@ module.exports =
                 exclude: /node_modules/,
                 options: {
                     appendTsSuffixTo: [/\.vue$/],
+                    transpileOnly: true
                 }
             },
             {
                 test: /\.js$/,
                 loader: "babel-loader",
+                exclude: /node_modules/,
                 include: [resolve("src"), resolve("node_modules/uppercamelcase"), resolve("node_modules/camelcase"), resolve("test")]
             },
             {
@@ -106,6 +109,12 @@ module.exports =
     },
     plugins:
     [
-        new webpack.optimize.ModuleConcatenationPlugin()
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        new webpack.WatchIgnorePlugin([/\.d\.ts$/]),
+        new ForkTsCheckerWebpackPlugin
+        ({
+            tslint: true,
+            vue: true
+        })
     ]
 };
