@@ -440,10 +440,10 @@ declare namespace AMap
         
         /**
          * 同原生requestIdleCallback
-         * @param  {static} func
+         * @param  {Function} func
          * @returns Number
          */
-        static requestIdleCallback(func: static): Number;
+        static requestIdleCallback(func: Function): Number;
         
         /**
          * 同原生cancelIdleCallback
@@ -454,10 +454,10 @@ declare namespace AMap
         
         /**
          * 同原生requestAnimationFrame
-         * @param  {static} func
+         * @param  {Function} func
          * @returns Number
          */
-        static requestAnimFrame(func: static): Number;
+        static requestAnimFrame(func: Function): Number;
         
         /**
          * 同原生cancelAnimationFrame

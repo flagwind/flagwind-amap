@@ -8,6 +8,7 @@
         "dist:clean": "node build/build.clean.js",
         "dist:debug": "webpack --config build/webpack.dist.debug.config.js",
         "dist:release": "webpack --config build/webpack.dist.release.config.js",
+        "dist:docs": "webpack --config build/webpack.dist.docs.config.js",
         "dist": "npm run dist:clean && npm run dist:debug && npm run dist:release",
         "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
         "test": "npm run unit"

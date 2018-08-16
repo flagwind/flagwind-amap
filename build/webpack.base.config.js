@@ -45,7 +45,7 @@ module.exports =
             {
                 test: /\.js$/,
                 loader: "babel-loader",
-                exclude: /node_modules/,
+                // exclude: /node_modules/,
                 include: [resolve("src"), resolve("node_modules/uppercamelcase"), resolve("node_modules/camelcase"), resolve("test")]
             },
             {
