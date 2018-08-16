@@ -1,6 +1,6 @@
 {
     "name": "flagwind-amap",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "flagwind amap library",
     "author": "jason <jasonsoop@gmail.com>",
     "scripts": {
@@ -8,6 +8,7 @@
         "dist:clean": "node build/build.clean.js",
         "dist:debug": "webpack --config build/webpack.dist.debug.config.js",
         "dist:release": "webpack --config build/webpack.dist.release.config.js",
+        "dist:docs": "webpack --config build/webpack.dist.docs.config.js",
         "dist": "npm run dist:clean && npm run dist:debug && npm run dist:release",
         "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
         "test": "npm run unit"
@@ -19,6 +20,8 @@
     "typings": "dist/typings/index.d.ts",
     "keywords": [
         "flagwind",
+        "amap-ts",
+        "amap",
         "typescript"
     ],
     "license": "MIT",
@@ -65,6 +68,7 @@
         "file-loader": "^1.1.5",
         "flagwind-core": "1.0.7",
         "flagwind-web": "^1.0.2",
+        "fork-ts-checker-webpack-plugin": "^0.4.6",
         "friendly-errors-webpack-plugin": "^1.6.1",
         "fs-extra": "^5.0.0",
         "gulp": "^3.9.1",

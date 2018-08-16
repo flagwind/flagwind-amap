@@ -8,7 +8,7 @@
 
 import flagwind from "flagwind-core";
 import Type = flagwind.Type;
-import IMapConfig from "models/map-config";
+import IMapConfig from "../models/map-config";
 import DEFAULT_MAP_CONFIG from "config/index";
 
 /**
@@ -172,7 +172,7 @@ export default class MapLoader
     private getMapUrl(): string
     {
         const config = this._config;
-        const amapPrefix = /^AMap./;
+        // const amapPrefix = /^AMap./;
         const paramMap = {"version": "v", "key": "key", "plugins": "plugin", "callback": "callback"};
         const paramKeys = Object.keys(paramMap);
 
