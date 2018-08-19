@@ -5,6 +5,7 @@ const webpackBaseConfig = require("./webpack.base.config");
 
 module.exports = merge(webpackBaseConfig,
 {
+    mode: 'production',
     entry:
     {
         main: "./src/index.ts"
@@ -26,14 +27,8 @@ module.exports = merge(webpackBaseConfig,
         "flagwind-core": "flagwind-core",
         "flagwind-web": "flagwind-web"
     },
-    plugins:
-    [
-        new webpack.DefinePlugin
-        ({
-            "process.env":
-            {
-                NODE_ENV: '"production"'
-            }
-        })
-    ]
+    optimization:
+    {
+        minimize: false
+    }
 });

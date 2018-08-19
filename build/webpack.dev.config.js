@@ -12,6 +12,18 @@ function resolve(dir)
 
 module.exports = webpackMerge(webpackBaseConfig,
 {
+    mode: 'development',
+    devServer: {
+        contentBase: './test',
+        host: 'localhost',
+        port: 8020,
+        open: true,
+        hot: true,
+        inline: true,
+        compress: true,
+        historyApiFallback: true,
+        noInfo: true
+    },
     entry: 
     {
         main: "./doc/index",
@@ -32,10 +44,32 @@ module.exports = webpackMerge(webpackBaseConfig,
         filename: "[name].js",
         chunkFilename: "[name].chunk.js"
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'async',
+            // 大于30KB才单独分离成chunk
+            minSize: 30000,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            name: true,
+            cacheGroups: {
+                default: {
+                    priority: -20,
+                    reuseExistingChunk: true,
+                },
+                vendors: {
+                    name: 'vendors',
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    chunks: "all"
+                }
+            }
+        }
+    },
     plugins: 
     [
         new FriendlyErrorsPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({ name: "vendors", filename: "vendor.bundle.js" }),
+        // new webpack.optimize.CommonsChunkPlugin({ name: "vendors", filename: "vendor.bundle.js" }),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin
         ({

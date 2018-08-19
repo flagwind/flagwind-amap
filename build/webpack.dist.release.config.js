@@ -2,9 +2,11 @@ const path = require("path");
 const webpack = require("webpack");
 const merge = require("webpack-merge");
 const webpackBaseConfig = require("./webpack.base.config");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = merge(webpackBaseConfig,
 {
+    mode: 'production',
     entry:
     {
         main: "./src/index.ts"
@@ -26,25 +28,15 @@ module.exports = merge(webpackBaseConfig,
         "flagwind-core": "flagwind-core",
         "flagwind-web": "flagwind-web"
     },
-    plugins: 
-    [
-        new webpack.DefinePlugin
-        ({
-            "process.env":
-            {
-                NODE_ENV: '"production"'
-            }
-        }),
-        new webpack.optimize.UglifyJsPlugin
-        ({
-            output:
-            {
-                comments: false
-            },
-            compress: 
-            {
-                warnings: false
-            }
-        })
-    ]
+    optimization:
+    {
+        minimizer:
+        [
+          new UglifyJsPlugin({
+            cache: true,
+            parallel: true,
+            sourceMap: false // set to true if you want JS source maps
+          })
+        ]
+    }
 });

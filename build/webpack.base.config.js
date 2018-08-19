@@ -1,6 +1,8 @@
 const path = require("path");
 const webpack = require("webpack");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 function resolve(dir)
 {
@@ -9,6 +11,7 @@ function resolve(dir)
 
 module.exports =
 {
+    performance: { hints: false },
     resolve:
     {
         extensions: [".js", ".vue", ".json", ".ts"],
@@ -27,12 +30,17 @@ module.exports =
     {
         rules:
         [
-            {
-                test: /\.ts$/,
-                exclude: /node_modules/,
-                enforce: "pre",
-                loader: "tslint-loader"
-            },
+            // {
+            //     test: /\.ts$/,
+            //     exclude: /node_modules/,
+            //     enforce: "pre",
+            //     use: [
+            //         {
+            //             loader: 'tslint-loader',
+            //             options: {}
+            //         }
+            //     ]
+            // },
             {
                 test: /\.tsx?$/,
                 loader: "ts-loader",
@@ -66,11 +74,15 @@ module.exports =
             },
             {
                 test: /\.css$/,
-                use:
-                [
-                    "style-loader",
-                    "css-loader"
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader'
                 ]
+                // use:
+                // [
+                //     "style-loader",
+                //     "css-loader"
+                // ]
             },
             // {
             //     test: /\.less$/,
@@ -83,7 +95,7 @@ module.exports =
                 test: /\.less$/,
                 use:
                 [
-                    "style-loader",
+                    "vue-style-loader",
                     "css-loader",
                     "less-loader"
                 ]
@@ -109,7 +121,11 @@ module.exports =
     },
     plugins:
     [
-        new webpack.optimize.ModuleConcatenationPlugin(),
+        new VueLoaderPlugin(),
+        // new webpack.optimize.ModuleConcatenationPlugin(),
+        new MiniCssExtractPlugin({
+            filename: 'output.css'
+        }),
         new webpack.WatchIgnorePlugin([/\.d\.ts$/]),
         new ForkTsCheckerWebpackPlugin
         ({
