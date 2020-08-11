@@ -139,6 +139,34 @@ export default class Map extends Component
     public viewMode: "2D" | "3D";
 
     /**
+     * 为 Map 实例指定掩模的路径，各图层将只显示路径范围内图像，3D视图下有效。
+     * 格式为一个经纬度的一维、二维或三维数组。
+     * 一维数组时代表一个普通多边形路径，如:
+     * [[lng1,lat1], [lng2,lat2], [lng3,lat3]]
+     * 二维数组时代表一个带洞的多边形路径，如:
+     * [
+     *   [[lng4,lat4], [lng5,lat5], [lng6,lat6]],
+     *   [[lng7,lat7], [lng8,lat8], [lng9,lat9]]
+     * ]
+     * 三维数组时代表多个多边形路径，如:
+     * [
+     *   [[lng1,lat1], [lng2,lat2], [lng3,lat3]],//一个普通多边形
+     *   [//一个带洞多边形
+     *     [[lng4,lat4], [lng5,lat5], [lng6,lat6]],
+     *     [[lng7,lat7], [lng8,lat8], [lng9,lat9]]
+     *   ]
+     * ]
+     * 另外，可以通过给指定图层添加rejectMapMask属性使得指定图层不适用掩模
+     * 
+     * ! 特别注意，动态初始值空数组报错，需要传false
+     * @config {Array | Boolean}
+     * @default false
+     * @description 动态属性，支持响应式。
+     */
+    @config({type: [Array, Boolean]})
+    public mask: Array<any> | Boolean;
+
+    /**
      * 获取或设置是否允许设置俯仰角度。
      * 3D视图下为true，2D视图下设置无效。
      * @config {boolean}
